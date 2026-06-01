@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Timex | LUXE Premium Editorial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .spring-hover {
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .spring-hover:hover {
+            transform: scale(1.02);
+        }
+        .active-tab-indicator {
+            position: relative;
+        }
+        .active-tab-indicator::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: currentColor;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#ffdad6",
+                      "surface-container-highest": "#e4e2e2",
+                      "surface-dim": "#dbd9d9",
+                      "on-error-container": "#93000a",
+                      "surface-container-high": "#eae8e7",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#1f1b13",
+                      "inverse-surface": "#303030",
+                      "inverse-on-surface": "#f2f0f0",
+                      "on-tertiary-container": "#898377",
+                      "primary": "#000000",
+                      "on-error": "#ffffff",
+                      "tertiary-fixed-dim": "#cdc6b8",
+                      "primary-fixed": "#e5e2e1",
+                      "on-primary-fixed": "#1c1b1b",
+                      "on-surface": "#1b1c1c",
+                      "outline-variant": "#c4c7c7",
+                      "error": "#ba1a1a",
+                      "primary-container": "#1c1b1b",
+                      "on-surface-variant": "#444748",
+                      "on-primary": "#ffffff",
+                      "secondary-fixed": "#e3e2e0",
+                      "background": "#fbf9f8",
+                      "on-secondary": "#ffffff",
+                      "surface-tint": "#5f5e5e",
+                      "secondary": "#5e5e5d",
+                      "surface": "#fbf9f8",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary": "#000000",
+                      "tertiary-fixed": "#eae2d4",
+                      "on-secondary-fixed-variant": "#464746",
+                      "surface-container": "#efeded",
+                      "surface-bright": "#fbf9f8",
+                      "primary-fixed-dim": "#c8c6c5",
+                      "secondary-container": "#e0dfde",
+                      "on-background": "#1b1c1c",
+                      "on-secondary-container": "#626361",
+                      "surface-container-low": "#f5f3f3",
+                      "on-secondary-fixed": "#1a1c1b",
+                      "outline": "#747878",
+                      "tertiary-container": "#1f1b13",
+                      "inverse-primary": "#c8c6c5",
+                      "on-primary-container": "#858383",
+                      "on-primary-fixed-variant": "#474746",
+                      "on-tertiary-fixed-variant": "#4b463c",
+                      "surface-variant": "#e4e2e2",
+                      "secondary-fixed-dim": "#c7c6c5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.5rem",
+                      "lg": "0.5rem",
+                      "xl": "0.5rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "20px",
+                      "max-width": "1440px",
+                      "margin-desktop": "64px",
+                      "unit": "8px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Bodoni Moda"],
+                      "body-lg": ["Inter"],
+                      "display-lg-mobile": ["Bodoni Moda"],
+                      "headline-xl-mobile": ["Bodoni Moda"],
+                      "label-sm": ["Inter"],
+                      "headline-xl": ["Bodoni Moda"],
+                      "display-lg": ["Bodoni Moda"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "display-lg-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "headline-xl-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                      "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "headline-xl": ["48px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                      "display-lg": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-x-hidden selection:bg-primary-fixed">
+<!-- TopNavBar -->
+<header class="bg-surface/80 backdrop-blur-md text-primary docked full-width top-0 sticky z-50 border-b border-outline-variant h-20">
+<nav class="flex justify-between items-center w-full px-margin-desktop h-20 max-w-max-width mx-auto">
+<a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary" href="#">LUXE</a>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-label-sm hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Home</a>
+<a class="text-on-surface-variant font-label-sm hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Fashion</a>
+<a class="text-on-surface-variant font-label-sm hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Kidz</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-label-sm hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Watches</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden sm:flex items-center gap-2 px-4 py-2 bg-surface-container rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+<span class="font-label-sm">London</span>
+</div>
+<button class="relative hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[24px]">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">3</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant hover:scale-105 transition-transform cursor-pointer">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi66rD3Or3bpiELUlWHjW_D4euOQ5K3hQ_RSZtokS5RicWET32L4CnZWD3ZLE_xKdYeENMI7XGMaxXm0HsOgibduWUaMSh1nG9G5ajYv59bgLmVfsnl_zmhC_kAf2G3B3gMv_5adwJtgdtT9ONxTSZ7xHN2w9Deepd4Apjiltkjoh19GtdLnDjQfBdgg_S5Fdjy5pFsKkBUU2M1BOL5ttyPwJ2GXtL-ZeIumhSN5LETtlpCauWWvrZ5xusTTPgYeLSDIvoA6n-HHo"/>
+</div>
+</div>
+</nav>
+</header>
+<main class="max-w-max-width mx-auto px-margin-desktop py-12">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-12 font-label-sm text-on-surface-variant uppercase tracking-widest text-[10px]">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Watches</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-semibold">Timex Brass Embellished Dial</span>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+<!-- Visual Column -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<div class="aspect-[4/5] bg-surface-container-low rounded-lg overflow-hidden relative group border border-outline-variant/30">
+<img alt="Timex Premium Watch" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRBn41kIX-2mI9ocpsu9xdf2QJXwF0BL6AR4Gb-0-f-7XADJaQrD5n52X-aZCIXK8e91b6LxZFpRWhR_sJMl-yuz_WnGmQfJmlG92b3hPxe20Zl2GCURvFFsCn0YBPSn8xcxfFeqYTD40IkXA9GEkI4_QUECj3Kkympc2o70qpsTJMBANJYivenK4Smqh0eL4LQpKmofuKIQrcw44Y1oERsFxVmjc-WBJP47MBbN15YC5cBJq6LUXCildcOg_FUzS5zfrhrZdmqsg"/>
+<div class="absolute bottom-6 right-6 bg-surface/90 backdrop-blur-md p-3 rounded-full cursor-pointer hover:bg-surface transition-colors shadow-sm">
+<span class="material-symbols-outlined">zoom_in</span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-4">
+<div class="aspect-square rounded-lg overflow-hidden border-2 border-primary cursor-pointer spring-hover">
+<img alt="Thumbnail 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8seR0P1pJAaYv_EEDVR8HxZMhxSdu4Euo9mp-KsPjUqylZnFHHkgklatDAUiF0m9t8cKhNllwEL-cvkIsGO97nCqr3_m_3F-zsAdf4oNY7y7WADGuXxEA4p0UYz-3Rdhq8_oQh-HolOJ166tDq3mrcQ5r4NC6p8-449Vit1DXZH0cJo9NCRXFkD8QvVBz9PheQoCA-YDwZtmD00q55_uGaODowsSexfRovHClRq9X-FYGQlTSR3nmESoKnZkFt-R9dCnfpqnWX6g"/>
+</div>
+<div class="aspect-square rounded-lg overflow-hidden border border-outline-variant/30 hover:border-outline cursor-pointer transition-all spring-hover">
+<img alt="Thumbnail 2" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiSQdUedJs0XGb3cHbXcXnTAHqJQErs1KoXMu0WVeBEAO630EWipYCD16sNPbLu7u6vWHB8_pe_ZahBfHzzXDHOeYoki59ff2ngH7qLkzvMo1dSKaM6mN1PXOtthJS2NL8-uVU8wM3MeblfHxSrONAvtdTHjRw7CjhcLwRcZwOd_NqKB5acugmjOWIjKrSZxd8HFUNnHHTCeD3ZdnqzM1q9MBsx_bUrObRGtadkqDahwgHGcCSYKkFRXC82gMsne4hD4kUW25TY6o"/>
+</div>
+<div class="aspect-square rounded-lg overflow-hidden border border-outline-variant/30 hover:border-outline cursor-pointer transition-all spring-hover">
+<img alt="Thumbnail 3" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA6pjNdgiAK_maYAn0ZFa_MAxhpx1Vex9tN4ObSCVLZpaA4vp05Id4n-qTl2YyI0fqbmnqbm-CgpinQdkaXjDpD-p9A2Ha65zwes490r0AbCl4A9L54itIXScU3WuULFuEIgjDyU7l2BayuZ16loJhbRXI-fCF5UN7fdwH8aJxCY2LfnBt8WJsQJ2Tej9gZrIDAKQ7kID-20XBPMwQkzA8kA25lF7Ix1d6H0l9tZqGhvTOYuAMC4wLW3EJmfStX_Qzcjzllln_BJI"/>
+</div>
+<div class="aspect-square rounded-lg overflow-hidden border border-outline-variant/30 hover:border-outline cursor-pointer transition-all spring-hover">
+<img alt="Thumbnail 4" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIKoVYhBVIOtVMiDPw3By4GXCKsAha2ybYQZ9b9vPl-fnWtoCiXSjhsUB-3GLEBQj6_sxwRQlUNREYu-UetCJWBsBPcFuPKHfRBAaBWPayyRDGUgrwy_lp29h6w2LT5_QcNc0nPfVUhdjiz6EuE-P-rpm6q2mIGVkvGK0AwOOv1sTgEoeD_nG3PEqWC-sUbiIlAVCAZesujhh4I5IgDNsqB3hmDLQJBi05lmm3GFrWMiI8Pw7y4nESS9AUTVQTkgKTg4fKQHDQ5Uo"/>
+</div>
+</div>
+</div>
+<!-- Info Column -->
+<div class="lg:col-span-5 flex flex-col gap-8">
+<div>
+<span class="font-label-sm text-on-surface-variant uppercase tracking-[0.3em] mb-4 block">Precision Engineering</span>
+<h1 class="font-headline-xl text-headline-xl text-primary mb-4 leading-tight">Timex Brass<br/>Embellished Dial</h1>
+<div class="flex items-center gap-4 mb-6">
+<div class="flex text-[#FFB800] gap-0.5">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="font-label-sm text-on-surface-variant underline decoration-outline-variant/50">1 Review</span>
+<div class="h-4 w-px bg-outline-variant/30"></div>
+<span class="font-label-sm text-on-surface-variant">SKU: <span class="font-bold text-primary">ZU49VOR</span></span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex flex-col">
+<span class="font-label-sm text-on-surface-variant line-through text-[14px] opacity-60">₹3,200</span>
+<span class="font-headline-md text-headline-md text-error">₹1,600</span>
+</div>
+<span class="bg-primary text-on-primary font-label-sm text-[10px] px-3 py-1 rounded-full uppercase tracking-widest h-fit">In Stock</span>
+</div>
+</div>
+<div class="space-y-4 pt-6 border-t border-outline-variant/20">
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                    Single watch Display: analogue Movement: quartz Power Source: battery Dial style: black embellished round brass dial Features: reset time, Strap Style: black, bracelet style, stainless steel strap with a foldover. Water resistance: 30 m. Comes in a signature Timex case.
+                </p>
+</div>
+<div class="flex flex-col gap-6 pt-6">
+<div class="flex items-center gap-4">
+<div class="flex items-center border border-outline-variant rounded-lg overflow-hidden bg-white">
+<button class="px-5 py-4 hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[16px]">remove</span></button>
+<span class="px-6 font-bold text-lg">1</span>
+<button class="px-5 py-4 hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[16px]">add</span></button>
+</div>
+<button class="flex-1 bg-primary text-on-primary font-label-sm text-label-sm py-5 rounded-lg uppercase tracking-[0.2em] spring-hover shadow-lg shadow-primary/10">
+                        Add To Cart
+                    </button>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex-1 border border-outline-variant font-label-sm text-label-sm py-4 rounded-lg uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+                        Wishlist
+                    </button>
+<button class="flex-1 border border-outline-variant font-label-sm text-label-sm py-4 rounded-lg uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">compare_arrows</span>
+                        Compare
+                    </button>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 pt-8">
+<div class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/20">
+<p class="font-label-sm text-on-surface-variant mb-1 uppercase tracking-tighter opacity-60">Type</p>
+<p class="font-body-md font-semibold">Organic</p>
+</div>
+<div class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/20">
+<p class="font-label-sm text-on-surface-variant mb-1 uppercase tracking-tighter opacity-60">MFG</p>
+<p class="font-body-md font-semibold">Jun 4, 2021</p>
+</div>
+<div class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/20">
+<p class="font-label-sm text-on-surface-variant mb-1 uppercase tracking-tighter opacity-60">Life</p>
+<p class="font-body-md font-semibold">30 days</p>
+</div>
+</div>
+</div>
+<!-- Sidebar Offers Column -->
+<aside class="lg:col-span-3">
+<div class="bg-surface-container-low p-8 rounded-lg border border-outline-variant/30 sticky top-24">
+<h3 class="font-label-sm text-label-sm tracking-[0.3em] uppercase text-primary mb-8 border-b border-outline-variant/50 pb-4">Best Offers</h3>
+<div class="space-y-8 max-h-[500px] overflow-y-auto pr-4 custom-scrollbar">
+<div class="relative pl-4 border-l-2 border-primary">
+<p class="font-label-sm leading-relaxed text-on-surface mb-3">
+                            Applicable on: Orders above Rs. 349 (only on first purchase)
+                        </p>
+<div class="bg-surface p-3 rounded mb-3 border border-dashed border-outline-variant">
+<p class="font-label-sm font-bold text-primary mb-1 tracking-wider uppercase">Coupon: MBBSAVE</p>
+<p class="font-label-sm text-[10px] text-on-surface-variant">30% off upto Rs. 250</p>
+</div>
+<a class="font-label-sm font-bold text-primary underline underline-offset-4" href="#">View Products</a>
+</div>
+<div class="pt-6 border-t border-outline-variant/30">
+<h4 class="font-body-md font-bold text-primary mb-2 text-sm">10% Instant Discount on ICICI Bank</h4>
+<p class="font-label-sm text-on-surface-variant mb-3 text-[11px]">Min Spend ₹3,500, Max Discount ₹500</p>
+<a class="font-label-sm text-error uppercase font-bold tracking-widest text-[10px]" href="#">T&amp;C Apply</a>
+</div>
+<div class="pt-6 border-t border-outline-variant/30">
+<h4 class="font-body-md font-bold text-primary mb-2 text-sm">10% Instant Discount on ICICI EMI</h4>
+<p class="font-label-sm text-on-surface-variant mb-3 text-[11px]">Min Spend ₹3,500, Max Discount ₹1,000</p>
+<a class="font-label-sm text-error uppercase font-bold tracking-widest text-[10px]" href="#">T&amp;C Apply</a>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<!-- Middle Tabs Section -->
+<section class="mt-32 mb-32">
+<div class="border-b border-outline-variant/30 flex gap-12 mb-16 overflow-x-auto no-scrollbar">
+<button class="font-headline-md text-headline-md py-4 active-tab-indicator text-primary whitespace-nowrap">Description</button>
+<button class="font-headline-md text-headline-md py-4 text-on-surface-variant hover:text-primary transition-colors whitespace-nowrap">Reviews (0)</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-6">
+<div class="space-y-6">
+<div class="flex justify-between pb-4 border-b border-outline-variant/10">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest">Pack Contains</span>
+<span class="font-body-md text-right">single watch</span>
+</div>
+<div class="flex justify-between pb-4 border-b border-outline-variant/10">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest">Display</span>
+<span class="font-body-md text-right">analogue</span>
+</div>
+<div class="flex justify-between pb-4 border-b border-outline-variant/10">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest">Movement</span>
+<span class="font-body-md text-right">quartz</span>
+</div>
+<div class="flex justify-between pb-4 border-b border-outline-variant/10">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest">Power Source</span>
+<span class="font-body-md text-right">battery</span>
+</div>
+<div class="flex justify-between pb-4 border-b border-outline-variant/10">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest">Water resistance</span>
+<span class="font-body-md text-right">30 m</span>
+</div>
+</div>
+<div class="space-y-6">
+<div class="flex justify-between pb-4 border-b border-outline-variant/10">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest">Dial style</span>
+<span class="font-body-md text-right">black embellished round brass dial</span>
+</div>
+<div class="flex justify-between pb-4 border-b border-outline-variant/10">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest">Dial Pattern</span>
+<span class="font-body-md text-right">Embellished</span>
+</div>
+<div class="flex justify-between pb-4 border-b border-outline-variant/10">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest">Dial Shape</span>
+<span class="font-body-md text-right">Round</span>
+</div>
+<div class="flex justify-between pb-4 border-b border-outline-variant/10">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest">Make</span>
+<span class="font-body-md text-right">Non-Swiss Made</span>
+</div>
+<div class="flex justify-between pb-4 border-b border-outline-variant/10">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest">Warranty</span>
+<span class="font-body-md text-right">1 Year</span>
+</div>
+</div>
+</div>
+<div class="mt-16 bg-surface-container-low p-10 rounded-lg border border-outline-variant/20">
+<h4 class="font-label-sm font-bold text-primary mb-4 uppercase tracking-[0.3em]">Material &amp; Care</h4>
+<p class="font-body-md text-on-surface-variant leading-relaxed max-w-2xl">
+                A gentle wipe with a clean soft dry cloth when needed. Do not use chemical cleaners or submerge in depths beyond 30m. Store in the provided signature Timex case to maintain the luster of the embellished brass dial.
+            </p>
+</div>
+</section>
+<!-- Related Products -->
+<section class="mb-32">
+<div class="flex justify-between items-end mb-16">
+<div>
+<span class="font-label-sm text-on-surface-variant uppercase tracking-widest mb-2 block">Pairs Perfectly</span>
+<h2 class="font-headline-md text-headline-md">Related Products</h2>
+</div>
+<a class="font-label-sm text-primary underline underline-offset-8 decoration-outline-variant" href="#">Explore All</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-gutter">
+<!-- Product 1 -->
+<div class="group flex flex-col gap-5">
+<div class="aspect-[3/4] bg-surface-container-low rounded-lg overflow-hidden relative border border-outline-variant/10">
+<span class="absolute top-4 left-4 z-10 bg-error text-on-error font-label-sm text-[10px] px-2 py-1 rounded-sm uppercase tracking-widest">50% Off</span>
+<img alt="Casio Military" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwIVtGhMh4xcnd8LD8NSSAUDFW2ggtroQNds8yQaR7M0NpM4JROvEn0b6fuCJGstk2WokDYXlPdx2iEjDok304NS3gtNWMND6noKgSTPfBZFNfnZ6EWPKY53Ofo7rEYGNCnwoZdFvkX1dIMtU1CD6JUNMK3dL6gc7yZBUhgOjMHdgaDwkm_jWh-z8M6w4sRh3FEpNpaoNn-xCRuH5_eYbrUBU5ptl3feW5t-8DJ5_ieW4SYRUlCFbFnMpePdqt6tqPlcZQalatYvM"/>
+<div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-surface/80 backdrop-blur-md">
+<button class="w-full py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest text-[10px]">Add to Cart</button>
+</div>
+</div>
+<div class="px-1">
+<p class="font-label-sm text-on-surface-variant uppercase tracking-[0.2em] mb-1 text-[10px]">CASIO</p>
+<h3 class="font-body-md font-semibold text-primary mb-1">Military Series G-X1</h3>
+<p class="font-label-sm text-primary font-bold">₹2,499 <span class="text-on-surface-variant/40 line-through ml-2 font-normal">₹4,998</span></p>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="group flex flex-col gap-5">
+<div class="aspect-[3/4] bg-surface-container-low rounded-lg overflow-hidden relative border border-outline-variant/10">
+<span class="absolute top-4 left-4 z-10 bg-error text-on-error font-label-sm text-[10px] px-2 py-1 rounded-sm uppercase tracking-widest">50% Off</span>
+<img alt="Fossil Heritage" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYJwacj1NJPpeA07HB2ZqPauYgtkLzYHPCX5ASHgyYCkNJOwg9rKDmrYRmsHqjoGs_RLE-cpZ-cKqcXV89OFtNqAE321IbAvZxdTnTxN3SmuIPeIBjEe9IyxA_C3pioAJv_t_VE68g9mKQFCVFpuh7avy9hniX4bpc3YPFbAnzy4ZXT0BQ0nCIigxyRGkLK_z_3bkjhgQSnxiH-yclLmHiZPlzeEkkWWzmjia0R88V-uAf-24q7jQVUT9n4VkK2fv_9BYmVJQl_z4"/>
+<div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-surface/80 backdrop-blur-md">
+<button class="w-full py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest text-[10px]">Add to Cart</button>
+</div>
+</div>
+<div class="px-1">
+<p class="font-label-sm text-on-surface-variant uppercase tracking-[0.2em] mb-1 text-[10px]">FOSSIL</p>
+<h3 class="font-body-md font-semibold text-primary mb-1">Heritage Chronograph</h3>
+<p class="font-label-sm text-primary font-bold">₹6,500 <span class="text-on-surface-variant/40 line-through ml-2 font-normal">₹13,000</span></p>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="group flex flex-col gap-5">
+<div class="aspect-[3/4] bg-surface-container-low rounded-lg overflow-hidden relative border border-outline-variant/10">
+<span class="absolute top-4 left-4 z-10 bg-error text-on-error font-label-sm text-[10px] px-2 py-1 rounded-sm uppercase tracking-widest">50% Off</span>
+<img alt="Titan Edge" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxJ3OAGjJIx_EdTDQWgHlcBOppH5cj8ksue8pR3ayF_F5i0PXsHvC5brBwPRRPHa977Q0cyTFeDPOfgHkr6Ryn3AJBp87BJQgIEp3PxLrxRxpVdr_sIgT-HSqiqPK-5FiGnRA5ucQxF9wbfIGQlm6h695Fz0Iqsu3ZZiwLcFjsMB4_wT50DdPZFNkgWF8g5PSI_7_drHHIJBX-sjtexIebOC9cGzqpLHeh2U7P5gB1k_Vg8LEC0Sge1opt0he1SVfY2ZUEHtmUFrE"/>
+<div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-surface/80 backdrop-blur-md">
+<button class="w-full py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest text-[10px]">Add to Cart</button>
+</div>
+</div>
+<div class="px-1">
+<p class="font-label-sm text-on-surface-variant uppercase tracking-[0.2em] mb-1 text-[10px]">TITAN</p>
+<h3 class="font-body-md font-semibold text-primary mb-1">Edge Sport 2.0</h3>
+<p class="font-label-sm text-primary font-bold">₹3,999 <span class="text-on-surface-variant/40 line-through ml-2 font-normal">₹7,998</span></p>
+</div>
+</div>
+<!-- Product 4 -->
+<div class="group flex flex-col gap-5">
+<div class="aspect-[3/4] bg-surface-container-low rounded-lg overflow-hidden relative border border-outline-variant/10">
+<span class="absolute top-4 left-4 z-10 bg-error text-on-error font-label-sm text-[10px] px-2 py-1 rounded-sm uppercase tracking-widest">50% Off</span>
+<img alt="Luxe Digital" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGigOL7Pmi5ubotIUyK8Pu4N2aULxpXOwOH5S7l1Zc7nwt4vltVJmuLed_0ddNRuBt3lV5ElOtt9BCSjQHW9E3ocUCHkno5IxjCkGmUk60rMGva61HAIh8m8VjNBxydMufgf1pd6aQPK6uzkGz86O8z0hl2l4lt00W9lczWuZms_ZN5dtXrjNgjIxzpzNZjVvQPCdDj1cugNMVJomemu_wDupQkHuM9SKzP1bGiMyYK4IXtF6GTskldgkLwfqQ1bl_NBJZ0SoNsIc"/>
+<div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-surface/80 backdrop-blur-md">
+<button class="w-full py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest text-[10px]">Add to Cart</button>
+</div>
+</div>
+<div class="px-1">
+<p class="font-label-sm text-on-surface-variant uppercase tracking-[0.2em] mb-1 text-[10px]">LUXE</p>
+<h3 class="font-body-md font-semibold text-primary mb-1">Digital Minimalist</h3>
+<p class="font-label-sm text-primary font-bold">₹1,200 <span class="text-on-surface-variant/40 line-through ml-2 font-normal">₹2,400</span></p>
+</div>
+</div>
+<!-- Product 5 -->
+<div class="group flex flex-col gap-5 hidden lg:flex">
+<div class="aspect-[3/4] bg-surface-container-low rounded-lg overflow-hidden relative border border-outline-variant/10">
+<span class="absolute top-4 left-4 z-10 bg-error text-on-error font-label-sm text-[10px] px-2 py-1 rounded-sm uppercase tracking-widest">50% Off</span>
+<img alt="Timex Classic" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP1mNAQTdfGR7pbNgnt0WZM2j5H0lTySNh__JdS5P6qh44Uz1gqh1HUyd9XUjBXewAOsrx-bxxGxIMpAJBIud99cjQmaE7s0SP9IoqPJrnquJQLPsUD1YyxgvkiTpKaXoa4QHCJWD9phwjMI5QPtKXmLt5k5mwOjbFrlsdBQ8ydjiLR8n8ShQvFRNre_lbuQ3rMPA8Y4Fg00uSConbAVPHrZm92UsnN3oSIPTG6EMKFiRUZxbWV9J8ZfF76vDwSg4aAT8gTL8mjLQ"/>
+<div class="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-surface/80 backdrop-blur-md">
+<button class="w-full py-3 bg-primary text-on-primary font-label-sm uppercase tracking-widest text-[10px]">Add to Cart</button>
+</div>
+</div>
+<div class="px-1">
+<p class="font-label-sm text-on-surface-variant uppercase tracking-[0.2em] mb-1 text-[10px]">TIMEX</p>
+<h3 class="font-body-md font-semibold text-primary mb-1">Classic Gold 80s</h3>
+<p class="font-label-sm text-primary font-bold">₹2,800 <span class="text-on-surface-variant/40 line-through ml-2 font-normal">₹5,600</span></p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-20 max-w-max-width mx-auto">
+<div class="flex flex-col gap-6">
+<a class="font-headline-md text-headline-md font-bold text-primary" href="#">LUXE</a>
+<p class="font-body-md text-on-surface-variant max-w-xs">Elevating your daily aesthetic with curated fashion from around the globe.</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">public</span>
+</a>
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">photo_camera</span>
+</a>
+<a class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center hover:bg-primary hover:text-on-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+</a>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-sm font-bold uppercase tracking-widest mb-2">Shop</h4>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Journal</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Collections</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Kidz</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Watches</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-sm font-bold uppercase tracking-widest mb-2">Help</h4>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Shipping</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Contact</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Returns</a>
+</div>
+<div class="flex flex-col gap-6">
+<h4 class="font-label-sm font-bold uppercase tracking-widest">Newsletter</h4>
+<p class="font-body-md text-on-surface-variant">Join our world for exclusive editorial releases.</p>
+<form class="flex flex-col gap-2" onsubmit="event.preventDefault();">
+<input class="bg-surface px-4 py-3 border border-outline-variant focus:border-primary outline-none text-body-md font-body-md rounded-none" placeholder="Your email address" type="email"/>
+<button class="bg-primary text-on-primary py-3 font-label-sm uppercase tracking-[0.2em] hover:opacity-80 transition-opacity">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="max-w-max-width mx-auto px-margin-desktop py-8 border-t border-outline-variant/30 flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="font-label-sm text-on-surface-variant">© 2024 LUXE Editorial. All rights reserved.</span>
+<div class="flex items-center gap-6 grayscale opacity-50">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="material-symbols-outlined text-[20px]">credit_card</span>
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+</div>
+</footer>
+<script>
+    // Tab Switching Micro-interaction
+    document.querySelectorAll('button.font-headline-md').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('button.font-headline-md').forEach(t => {
+                t.classList.remove('active-tab-indicator', 'text-primary');
+                t.classList.add('text-on-surface-variant');
+            });
+            this.classList.add('active-tab-indicator', 'text-primary');
+            this.classList.remove('text-on-surface-variant');
+        });
+    });
+
+    // Thumbnail Switcher
+    const thumbnails = document.querySelectorAll('.grid-cols-4 > div');
+    const mainImage = document.querySelector('.lg\\:col-span-4 img');
+
+    thumbnails.forEach(thumbWrapper => {
+        thumbWrapper.addEventListener('click', () => {
+            thumbnails.forEach(t => t.classList.remove('border-primary'));
+            thumbnails.forEach(t => t.classList.add('border-outline-variant/30'));
+            thumbWrapper.classList.remove('border-outline-variant/30');
+            thumbWrapper.classList.add('border-primary');
+            const thumbImg = thumbWrapper.querySelector('img');
+            mainImage.src = thumbImg.src;
+        });
+    });
+</script>
+</body></html>

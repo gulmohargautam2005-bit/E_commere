@@ -1,0 +1,110 @@
+/* SubCategory Add Container */
+.subcategory-add-container {
+  padding: 100px 30px 30px;
+  min-height: 100vh;
+  background: radial-gradient(circle at 15% 20%, rgba(111, 134, 255, 0.18), transparent 35%),
+    radial-gradient(circle at 85% 0%, rgba(255, 124, 210, 0.14), transparent 40%),
+    radial-gradient(circle at 40% 100%, rgba(123, 255, 216, 0.12), transparent 40%),
+    #f5f7fa;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* Header Card */
+.subcategory-add-header {
+  background: linear-gradient(135deg, #b6bfe7 0%, #ab9fb6 100%);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.subcategory-add-header .page-title {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.subcategory-add-header .breadcrumbs {
+  margin-top: 8px;
+}
+
+/* Form Card */
+.subcategory-add-form-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.12);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.subcategory-add-form-card .MuiCardContent-root {
+  padding: 32px !important;
+}
+
+/* Form Styles */
+.subcategory-form {
+  width: 100%;
+}
+
+.form-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+}
+
+.form-row {
+  margin-bottom: 24px;
+}
+
+.form-field {
+  margin-bottom: 0 !important;
+}
+
+/* Submit Section */
+.submit-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 2px solid rgba(102, 126, 234, 0.1);
+}
+
+.submit-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  padding: 14px 24px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
+}
+
+.submit-button:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #6a3f91 100%) !important;
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4) !important;
+}
+
+.submit-button:disabled {
+  opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .subcategory-add-container {
+    padding: 80px 20px 20px;
+  }
+
+  .subcategory-add-form-card .MuiCardContent-root {
+    padding: 24px !important;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+}
+

@@ -1,0 +1,918 @@
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Mycontext } from '../../App';
+import Dialog from "@mui/material/Dialog";
+import Slide from "@mui/material/Slide";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import Logout from "@mui/icons-material/Logout";
+import Settings from "@mui/icons-material/Settings";
+import Avatar from "@mui/material/Avatar";
+import { IoMdClose } from "react-icons/io";
+import { FaSearch } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import { deletedata, fetchDataFromAPI } from '../../utils/api';
+import '../../web.css';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
+const Wishlist1 = () => {
+  const navigate = useNavigate();
+  const context = useContext(Mycontext);
+
+  // Nav header states
+  const [scrolled, setScrolled] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [activeSubmenu, setActiveSubmenu] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("Fruits & Vegetables");
+  const [activeLink, setActiveLink] = useState("Wishlist");
+
+  const [isOpenLocationModal, setIsOpenLocationModal] = useState(false);
+  const [selectedLocationTab, setSelectedLocationTab] = useState(null);
+  const [countryList, setCountryList] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("India");
+  const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+
+  const dropdownRef = useRef(null);
+  const navLinksRef = useRef(null);
+
+  // Wishlist specific states
+  const [items, setItems] = useState([]);
+  const [catalog, setCatalog] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [shareCopied, setShareCopied] = useState(false);
+
+  // Dynamically load Tailwind CDN & Scoped configuration
+  useEffect(() => {
+    const scriptId = "tailwind-cdn-script";
+    let script = document.getElementById(scriptId);
+
+    const applyConfig = () => {
+      if (window.tailwind) {
+        window.tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                background: "#fbf9f8",
+                "on-surface": "#1b1c1c",
+                "on-surface-variant": "#444748",
+                primary: "#000000",
+                "on-primary": "#ffffff",
+                outline: "#747878",
+                "outline-variant": "#c4c7c7",
+                "surface-container": "#efeded",
+                "surface-container-low": "#f5f3f3",
+                "surface-container-high": "#eae8e7"
+              },
+              spacing: {
+                gutter: "24px",
+                "margin-desktop": "64px",
+                "max-width": "1440px"
+              }
+            }
+          }
+        };
+      }
+    };
+
+    if (!script) {
+      script = document.createElement("script");
+      script.src = "https://cdn.tailwindcss.com?plugins=forms,container-queries";
+      script.id = scriptId;
+      script.onload = applyConfig;
+      document.head.appendChild(script);
+    } else {
+      if (window.tailwind) {
+        applyConfig();
+      } else {
+        script.addEventListener("load", applyConfig);
+      }
+    }
+
+    return () => {
+      if (script) {
+        script.removeEventListener("load", applyConfig);
+      }
+    };
+  }, []);
+
+  // Scroll listener for sticky navbar background opacity
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close nav submenus on click outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+      if (navLinksRef.current && !navLinksRef.current.contains(event.target)) {
+        setActiveSubmenu(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Sync country list on context load
+  useEffect(() => {
+    setCountryList(context.countrylist || []);
+  }, [context.countrylist]);
+
+  // Load wishlist items + catalog concurrently
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const userId = user?.userid || user?.id;
+
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
+
+    // Fetch wishlist items and catalog products
+    Promise.all([
+      fetchDataFromAPI(`/api/Whishlist?userId=${userId}`),
+      fetchDataFromAPI('/api/products?limit=1000')
+    ])
+      .then(([wishlistRes, catalogRes]) => {
+        setItems(wishlistRes?.MyList || []);
+        setCatalog(catalogRes?.products || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error loading wishlist or catalog:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  // Profile Menu Handlers
+  const handleProfileClick = (event) => {
+    setProfileAnchorEl(event.currentTarget);
+  };
+  const handleProfileClose = () => {
+    setProfileAnchorEl(null);
+  };
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/';
+  };
+
+  // Location Selector handlers
+  const selectcountry = (index) => {
+    setSelectedLocationTab(index);
+    setSelectedCountry(countryList[index].country);
+    setIsOpenLocationModal(false);
+  };
+
+  const filterlist = (e) => {
+    const Keyword = e.target.value.toLowerCase();
+    if (Keyword !== "") {
+      const list = (context.countrylist || []).filter((item) => {
+        return item.country.toLowerCase().includes(Keyword);
+      });
+      setCountryList(list);
+    } else {
+      setCountryList(context.countrylist || []);
+    }
+  };
+
+  // Wishlist Actions
+  const handleRemove = (id) => {
+    deletedata(`/api/Whishlist/${id}`)
+      .then(() => {
+        setItems((prev) => prev.filter((item) => item._id !== id));
+      })
+      .catch((err) => {
+        console.error("Error removing item:", err);
+      });
+  };
+
+  const handleClearAll = () => {
+    if (items.length === 0) return;
+    if (!window.confirm("Are you sure you want to clear your entire wishlist?")) return;
+
+    const deletePromises = items.map((item) => deletedata(`/api/Whishlist/${item._id}`));
+    Promise.all(deletePromises)
+      .then(() => {
+        setItems([]);
+      })
+      .catch((err) => {
+        console.error("Error clearing wishlist:", err);
+      });
+  };
+
+  const handleShareWishlist = () => {
+    const shareUrl = window.location.href;
+    navigator.clipboard.writeText(shareUrl)
+      .then(() => {
+        setShareCopied(true);
+        setTimeout(() => setShareCopied(false), 2000);
+      })
+      .catch((err) => {
+        console.error("Failed to copy link:", err);
+      });
+  };
+
+  const handleAddToBag = (item, productDetail) => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    if (!user?.userid) {
+      window.alert("Please login first to add items to cart!");
+      return;
+    }
+
+    const productId = item?.productId || item?._id || item?.id;
+    const cartfield = {
+      title: productDetail?.name || item?.title || "Luxury item",
+      image: productDetail?.images?.[0] || item?.image,
+      rating: productDetail?.rating || item?.rating || 0,
+      price: productDetail?.price || item?.price || 0,
+      quantity: 1,
+      subtotal: (productDetail?.price || item?.price || 0) * 1,
+      productId,
+      userId: user?.userid,
+    };
+
+    context.addtocart(cartfield);
+  };
+
+  // Luxury Categories List
+  const categories = [
+    { name: "Fruits & Vegetables", icon: "eco" },
+    { name: "Meats & Seafood", icon: "restaurant" },
+    { name: "Breakfast & Dairy", icon: "bakery_dining" },
+    { name: "Beverages", icon: "local_cafe" },
+    { name: "Breads & Bakery", icon: "breakfast_dining" },
+    { name: "Frozen Foods", icon: "kitchen" },
+    { name: "Biscuits & Snacks", icon: "cookie" },
+    { name: "Grocery & Staples", icon: "shopping_basket" },
+  ];
+
+  const groupedSubCats = (context.subCatData || []).reduce((acc, item) => {
+    const catName = item.category?.name || "Other";
+    if (!acc[catName]) acc[catName] = [];
+    acc[catName].push(item);
+    return acc;
+  }, {});
+
+  const fashionKey = Object.keys(groupedSubCats).find(k => k.toLowerCase() === 'fashion');
+  const kidzKey = Object.keys(groupedSubCats).find(k => ['kidz', 'kids', 'kidszz'].includes(k.toLowerCase()));
+  const watchesKey = Object.keys(groupedSubCats).find(k => k.toLowerCase() === 'watches');
+
+  return (
+    <div className="luxe-body min-h-screen flex flex-col font-body selection:bg-black selection:text-white">
+
+      {/* 1. Navbar */}
+      <nav className={`navbar luxe-navbar ${scrolled ? 'scrolled' : ''} ${scrolled ? 'h-compact' : 'h-normal'}`}>
+        <div className="navbar-inner luxe-navbar-container">
+          <div className="navbar-brand brand-logo" onClick={() => navigate("/")}>
+            LUXE
+          </div>
+
+          <ul className="nav-links" ref={navLinksRef}>
+            <li className="nav-item">
+              <button
+                className={`nav-link-btn ${activeLink === "Home" ? "active" : ""}`}
+                onClick={() => {
+                  setActiveLink("Home");
+                  setActiveSubmenu(null);
+                  setDropdownOpen(false);
+                  navigate("/");
+                }}
+              >
+                Home
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link-btn ${activeSubmenu === "Fashion" ? "active" : ""}`}
+                onClick={() => {
+                  setActiveSubmenu(activeSubmenu === "Fashion" ? null : "Fashion");
+                  setDropdownOpen(false);
+                }}
+              >
+                Fashion
+                <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
+                  {activeSubmenu === "Fashion" ? "expand_less" : "expand_more"}
+                </span>
+              </button>
+              {fashionKey && groupedSubCats[fashionKey] && (
+                <div className={`luxe-submenu ${activeSubmenu === "Fashion" ? "show" : ""}`}>
+                  {groupedSubCats[fashionKey].map((sub, idx) => (
+                    <button
+                      key={idx}
+                      className="luxe-submenu-item"
+                      onClick={() => {
+                        setActiveSubmenu(null);
+                        setActiveLink("Fashion");
+                        navigate(`/subCat/${sub._id}`);
+                      }}
+                    >
+                      {sub.subCat}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link-btn ${activeSubmenu === "Kidz" ? "active" : ""}`}
+                onClick={() => {
+                  setActiveSubmenu(activeSubmenu === "Kidz" ? null : "Kidz");
+                  setDropdownOpen(false);
+                }}
+              >
+                Kidz
+                <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
+                  {activeSubmenu === "Kidz" ? "expand_less" : "expand_more"}
+                </span>
+              </button>
+              {kidzKey && groupedSubCats[kidzKey] && (
+                <div className={`luxe-submenu ${activeSubmenu === "Kidz" ? "show" : ""}`}>
+                  {groupedSubCats[kidzKey].map((sub, idx) => (
+                    <button
+                      key={idx}
+                      className="luxe-submenu-item"
+                      onClick={() => {
+                        setActiveSubmenu(null);
+                        setActiveLink("Kidz");
+                        navigate(`/subCat/${sub._id}`);
+                      }}
+                    >
+                      {sub.subCat}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link-btn ${activeSubmenu === "Watches" ? "active" : ""}`}
+                onClick={() => {
+                  setActiveSubmenu(activeSubmenu === "Watches" ? null : "Watches");
+                  setDropdownOpen(false);
+                }}
+              >
+                Watches
+                <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
+                  {activeSubmenu === "Watches" ? "expand_less" : "expand_more"}
+                </span>
+              </button>
+              {watchesKey && groupedSubCats[watchesKey] && (
+                <div className={`luxe-submenu ${activeSubmenu === "Watches" ? "show" : ""}`}>
+                  {groupedSubCats[watchesKey].map((sub, idx) => (
+                    <button
+                      key={idx}
+                      className="luxe-submenu-item"
+                      onClick={() => {
+                        setActiveSubmenu(null);
+                        setActiveLink("Watches");
+                        navigate(`/subCat/${sub._id}`);
+                      }}
+                    >
+                      {sub.subCat}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </li>
+
+            <li className="nav-item" ref={dropdownRef}>
+              <button
+                className={`nav-link-btn ${dropdownOpen ? "active" : ""}`}
+                onClick={() => {
+                  setDropdownOpen(!dropdownOpen);
+                  setActiveSubmenu(null);
+                }}
+              >
+                Categories
+                <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
+                  {dropdownOpen ? "expand_less" : "expand_more"}
+                </span>
+              </button>
+
+              <div className={`categories-dropdown ${dropdownOpen ? "show" : ""}`}>
+                {categories.map((cat, idx) => (
+                  <button
+                    key={idx}
+                    className={`dropdown-row ${selectedCategory === cat.name ? "selected" : ""}`}
+                    onClick={() => {
+                      setSelectedCategory(cat.name);
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    <span className="material-symbols-outlined dropdown-icon">
+                      {cat.icon}
+                    </span>
+                    <span className="dropdown-label">{cat.name}</span>
+                  </button>
+                ))}
+              </div>
+            </li>
+          </ul>
+
+          <div className="right-cluster navbar-icons">
+            <div className="search-bar-luxury d-none d-md-flex align-items-center" style={{
+              display: "flex",
+              alignItems: "center",
+              border: "1px solid var(--outline-variant)",
+              borderRadius: "20px",
+              padding: "4px 16px",
+              backgroundColor: "var(--surface-container-low)",
+              marginRight: "4px"
+            }}>
+              <input
+                placeholder="Search products..."
+                type="text"
+                style={{
+                  border: "none",
+                  outline: "none",
+                  background: "transparent",
+                  fontSize: "12px",
+                  fontFamily: "var(--font-sans)",
+                  color: "var(--primary)",
+                  width: "120px"
+                }}
+              />
+              <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--on-surface-variant)", cursor: "pointer" }}>
+                search
+              </span>
+            </div>
+
+            <div
+              className="location-pill"
+              onClick={() => {
+                setCountryList(context.countrylist || []);
+                setIsOpenLocationModal(true);
+              }}
+            >
+              <span className="material-symbols-outlined text-[20px]" style={{ color: "var(--on-surface-variant)" }}>
+                location_on
+              </span>
+              <span className="location-text">{selectedCountry}</span>
+            </div>
+
+            <button className="cart-icon-wrapper icon-hover-trigger" onClick={() => navigate("/cart")}>
+              <span className="material-symbols-outlined" style={{ fontSize: "28px" }}>
+                shopping_bag
+              </span>
+              <span className="cart-badge">
+                {context?.cartData?.length || 0}
+              </span>
+            </button>
+
+            {context.isLogin !== true ? (
+              <button
+                className="nav-link-btn"
+                onClick={() => navigate("/signin")}
+                style={{ fontSize: "11px", fontWeight: "600", letterSpacing: "0.18em", textTransform: "uppercase" }}
+              >
+                Sign In
+              </button>
+            ) : (
+              <>
+                <div
+                  className="profile-avatar icon-hover-trigger"
+                  onClick={handleProfileClick}
+                  style={{ cursor: "pointer" }}
+                >
+                  {context.user?.name?.substring(0, 2).toUpperCase() || "JD"}
+                </div>
+                <Menu
+                  anchorEl={profileAnchorEl}
+                  id="account-menu"
+                  open={Boolean(profileAnchorEl)}
+                  onClose={handleProfileClose}
+                  disableScrollLock={true}
+                  onClick={handleProfileClose}
+                  slotProps={{
+                    paper: {
+                      elevation: 0,
+                      sx: {
+                        overflow: 'visible',
+                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                        mt: 1.5,
+                        '& .MuiAvatar-root': {
+                          width: 32,
+                          height: 32,
+                          ml: -0.5,
+                          mr: 1,
+                        },
+                        '&::before': {
+                          content: '""',
+                          display: 'block',
+                          position: 'absolute',
+                          top: 0,
+                          right: 14,
+                          width: 10,
+                          height: 10,
+                          bgcolor: 'background.paper',
+                          transform: 'translateY(-50%) rotate(45deg)',
+                          zIndex: 0,
+                        },
+                      },
+                    },
+                  }}
+                  transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                  anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                >
+                  <MenuItem onClick={() => navigate("/my-account")}>
+                    <Avatar sx={{ width: 32, height: 32, mr: 1 }} />  My account
+                  </MenuItem>
+                  <MenuItem onClick={() => navigate("/order")}>
+                    <Avatar sx={{ width: 32, height: 32, mr: 1 }} /> Orders
+                  </MenuItem>
+                  <Divider />
+                  <MenuItem onClick={() => navigate("/wishlist")}>
+                    <ListItemIcon>
+                      <FaHeart style={{ color: '#ef4444' }} />
+                    </ListItemIcon>
+                    Wishlist
+                  </MenuItem>
+                  <MenuItem onClick={handleProfileClose}>
+                    <ListItemIcon>
+                      <Settings fontSize="small" />
+                    </ListItemIcon>
+                    Settings
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Logout
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      {/* 2. Wishlist Main Content Area */}
+      <main className="wishlist-page-container">
+        
+        {/* Header Section */}
+        <header className="wishlist-page-header">
+          <h1 className="wishlist-page-title">My Wishlist</h1>
+          <p className="wishlist-page-subtitle">
+            A curated space for your selected wardrobe components and seasonal design acquisitions.
+          </p>
+        </header>
+
+        {/* Wishlist Summary Bar */}
+        <div className="wishlist-summary-bar">
+          <span className="wishlist-summary-count">
+            {loading ? "SAVED PIECES" : `${items.length} ${items.length === 1 ? "PIECE" : "PIECES"} SAVED`}
+          </span>
+
+          <div className="wishlist-summary-actions">
+            <button className="wishlist-share-btn font-sans" onClick={handleShareWishlist}>
+              {shareCopied ? "LINK COPIED!" : "SHARE WISHLIST"}
+            </button>
+            <button className="wishlist-clear-all-link font-sans" onClick={handleClearAll}>
+              CLEAR ALL
+            </button>
+          </div>
+        </div>
+
+        {/* Main Grid or Loading/Empty States */}
+        {loading ? (
+          /* Editorial Skeleton Loaders */
+          <div className="wishlist-grid-layout">
+            {[1, 2, 3].map((n) => (
+              <div className="wishlist-luxury-card animate-pulse" key={n}>
+                <div className="wishlist-card-image-wrap bg-neutral-200" />
+                <div className="wishlist-card-info gap-3">
+                  <div className="h-3 w-1/4 bg-neutral-200 rounded" />
+                  <div className="h-6 w-3/4 bg-neutral-200 rounded" />
+                  <div className="h-4 w-1/3 bg-neutral-200 rounded" />
+                  <div className="h-10 w-full bg-neutral-200 rounded mt-2" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : items.length === 0 ? (
+          /* Premium Empty State */
+          <div className="wishlist-empty-layout">
+            <div className="wishlist-empty-svg-wrap">
+              <svg viewBox="0 0 200 200" width="120" height="120" className="opacity-80">
+                <circle cx="100" cy="100" r="78" fill="#eae8e7" opacity="0.3" />
+                <path
+                  d="M100 142s-32-18-50-40c-16-19-8-44 16-47 12-2 23 3 29 12 6-9 17-14 29-12 24 3 32 28 16 47-18 22-50 40-50 40z"
+                  fill="none"
+                  stroke="#747878"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <h2 className="wishlist-empty-title italic">Your gallery is empty.</h2>
+            <p className="wishlist-empty-subtitle">
+              Sift through our curation and select the heart icon to save rare items here for private evaluation.
+            </p>
+            <Link to="/cat" className="wishlist-empty-cta font-sans">
+              BROWSE ALL COLLECTIONS
+            </Link>
+          </div>
+        ) : (
+          /* Wishlist Cards Grid */
+          <div className="wishlist-grid-layout">
+            {items.map((item) => {
+              const productId = item.productId;
+              // Cross reference with catalog to fetch latest countInstock and metadata
+              const productDetail = catalog.find((p) => p._id === productId || p.id === productId);
+
+              const name = productDetail?.name || item.title || "Luxury Item";
+              const price = productDetail?.price || item.price || 0;
+              const discount = productDetail?.discount || 0;
+              const hasDiscount = discount > 0;
+              const oldPrice = price + discount;
+              const brand = productDetail?.brand || "LUXE";
+              const categoryName = productDetail?.catName || "Acquisition";
+
+              const firstImage = productDetail?.images?.[0] || item.image;
+              
+              // Stock badge resolution
+              const stockLevel = productDetail ? productDetail.countInstock : 10; // Fallback to 10 if not found
+              const isSoldOut = stockLevel === 0;
+              const isLowStock = stockLevel > 0 && stockLevel < 5;
+              const isBackInStock = stockLevel >= 5 && (productDetail?.isFeatured === true || discount > 0);
+
+              let badge = "";
+              let badgeClass = "";
+              if (isSoldOut) {
+                badge = "SOLD OUT";
+                badgeClass = "wishlist-card-badge--sold-out";
+              } else if (isLowStock) {
+                badge = "LOW STOCK";
+                badgeClass = "wishlist-card-badge--low-stock";
+              } else if (isBackInStock) {
+                badge = "BACK IN STOCK";
+                badgeClass = "wishlist-card-badge--back-in-stock";
+              }
+
+              return (
+                <div
+                  key={item._id}
+                  className={`wishlist-luxury-card ${isSoldOut ? "sold-out" : ""}`}
+                >
+                  {/* Image Wrap */}
+                  <div 
+                    className="wishlist-card-image-wrap"
+                    onClick={() => navigate(`/product/${productId}`)}
+                  >
+                    {badge && (
+                      <span className={`wishlist-card-badge ${badgeClass}`}>
+                        {badge}
+                      </span>
+                    )}
+
+                    <button
+                      className="wishlist-card-remove-btn"
+                      aria-label="Remove from wishlist"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemove(item._id);
+                      }}
+                    >
+                      <FaHeart style={{ color: '#ef4444' }} />
+                    </button>
+
+                    {firstImage ? (
+                      <img
+                        className="wishlist-card-image"
+                        src={firstImage}
+                        alt={name}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-neutral-200" />
+                    )}
+                  </div>
+
+                  {/* Card Details Info */}
+                  <div className="wishlist-card-info">
+                    <span className="wishlist-card-category">{brand} • {categoryName}</span>
+                    <h3 
+                      className="wishlist-card-name text-ellipsis overflow-hidden whitespace-nowrap"
+                      onClick={() => navigate(`/product/${productId}`)}
+                    >
+                      {name}
+                    </h3>
+                    
+                    <div className="wishlist-card-price-row">
+                      {hasDiscount && (
+                        <span className="oldprice line-through text-neutral-400 mr-2 text-[14px]">
+                          ₹{oldPrice}
+                        </span>
+                      )}
+                      <span className="wishlist-card-price">
+                        ₹{price}
+                      </span>
+                    </div>
+
+                    <button
+                      className="wishlist-card-cta-btn font-sans"
+                      disabled={isSoldOut}
+                      onClick={() => handleAddToBag(item, productDetail)}
+                    >
+                      {isSoldOut ? "NOTIFY ME" : "ADD TO BAG"}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Membership Perks Panel & Concierge Callout */}
+        <div className="wishlist-panels-container grid grid-cols-1 md:grid-cols-2 gap-6 mt-16 pt-16 border-t border-neutral-200">
+          
+          {/* Platinum Membership Perks Panel */}
+          <div className="account-card account-card--dark flex flex-col justify-between p-8 min-h-[300px]">
+            <div className="card-header-row mb-6">
+              <span className="material-symbols-outlined card-icon text-white">verified</span>
+              <span className="card-badge bg-neutral-800 text-white border border-neutral-700">VIP RESERVE</span>
+            </div>
+            <div>
+              <h3 className="card-title text-white mt-0 mb-4">Reserve Platinum Benefits</h3>
+              <p className="card-body text-neutral-400 mb-6">
+                Wishlist members receive exclusive complimentary priority shipping, early notifications on restocks, and priority sizing reservations on high-demand collections.
+              </p>
+            </div>
+            <span 
+              className="card-link text-white border-white cursor-pointer" 
+              onClick={() => alert("Your Platinum benefits are active.")}
+            >
+              LEARN MORE
+            </span>
+          </div>
+
+          {/* Concierge Callout */}
+          <div className="account-card flex flex-col justify-between p-8 min-h-[300px] border border-neutral-200">
+            <div className="card-header-row mb-6">
+              <span className="material-symbols-outlined card-icon">support_agent</span>
+            </div>
+            <div>
+              <h3 className="card-title mt-0 mb-4">Luxe Private Concierge</h3>
+              <p className="card-body text-neutral-500 mb-6">
+                Need assistance securing rare catalog items or customizing your order sizing? Our private styling directors are online 24/7 to coordinate your boutique delivery.
+              </p>
+            </div>
+            <span 
+              className="card-link cursor-pointer" 
+              onClick={() => alert("Our Private Concierge will email you shortly.")}
+            >
+              CONTACT STYLIST
+            </span>
+          </div>
+
+        </div>
+
+      </main>
+
+      {/* 3. Footer */}
+      <footer className="site-footer">
+        <div className="footer-grid">
+          <div className="footer-brand-col">
+            <Link to="/" className="footer-brand">LUXE</Link>
+            <p className="footer-tagline">
+              A curated space for the sophisticated wardrobe. Each collection represents an intentional synthesis of couture and high design.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="footer-heading">Collections</h4>
+            <ul className="footer-links">
+              <li><Link to="/cat">New Arrivals</Link></li>
+              <li><Link to="/cat">Ready-to-Wear</Link></li>
+              <li><Link to="/cat">Editorial Acquired</Link></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="footer-heading">Support</h4>
+            <ul className="footer-links">
+              <li><a href="#" onClick={(e) => e.preventDefault()}>Private Viewings</a></li>
+              <li><a href="#" onClick={(e) => e.preventDefault()}>Shipping Policy</a></li>
+              <li><a href="#" onClick={(e) => e.preventDefault()}>Contact Support</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-newsletter-col">
+            <h4 className="footer-heading">Newsletter</h4>
+            <div className="position-relative" style={{ borderBottom: "1px solid rgba(0, 0, 0, 0.2)", paddingBottom: "8px" }}>
+              <input
+                className="w-100 bg-transparent border-0 py-2 outline-none font-sans"
+                placeholder="Enter your email"
+                type="email"
+                style={{ border: "none", outline: "none", background: "transparent", color: "var(--primary)", width: "100%", fontSize: "14px" }}
+              />
+              <button
+                className="position-absolute end-0 bottom-0 bg-transparent border-0 tracking-widest"
+                style={{ background: "transparent", border: "none", color: "var(--primary)", fontSize: "11px", fontWeight: "700", letterSpacing: "0.15em", cursor: "pointer" }}
+              >
+                JOIN
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <span className="footer-copyright">
+            © {new Date().getFullYear()} LUXE EDITORIAL. ALL RIGHTS RESERVED.
+          </span>
+        </div>
+      </footer>
+
+      {/* 4. Location dialog popup */}
+      <Dialog
+        open={isOpenLocationModal}
+        disableScrollLock={true}
+        className="location"
+        onClose={() => setIsOpenLocationModal(false)}
+        TransitionComponent={Transition}
+      >
+        <div style={{ padding: "24px", position: "relative" }}>
+          <h4 style={{ fontFamily: "var(--font-serif)", fontSize: "20px", fontWeight: "600", marginBottom: "8px" }}>
+            Choose your Delivery Location
+          </h4>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: "13px", color: "var(--on-surface-variant)", marginBottom: "20px" }}>
+            Enter your address and we will specify the offer for your area.
+          </p>
+          <Button
+            onClick={() => setIsOpenLocationModal(false)}
+            style={{
+              position: "absolute",
+              top: "16px",
+              right: "16px",
+              minWidth: "auto",
+              padding: "8px",
+              color: "var(--primary)"
+            }}
+          >
+            <IoMdClose size={24} />
+          </Button>
+
+          <div style={{ display: "flex", alignItems: "center", border: "1px solid var(--outline-variant)", borderRadius: "4px", padding: "4px 12px", marginBottom: "20px" }}>
+            <input
+              onChange={filterlist}
+              placeholder="Search your area..."
+              type="text"
+              style={{ border: "none", outline: "none", width: "100%", fontFamily: "var(--font-sans)", fontSize: "13px", padding: "8px 0" }}
+            />
+            <Button style={{ minWidth: "auto", color: "var(--on-surface-variant)" }}>
+              <FaSearch />
+            </Button>
+          </div>
+
+          <ul className="clist" style={{ listStyle: "none", padding: 0, margin: 0, maxHeight: "260px", overflowY: "auto" }}>
+            {countryList?.length !== 0 && countryList?.map((item, index) => (
+              <li key={index} style={{ marginBottom: "8px" }}>
+                <Button
+                  onClick={() => selectcountry(index)}
+                  className={`${selectedLocationTab === index ? "active" : ""}`}
+                  style={{
+                    width: "100%",
+                    justifyContent: "flex-start",
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "13px",
+                    textTransform: "none",
+                    color: selectedLocationTab === index ? "var(--primary)" : "var(--on-surface-variant)",
+                    fontWeight: selectedLocationTab === index ? "600" : "400",
+                    backgroundColor: selectedLocationTab === index ? "var(--surface-container)" : "transparent",
+                    textAlign: "left",
+                    padding: "8px 16px"
+                  }}
+                >
+                  {item.country}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Dialog>
+
+    </div>
+  );
+};
+
+export default Wishlist1;

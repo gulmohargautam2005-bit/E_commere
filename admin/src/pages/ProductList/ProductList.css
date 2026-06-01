@@ -1,0 +1,336 @@
+/* Product List Container */
+.product-list-container {
+  padding: 100px 30px 30px;
+  min-height: 100vh;
+  background: radial-gradient(circle at 15% 20%, rgba(111, 134, 255, 0.18), transparent 35%),
+    radial-gradient(circle at 85% 0%, rgba(255, 124, 210, 0.14), transparent 40%),
+    radial-gradient(circle at 40% 100%, rgba(123, 255, 216, 0.12), transparent 40%),
+    #f5f7fa;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.product-list-container .product-list-header {
+  background: linear-gradient(135deg, #b6bfe7 0%, #ab9fb6 100%);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.product-list-container .page-title {
+  color: white;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.product-list-container .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+/* Product Table Card */
+.product-table-card {
+  background: #ffffff !important;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.12);
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.product-table-card .MuiCardContent-root {
+  padding: 20px !important;
+}
+
+/* Table Styles */
+.product-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 12px;
+}
+
+.table-header-row {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.table-header-cell {
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: white !important;
+  padding: 16px 12px !important;
+  border-bottom: none !important;
+  white-space: nowrap;
+}
+
+.table-row {
+  background: #ffffff !important;
+  position: relative;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
+}
+
+.table-row:nth-child(even) {
+  background: #ffffff !important;
+}
+
+.table-row td {
+  padding: 18px 14px !important;
+  border-bottom: none !important;
+  vertical-align: middle;
+  background: #ffffff !important;
+  position: relative;
+  color: #4a5568 !important;
+  font-weight: 500;
+}
+
+.table-row td:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.table-row td:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/* Product Thumbnail */
+.product-thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.15);
+  display: block;
+  border: 2px solid rgba(102, 126, 234, 0.1);
+}
+
+.product-thumbnail-placeholder {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #f0f2ff 0%, #e8ebff 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e0;
+  border: 2px dashed rgba(102, 126, 234, 0.3);
+}
+
+/* Description Cell */
+.description-cell {
+  color: #718096 !important;
+  max-width: 200px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Override Material UI Typography colors in table cells */
+.table-row td .MuiTypography-root {
+  color: #4a5568 !important;
+}
+
+.table-row td .MuiTypography-body2 {
+  color: #4a5568 !important;
+}
+
+.table-row td .description-cell {
+  color: #718096 !important;
+}
+
+/* Override Material UI color props */
+.table-row td .MuiTypography-colorPrimary {
+  color: #4a5568 !important;
+}
+
+.table-row td .MuiTypography-colorTextSecondary {
+  color: #a0aec0 !important;
+}
+
+.table-row td .MuiChip-root {
+  color: #4a5568 !important;
+}
+
+/* Price Cell */
+.price-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-cell .MuiTypography-root {
+  color: #4a5568 !important;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #a0aec0 !important;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.action-btn {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 8px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn.edit-btn {
+  background-color: #ffa726 !important;
+  color: white !important;
+}
+
+.action-btn.delete-btn {
+  background-color: #ef5350 !important;
+  color: white !important;
+}
+
+.action-btn svg {
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+  .table-header-cell,
+  .table-row td {
+    padding: 12px 8px !important;
+    font-size: 0.875rem;
+  }
+
+  .product-thumbnail,
+  .product-thumbnail-placeholder {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .description-cell {
+    max-width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-list-container {
+    padding: 80px 20px 20px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .product-list-container .header-content .MuiTextField-root {
+    min-width: 100% !important;
+  }
+
+  .product-table-card {
+    overflow-x: auto;
+  }
+
+  .table-header-cell,
+  .table-row td {
+    padding: 10px 6px !important;
+    font-size: 0.75rem;
+  }
+
+  .product-thumbnail,
+  .product-thumbnail-placeholder {
+    width: 40px;
+    height: 40px;
+  }
+
+  .action-btn {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .description-cell {
+    max-width: 100px;
+  }
+}
+
+/* Empty State */
+.MuiBox-root.empty-state {
+  padding: 40px 20px;
+}
+
+/* Rating Stars */
+.MuiRating-root {
+  color: #ffc107;
+}
+
+/* Chip Styles */
+.MuiChip-root {
+  font-weight: 600;
+  height: 28px;
+}
+
+/* Pagination */
+.MuiPagination-root {
+  margin: 24px 0;
+}
+
+/* Loading State */
+.MuiCircularProgress-root {
+  color: #667eea;
+}
+
+/* Dialog Styles */
+.MuiDialog-paper {
+  border-radius: 16px !important;
+}
+
+.MuiDialogTitle-root {
+  font-weight: 700;
+  color: #718096;
+}
+
+/* Scrollbar Styling */
+.product-table-card::-webkit-scrollbar {
+  height: 8px;
+}
+
+.product-table-card::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.product-table-card::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 10px;
+}
+
+
+
+.css-1i70zcp-MuiChip-root {
+  background-color:white !important;
+}
+.product-table tbody td span {
+  color: white !important;
+}
+.product-table thead th {
+  background: rgba(102, 126, 234, 0.3)!important;
+}
+
+
+.action-btn.edit-btn {
+  background-color: black !important;
+}
+.product-table tbody td span {
+  color: #1f1b12 !important;
+}

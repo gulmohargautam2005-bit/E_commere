@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout | LUXE Editorial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#e3e2e0",
+                    "background": "#fbf9f8",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "tertiary-container": "#1f1b13",
+                    "surface-tint": "#5f5e5e",
+                    "on-tertiary-fixed": "#1f1b13",
+                    "tertiary-fixed": "#eae2d4",
+                    "surface-container": "#efeded",
+                    "primary-container": "#1c1b1b",
+                    "surface": "#fbf9f8",
+                    "on-background": "#1b1c1c",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#444748",
+                    "inverse-on-surface": "#f2f0f0",
+                    "outline-variant": "#c4c7c7",
+                    "surface-container-low": "#f5f3f3",
+                    "surface-container-highest": "#e4e2e2",
+                    "on-tertiary-container": "#898377",
+                    "tertiary": "#000000",
+                    "tertiary-fixed-dim": "#cdc6b8",
+                    "on-surface": "#1b1c1c",
+                    "inverse-surface": "#303030",
+                    "on-secondary-fixed-variant": "#464746",
+                    "on-secondary": "#ffffff",
+                    "on-primary-fixed-variant": "#474746",
+                    "on-primary-fixed": "#1c1b1b",
+                    "primary-fixed": "#e5e2e1",
+                    "primary": "#000000",
+                    "surface-variant": "#e4e2e2",
+                    "on-error": "#ffffff",
+                    "on-primary-container": "#858383",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#dbd9d9",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#eae8e7",
+                    "on-secondary-fixed": "#1a1c1b",
+                    "surface-bright": "#fbf9f8",
+                    "secondary": "#5e5e5d",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#c7c6c5",
+                    "outline": "#747878",
+                    "on-tertiary-fixed-variant": "#4b463c",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#626361",
+                    "inverse-primary": "#c8c6c5",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#e0dfde"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "max-width": "1440px",
+                    "gutter": "24px",
+                    "unit": "8px",
+                    "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                    "headline-xl-mobile": ["Bodoni Moda"],
+                    "display-lg": ["Bodoni Moda"],
+                    "headline-md": ["Bodoni Moda"],
+                    "display-lg-mobile": ["Bodoni Moda"],
+                    "label-sm": ["Inter"],
+                    "headline-xl": ["Bodoni Moda"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-xl-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "display-lg": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "display-lg-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #fbf9f8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .form-input-minimal {
+            border: none;
+            border-bottom: 1px solid #c4c7c7;
+            background: transparent;
+            padding: 12px 0;
+            width: 100%;
+            transition: border-color 0.3s ease;
+        }
+        .form-input-minimal:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: none;
+        }
+        .custom-radio:checked + label .radio-circle {
+            background-color: #000000;
+            border-color: #000000;
+        }
+        .custom-radio:checked + label .radio-dot {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopNavBar Component -->
+<nav class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md docked full-width top-0 sticky z-50 border-b border-outline-variant dark:border-outline">
+<div class="flex justify-between items-center w-full px-margin-desktop h-20 max-w-max-width mx-auto">
+<div class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-on-primary">LUXE</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Home</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Fashion</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Kidz</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Watches</a>
+</div>
+<div class="flex items-center space-x-6">
+<button class="text-primary hover:scale-105 transition-all"><span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span></button>
+<button class="text-primary hover:scale-105 transition-all"><span class="material-symbols-outlined" data-icon="person">person</span></button>
+</div>
+</div>
+</nav>
+<main class="max-w-max-width mx-auto px-margin-desktop py-16 md:py-24">
+<header class="mb-16">
+<h1 class="font-headline-xl text-headline-xl text-primary mb-4">Checkout</h1>
+<p class="font-body-md text-on-surface-variant">Review your selection and provide shipping details to finalize your order.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+<!-- Left Column: Billing Details -->
+<section class="lg:col-span-7">
+<h2 class="font-headline-md text-headline-md text-primary mb-12">Billing Details</h2>
+<form class="space-y-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="relative">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">First Name *</label>
+<input class="form-input-minimal font-body-md" placeholder="e.g. Julian" type="text"/>
+</div>
+<div class="relative">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Last Name *</label>
+<input class="form-input-minimal font-body-md" placeholder="e.g. Beaumont" type="text"/>
+</div>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Country / Region *</label>
+<select class="form-input-minimal font-body-md appearance-none">
+<option>United Kingdom</option>
+<option>United States</option>
+<option>France</option>
+<option>Italy</option>
+</select>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Street address *</label>
+<input class="form-input-minimal font-body-md mb-4" placeholder="House number and street name" type="text"/>
+<input class="form-input-minimal font-body-md" placeholder="Apartment, suite, unit, etc. (optional)" type="text"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Town / City *</label>
+<input class="form-input-minimal font-body-md" placeholder="London" type="text"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Postcode / ZIP *</label>
+<input class="form-input-minimal font-body-md" placeholder="E1 6AN" type="text"/>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Phone *</label>
+<input class="form-input-minimal font-body-md" placeholder="+44 20 7946 0000" type="tel"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Email address *</label>
+<input class="form-input-minimal font-body-md" placeholder="julian@example.com" type="email"/>
+</div>
+</div>
+<div class="pt-8 space-y-6">
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded-sm text-primary focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-on-surface transition-colors group-hover:text-primary">Create an account?</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="w-5 h-5 border-outline rounded-sm text-primary focus:ring-0" type="checkbox"/>
+<span class="font-body-md text-on-surface transition-colors group-hover:text-primary">Ship to a different address?</span>
+</label>
+</div>
+<div class="pt-8">
+<label class="font-label-sm text-label-sm text-on-surface-variant mb-1 block">Order notes (optional)</label>
+<textarea class="form-input-minimal font-body-md resize-none" placeholder="Notes about your order, e.g. special notes for delivery." rows="4"></textarea>
+</div>
+</form>
+</section>
+<!-- Right Column: Order Summary & Payment -->
+<aside class="lg:col-span-5">
+<div class="sticky top-28 space-y-12">
+<!-- Order Table -->
+<div class="bg-surface-container-low p-8 md:p-12 border border-outline-variant">
+<h3 class="font-headline-md text-headline-md text-primary mb-8">Your Order</h3>
+<div class="space-y-6">
+<div class="flex justify-between items-start pb-6 border-b border-outline-variant">
+<div class="pr-4">
+<p class="font-body-md text-primary">All Natural Italian-Style Chicken Meatballs <span class="text-on-surface-variant text-sm ml-2">× 2</span></p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">FROZEN / 500G</p>
+</div>
+<span class="font-body-md text-primary">$14.50</span>
+</div>
+<div class="flex justify-between items-start pb-6 border-b border-outline-variant">
+<div class="pr-4">
+<p class="font-body-md text-primary">Angie's Boomchickapop Sweet &amp; Salty Kettle Corn <span class="text-on-surface-variant text-sm ml-2">× 2</span></p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-1">SNACK / ORGANIC</p>
+</div>
+<span class="font-body-md text-primary">$6.58</span>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest pt-4">
+<span>Subtotal</span>
+<span>$21.08</span>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">
+<span>Shipping</span>
+<span>$5.00 via Flat rate</span>
+</div>
+<div class="flex justify-between pt-6 mt-6 border-t border-primary">
+<span class="font-headline-md text-headline-md text-primary">Total</span>
+<span class="font-headline-md text-headline-md text-primary">$26.08</span>
+</div>
+</div>
+</div>
+<!-- Payment Section -->
+<div class="bg-white border border-outline-variant p-8 md:p-12">
+<div class="space-y-8">
+<div class="relative">
+<input checked="" class="sr-only custom-radio" id="bank_transfer" name="payment" type="radio"/>
+<label class="flex items-start space-x-4 cursor-pointer group" for="bank_transfer">
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant flex items-center justify-center mt-1 radio-circle shrink-0 transition-all">
+<div class="w-2.5 h-2.5 rounded-full radio-dot transition-all"></div>
+</div>
+<div>
+<p class="font-body-md font-semibold text-primary group-hover:opacity-80">Direct bank transfer</p>
+<div class="mt-4 p-4 bg-surface-container-low text-on-surface-variant font-label-sm leading-relaxed border border-outline-variant/30 overflow-hidden transition-all duration-300">
+                                            Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
+                                        </div>
+</div>
+</label>
+</div>
+<div class="relative">
+<input class="sr-only custom-radio" id="check_payments" name="payment" type="radio"/>
+<label class="flex items-center space-x-4 cursor-pointer group" for="check_payments">
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant flex items-center justify-center radio-circle shrink-0 transition-all">
+<div class="w-2.5 h-2.5 rounded-full radio-dot transition-all"></div>
+</div>
+<p class="font-body-md font-semibold text-primary group-hover:opacity-80">Check payments</p>
+</label>
+</div>
+<div class="relative">
+<input class="sr-only custom-radio" id="cash_on_delivery" name="payment" type="radio"/>
+<label class="flex items-center space-x-4 cursor-pointer group" for="cash_on_delivery">
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant flex items-center justify-center radio-circle shrink-0 transition-all">
+<div class="w-2.5 h-2.5 rounded-full radio-dot transition-all"></div>
+</div>
+<p class="font-body-md font-semibold text-primary group-hover:opacity-80">Cash on delivery</p>
+</label>
+</div>
+</div>
+<div class="mt-12 pt-10 border-t border-outline-variant">
+<p class="font-label-sm text-on-surface-variant leading-relaxed mb-8">
+                                Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our <a class="underline hover:text-primary transition-colors" href="#">privacy policy</a>.
+                            </p>
+<label class="flex items-start space-x-3 cursor-pointer group mb-10">
+<input class="w-5 h-5 border-outline rounded-sm text-primary focus:ring-0 mt-0.5" required="" type="checkbox"/>
+<span class="font-label-sm text-on-surface-variant transition-colors group-hover:text-primary">
+                                    I have read and agree to the website <a class="underline" href="#">terms and conditions</a> *
+                                </span>
+</label>
+<button class="w-full bg-primary text-on-primary font-label-sm py-6 uppercase tracking-widest hover:bg-on-surface-variant transition-all duration-300 transform active:scale-95 shadow-lg shadow-primary/10">
+                                Place Order
+                            </button>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer Component -->
+<footer class="bg-surface-container dark:bg-inverse-surface mt-24">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-20 max-w-max-width mx-auto">
+<div class="space-y-6">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">LUXE</div>
+<p class="font-body-md text-on-surface-variant">A curated world of editorial fashion, where craftsmanship meets contemporary vision. Founded 2024.</p>
+</div>
+<div class="md:pl-8">
+<h4 class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-6">Explore</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Journal</a></li>
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Collections</a></li>
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Bestsellers</a></li>
+</ul>
+</div>
+<div class="md:pl-8">
+<h4 class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-6">Service</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Shipping</a></li>
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Returns</a></li>
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<div class="md:pl-8">
+<h4 class="font-label-sm text-label-sm uppercase tracking-widest text-primary mb-6">Editorial</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="font-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="px-margin-desktop py-10 border-t border-outline-variant/30 text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-60">© 2024 LUXE Editorial. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Micro-interaction for payment method selection
+        const radioInputs = document.querySelectorAll('input[name="payment"]');
+        radioInputs.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                // Handle dynamic description visibility if needed (using CSS for now)
+            });
+        });
+
+        // Add subtle scroll reveal effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-sm');
+            } else {
+                header.classList.remove('shadow-sm');
+            }
+        });
+    </script>
+</body></html>

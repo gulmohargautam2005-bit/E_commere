@@ -1,0 +1,196 @@
+/* ===== GLASS PURPLE THEME ===== */
+:root{
+  --bg:#4f00a4;
+  --card:#5e5a5a;
+  --text:#22253a;
+  --muted:#7d82a8;
+  --border:#e7e6fb;
+  --headerGrad:linear-gradient(120deg,#7a5cff,#b06bff);
+}
+
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0e0b1e;
+    --card:#c4c4c4;
+    --text:#555360;
+    --muted:#a3a0d6;
+    --border:#2c2954;
+    --headerGrad:linear-gradient(120deg,#9b7bff,#d69cff);
+  }
+}
+
+
+  
+  /* ===== BACKGROUND GRAPHICS ===== */
+  .admin-dashboard{
+  padding:100px 30px 30px;
+  min-height:100vh;
+  background:
+  radial-gradient(circle at 15% 20%,rgba(111,134,255,.18),transparent 35%),
+  radial-gradient(circle at 85% 0%,rgba(255,124,210,.14),transparent 40%),
+  radial-gradient(circle at 40% 100%,rgba(123,255,216,.12),transparent 40%),
+  var(--bg);
+  font-family:"Inter","Segoe UI",sans-serif;
+  color:var(--text);
+  }
+  
+  /* ===== TABLE CARD ===== */
+  .product-table-container{
+  background:#ffffff !important;
+  border-radius:16px;
+  padding:20px;
+  border:1px solid rgba(102, 126, 234, 0.1);
+  box-shadow:0 8px 32px rgba(102, 126, 234, 0.12);
+  }
+  
+  /* ===== TABLE ===== */
+  .product-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0 12px;
+  }
+  
+  /* ===== HEADER ===== */
+  .product-table thead th{
+  padding:16px 12px;
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.8px;
+  color:white !important;
+  background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow:0 4px 12px rgba(102, 126, 234, 0.2);
+  border-bottom:none;
+  }
+  
+  .product-table thead th:first-child{
+  border-top-left-radius:12px;
+  border-bottom-left-radius:12px;
+  }
+  .product-table thead th:last-child{
+  border-top-right-radius:12px;
+  border-bottom-right-radius:12px;
+  }
+  
+  /* ===== ROW ===== */
+  .product-table tbody tr{
+  background:#ffffff !important;
+  border-radius:12px;
+  box-shadow:0 2px 8px rgba(102, 126, 234, 0.08);
+  }
+  
+  .product-table tbody tr:nth-child(even){
+  background:#ffffff !important;
+  }
+  
+  /* ===== CELLS ===== */
+  .product-table tbody td{
+  padding:18px 14px;
+  font-size:15px;
+  font-weight:500;
+  color:#4a5568 !important;
+  background:#ffffff !important;
+  border-bottom:none;
+  vertical-align:middle;
+  }
+  
+  .product-table tbody tr td:first-child{
+  border-top-left-radius:12px;
+  border-bottom-left-radius:12px;
+  }
+  .product-table tbody tr td:last-child{
+  border-top-right-radius:12px;
+  border-bottom-right-radius:12px;
+  }
+  
+  /* ===== TEXT COLORS IN CELLS ===== */
+  .product-table tbody td span{
+  color:#4a5568 !important;
+  }
+  
+  /* ===== IMAGE ===== */
+  .product-table img{
+  width:60px;
+  height:60px;
+  border-radius:10px;
+  object-fit:cover;
+  box-shadow:0 2px 6px rgba(102, 126, 234, 0.15);
+  border:2px solid rgba(102, 126, 234, 0.1);
+  }
+  
+  /* ===== PRODUCT NAME ===== */
+  .product-cell span{
+  font-size:16px;
+  font-weight:600;
+  color:#4a5568 !important;
+  }
+  
+  /* ===== ACTION BUTTONS ===== */
+  .action-buttons{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  }
+  
+  .action-btn{
+  width:36px;
+  height:36px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  }
+  
+  /* ICON COLORS FIXED */
+  .action-btn svg{
+  color:white;
+  }
+  
+  /* BUTTON COLORS */
+  .action-btn.view{
+  background:#3f8cff;
+  }
+  .action-btn.edit{
+  background:#ffa726;
+  }
+  .action-btn.delete{
+  background:#ef5350;
+  }
+  
+  /* ===== FILTER CARD ===== */
+  .best-selling-section{
+  background:var(--card);
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:24px;
+  border:1px solid var(--border);
+  box-shadow:0 12px 28px rgba(0,0,0,.05);
+  }
+  
+  .section-title{
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:16px;
+  }
+  
+  .filter-group select{
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+  font-weight:500;
+  }
+  
+  .filter-group select:focus{
+  outline:none;
+  border-color:#6f86ff;
+  box-shadow:0 0 0 3px rgba(111,134,255,.2);
+  }
+  .filter-group label,select{
+    color: #fff !important;
+  }
+  

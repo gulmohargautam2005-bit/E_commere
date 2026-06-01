@@ -1,0 +1,163 @@
+.admin-sidebar {
+  width: 250px;
+  height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  overflow-y: auto;
+  transition: transform 0.3s ease;
+}
+
+.admin-sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar-logo {
+  padding: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.sidebar-logo .logo-text {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1976d2 0%, #ff6b35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.admin-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  padding-top: 20px;
+}
+
+.admin-sidebar ul li {
+  margin: 0;
+  padding: 0;
+}
+
+.admin-sidebar ul li .MuiButton-root {
+  width: 100%;
+  justify-content: flex-start;
+  padding: 12px 20px;
+  text-transform: none;
+  color: #333;
+  font-size: 14px;
+  border-radius: 0;
+  text-align: left;
+}
+
+.admin-sidebar ul li .MuiButton-root:hover {
+  background: #f5f5f5;
+}
+
+.admin-sidebar ul li .MuiButton-root.active {
+  background: #e3f2fd;
+  color: #1976d2;
+  font-weight: 600;
+}
+
+.admin-sidebar .icon {
+  margin-right: 12px;
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.admin-sidebar .arrow {
+  margin-left: auto;
+  font-size: 12px;
+  transition: transform 0.3s;
+}
+
+.admin-sidebar .MuiButton-root.active .arrow {
+  transform: rotate(90deg);
+}
+
+.admin-sidebar .submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: #f9f9f9;
+}
+
+.admin-sidebar .submenu.open {
+  max-height: 300px;
+}
+
+.admin-sidebar .submenu-item {
+  padding-left: 50px !important;
+  font-size: 13px;
+  color: #666;
+}
+
+.admin-sidebar .submenu-item:hover {
+  background: #f0f0f0;
+}
+
+.admin-sidebar .submenu-item.active {
+  background: #e3f2fd !important;
+  color: #1976d2 !important;
+  font-weight: 600 !important;
+}
+
+/* Dark mode overrides for sidebar submenu */
+body.dark-mode .admin-sidebar {
+  background: #111827;
+}
+
+body.dark-mode .admin-sidebar .submenu {
+  background: #020617;
+}
+
+body.dark-mode .admin-sidebar .submenu-item {
+  color: #e5e7eb;
+}
+
+body.dark-mode .admin-sidebar .submenu-item:hover {
+  background: #1f2933;
+}
+
+body.dark-mode .admin-sidebar .submenu-item.active {
+  background: #2563eb !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode .logout-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.logout-section {
+  padding: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.logout-btn {
+  width: 100%;
+  background: #f44336 !important;
+  color: white !important;
+  padding: 12px !important;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 6px !important;
+}
+
+.logout-btn:hover {
+  background: #d32f2f !important;
+}
+

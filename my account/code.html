@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Account | LUXE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#000000",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#5f5e5e",
+                        "on-primary-fixed": "#1c1b1b",
+                        "inverse-surface": "#303030",
+                        "background": "#fbf9f8",
+                        "tertiary-fixed": "#eae2d4",
+                        "tertiary-container": "#1f1b13",
+                        "surface": "#fbf9f8",
+                        "surface-container-high": "#eae8e7",
+                        "on-secondary-fixed-variant": "#464746",
+                        "secondary": "#5e5e5d",
+                        "on-tertiary-fixed-variant": "#4b463c",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#c7c6c5",
+                        "on-tertiary-container": "#898377",
+                        "inverse-on-surface": "#f2f0f0",
+                        "surface-bright": "#fbf9f8",
+                        "secondary-fixed": "#e3e2e0",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f5f3f3",
+                        "primary-fixed": "#e5e2e1",
+                        "on-background": "#1b1c1c",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-secondary-fixed": "#1a1c1b",
+                        "on-primary-container": "#858383",
+                        "error": "#ba1a1a",
+                        "tertiary": "#000000",
+                        "surface-container-highest": "#e4e2e2",
+                        "on-secondary-container": "#626361",
+                        "outline-variant": "#c4c7c7",
+                        "on-primary-fixed-variant": "#474746",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#dbd9d9",
+                        "surface-container": "#efeded",
+                        "inverse-primary": "#c8c6c5",
+                        "tertiary-fixed-dim": "#cdc6b8",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e4e2e2",
+                        "secondary-container": "#e0dfde",
+                        "outline": "#747878",
+                        "on-surface-variant": "#444748",
+                        "on-surface": "#1b1c1c",
+                        "on-error": "#ffffff",
+                        "primary-container": "#1c1b1b",
+                        "on-tertiary-fixed": "#1f1b13"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "max-width": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-xl-mobile": ["Bodoni Moda"],
+                        "headline-xl": ["Bodoni Moda"],
+                        "body-lg": ["Inter"],
+                        "display-lg-mobile": ["Bodoni Moda"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Bodoni Moda"],
+                        "headline-md": ["Bodoni Moda"]
+                    },
+                    "fontSize": {
+                        "headline-xl-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "headline-xl": ["48px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "display-lg-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "display-lg": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .transition-spring {
+            transition: all 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .active-nav {
+            border-bottom: 1px solid #000000;
+        }
+        .input-minimal:focus {
+            border-bottom-color: #000000;
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant dark:border-on-surface-variant/10">
+<div class="flex justify-between items-center px-margin-desktop h-20 max-w-max-width mx-auto">
+<div class="flex items-center gap-12">
+<span class="font-headline-xl text-headline-xl tracking-tight text-primary uppercase">LUXE</span>
+<div class="hidden md:flex gap-8">
+<a class="font-Inter text-body-md text-secondary hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]" href="#">Collections</a>
+<a class="font-Inter text-body-md text-secondary hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]" href="#">Editorial</a>
+<a class="font-Inter text-body-md text-secondary hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]" href="#">Archive</a>
+<a class="font-Inter text-body-md text-secondary hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]" href="#">Boutique</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="material-symbols-outlined text-primary hover:scale-110 transition-spring">shopping_bag</button>
+<button class="material-symbols-outlined text-primary border-b border-primary hover:scale-110 transition-spring">person</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-24 max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Hero Section -->
+<header class="mb-20 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+<h1 class="font-headline-xl text-headline-xl-mobile md:text-headline-xl text-primary mb-4">My Account</h1>
+<p class="font-body-lg text-body-lg text-secondary max-w-2xl">Welcome back, Alexandra. Your personal style sanctuary and curated collections are ready for exploration.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Profile Settings -->
+<section class="lg:col-span-4 space-y-12">
+<div class="bg-surface-container-low p-8 rounded-lg">
+<div class="flex flex-col items-center mb-8">
+<div class="relative group cursor-pointer">
+<img class="w-32 h-32 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-700 border border-outline-variant" data-alt="A sophisticated close-up portrait of a professional woman in a high-fashion editorial style. She has elegant features and is captured in a minimalist studio environment with soft, high-key natural light. The color palette is strictly monochromatic with deep blacks and bright whites, reflecting a luxury fashion aesthetic with high contrast and sharp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdBp390nhO9NUxYUJcY8EMly_MIapsZH63OecXKDpnq32GLm7aqgOcnOdhUy0Dse9biNDOLHAwyTakYcr85RTbgAlbJw5TiSt72aQmYeFZeu3_CIKgPKdL7ptcOEXT735nOYReLLh7yrneHx1TNj9BhHkaxxXAbScw3QPSF0KZCbSPA2UVlCZlN2NIT3HtR0lkAJj-5P7g5mLLDuvwnsYD3OGhpfN4UVK9XRWuE8z9bnBOOiMStqgiEzqi7aDmBvkfjGr7P7tSPs0"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white">photo_camera</span>
+</div>
+</div>
+<h2 class="mt-4 font-headline-md text-headline-md text-primary">Alexandra Vance</h2>
+<p class="font-label-sm text-label-sm text-secondary-fixed-dim uppercase">Platinum Member</p>
+</div>
+<form class="space-y-6">
+<div>
+<label class="font-label-sm text-label-sm text-secondary uppercase block mb-2">Name</label>
+<input class="w-full bg-transparent border-b border-outline-variant py-2 font-body-md text-primary input-minimal transition-all" type="text" value="Alexandra Vance"/>
+</div>
+<div>
+<label class="font-label-sm text-label-sm text-secondary uppercase block mb-2">Mobile Number</label>
+<input class="w-full bg-transparent border-b border-outline-variant py-2 font-body-md text-primary input-minimal transition-all" type="tel" value="+1 (555) 012-3456"/>
+</div>
+<button class="w-full py-4 bg-primary text-on-primary font-label-sm uppercase tracking-widest hover:bg-on-primary-container transition-spring active:scale-95">
+                            Update Profile
+                        </button>
+</form>
+</div>
+</section>
+<!-- Interactive Grid -->
+<section class="lg:col-span-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Your Addresses -->
+<div class="bg-surface p-8 border border-outline-variant rounded-lg hover:shadow-sm transition-spring group cursor-pointer">
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-spring">location_on</span>
+<span class="font-label-sm text-label-sm text-secondary uppercase">Default</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2 text-[24px]">Your Addresses</h3>
+<p class="font-body-md text-secondary mb-8">724 Madison Avenue<br/>New York, NY 10065<br/>United States</p>
+<a class="font-label-sm text-label-sm text-primary uppercase border-b border-primary pb-1" href="#">Edit Addresses</a>
+</div>
+<!-- Your Orders -->
+<div class="bg-surface p-8 border border-outline-variant rounded-lg hover:shadow-sm transition-spring group cursor-pointer">
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-spring">package_2</span>
+<span class="px-2 py-1 bg-surface-container-high font-label-sm text-[10px] text-primary uppercase">In Transit</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2 text-[24px]">Your Orders</h3>
+<p class="font-body-md text-secondary mb-8">Order #LX-99021<br/>Arriving by Friday, May 24</p>
+<a class="font-label-sm text-label-sm text-primary uppercase border-b border-primary pb-1" href="#">Track Order</a>
+</div>
+<!-- Payment Options -->
+<div class="bg-surface p-8 border border-outline-variant rounded-lg hover:shadow-sm transition-spring group cursor-pointer">
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-spring">credit_card</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2 text-[24px]">Payment Options</h3>
+<p class="font-body-md text-secondary mb-8">Visa ending in 4492<br/>Expires 08/26</p>
+<a class="font-label-sm text-label-sm text-primary uppercase border-b border-primary pb-1" href="#">Manage Cards</a>
+</div>
+<!-- Subscription -->
+<div class="bg-primary text-on-primary p-8 rounded-lg hover:bg-on-primary-container transition-spring group cursor-pointer">
+<div class="flex justify-between items-start mb-6">
+<span class="material-symbols-outlined text-on-primary group-hover:scale-110 transition-spring">verified</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-primary mb-2 text-[24px]">Subscription</h3>
+<p class="font-body-md text-on-primary/70 mb-8">Luxe Reserve Member<br/>Auto-renews Aug 2024</p>
+<a class="font-label-sm text-label-sm text-on-primary uppercase border-b border-on-primary pb-1" href="#">Membership Settings</a>
+</div>
+<!-- Contact Us -->
+<div class="md:col-span-2 bg-surface-container-high p-8 rounded-lg hover:bg-surface-container-highest transition-spring group cursor-pointer flex flex-col md:flex-row gap-8 items-center">
+<div class="w-full md:w-1/3 h-48 overflow-hidden rounded-lg">
+<img class="w-full h-full object-cover grayscale group-hover:scale-110 transition-all duration-700" data-alt="A minimalist and high-end concierge or showroom setting. A sleek, black marble desk holds a single glass of water and a bouquet of white lilies in a crystal vase. The background is a soft, blurred gallery wall with black-and-white fashion photography. The lighting is ethereal and sophisticated, evoking a sense of exclusive service and quiet luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnQ1L4uJ11QNeBzvtvm4A6tLmJRjYwVfQ_FjupeKg4IJGAGPrFTJEWgIe05eY4y-pxz-iIlBBEcKzyhQ0T_kbUmZjOnfPtg7aRzSs7qlZXZRMKIsNEclnV7xR8RG_vZeU6csIbNhqiF5GXKevQWCPimmBtVCj5k9SMdQRcoVZqxPHcFODlCRk0QN4XizRKGlBHnp909_uFw6S3URppVmuehPJHJQLXM6YDvJcaz51SmE3poXQ-0cjPUSD93Bt4hvUCj87Iu7vsoPo"/>
+</div>
+<div class="flex-1">
+<span class="material-symbols-outlined text-primary mb-4">support_agent</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Concierge Service</h3>
+<p class="font-body-md text-secondary mb-6">Our dedicated team is available 24/7 to assist with private viewings, style consultations, or order inquiries.</p>
+<a class="font-label-sm text-label-sm text-primary uppercase border-b border-primary pb-1" href="#">Contact Support</a>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-16 bg-surface dark:bg-surface-container-highest border-t border-outline-variant dark:border-on-surface-variant/10">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter px-margin-desktop max-w-max-width mx-auto">
+<div>
+<span class="font-headline-md text-headline-md text-primary dark:text-on-primary uppercase">LUXE</span>
+<p class="mt-6 font-body-md text-secondary font-Inter">Curation for the modern visionary. Experience the pinnacle of intentional fashion.</p>
+</div>
+<div class="space-y-4">
+<h4 class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-6">Support</h4>
+<a class="block font-label-sm text-label-sm text-secondary hover:text-primary dark:hover:text-on-primary transition-colors uppercase tracking-widest" href="#">Shipping &amp; Returns</a>
+<a class="block font-label-sm text-label-sm text-secondary hover:text-primary dark:hover:text-on-primary transition-colors uppercase tracking-widest" href="#">Sustainability</a>
+<a class="block font-label-sm text-label-sm text-secondary hover:text-primary dark:hover:text-on-primary transition-colors uppercase tracking-widest" href="#">Contact</a>
+</div>
+<div class="space-y-4">
+<h4 class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-6">Legal</h4>
+<a class="block font-label-sm text-label-sm text-secondary hover:text-primary dark:hover:text-on-primary transition-colors uppercase tracking-widest" href="#">Privacy Policy</a>
+<a class="block font-label-sm text-label-sm text-secondary hover:text-primary dark:hover:text-on-primary transition-colors uppercase tracking-widest" href="#">Terms of Service</a>
+</div>
+<div>
+<h4 class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-6">Newsletter</h4>
+<div class="flex border-b border-outline">
+<input class="bg-transparent border-none py-2 px-0 focus:ring-0 font-label-sm uppercase tracking-widest w-full" placeholder="JOIN THE CIRCLE" type="email"/>
+<button class="material-symbols-outlined text-primary">arrow_forward</button>
+</div>
+</div>
+</div>
+<div class="max-w-max-width mx-auto px-margin-desktop mt-16 pt-8 border-t border-outline-variant/30">
+<p class="font-Inter text-label-sm uppercase tracking-widest text-secondary text-center">© 2024 LUXE EDITORIAL. ALL RIGHTS RESERVED.</p>
+</div>
+</footer>
+<script>
+        // Micro-interactions for input focus
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label').classList.add('text-primary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label').classList.remove('text-primary');
+            });
+        });
+
+        // Hover effect for cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

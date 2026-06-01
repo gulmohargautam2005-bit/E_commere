@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LUXE | Your Collection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#000000",
+                    "on-tertiary-fixed": "#1f1b13",
+                    "on-primary-container": "#858383",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#4b463c",
+                    "on-secondary-container": "#626361",
+                    "surface-container-highest": "#e4e2e2",
+                    "primary-container": "#1c1b1b",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#303030",
+                    "on-surface-variant": "#444748",
+                    "inverse-on-surface": "#f2f0f0",
+                    "on-primary-fixed": "#1c1b1b",
+                    "on-tertiary-container": "#898377",
+                    "background": "#fbf9f8",
+                    "on-primary-fixed-variant": "#474746",
+                    "surface-container-high": "#eae8e7",
+                    "secondary-fixed": "#e3e2e0",
+                    "on-secondary-fixed-variant": "#464746",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed-dim": "#cdc6b8",
+                    "tertiary-fixed": "#eae2d4",
+                    "tertiary-container": "#1f1b13",
+                    "surface-dim": "#dbd9d9",
+                    "on-error": "#ffffff",
+                    "tertiary": "#000000",
+                    "on-error-container": "#93000a",
+                    "secondary": "#5e5e5d",
+                    "inverse-primary": "#c8c6c5",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1b1c1c",
+                    "surface-container-low": "#f5f3f3",
+                    "surface-container": "#efeded",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e4e2e2",
+                    "outline": "#747878",
+                    "on-background": "#1b1c1c",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#e5e2e1",
+                    "surface-bright": "#fbf9f8",
+                    "secondary-container": "#e0dfde",
+                    "outline-variant": "#c4c7c7",
+                    "on-secondary-fixed": "#1a1c1b",
+                    "surface": "#fbf9f8",
+                    "secondary-fixed-dim": "#c7c6c5",
+                    "surface-tint": "#5f5e5e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "margin-mobile": "20px",
+                    "max-width": "1440px",
+                    "margin-desktop": "64px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-md": ["Bodoni Moda"],
+                    "label-sm": ["Inter"],
+                    "headline-xl-mobile": ["Bodoni Moda"],
+                    "display-lg": ["Bodoni Moda"],
+                    "display-lg-mobile": ["Bodoni Moda"],
+                    "body-lg": ["Inter"],
+                    "headline-xl": ["Bodoni Moda"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-xl-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "display-lg": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "1.2", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        font-size: 20px;
+      }
+      .cubic-bezier-spring {
+        transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 backdrop-blur-xl border-b border-tertiary-container/10 bg-surface/80">
+<nav class="flex justify-between items-center px-margin-desktop max-w-max-width mx-auto h-20">
+<div class="flex items-center space-x-12">
+<a class="font-display-lg text-[32px] md:text-display-lg uppercase tracking-widest text-primary" href="#">LUXE</a>
+<div class="hidden md:flex space-x-8">
+<a class="font-label-sm text-label-sm text-secondary hover:opacity-70 transition-opacity duration-300" href="#">Collections</a>
+<a class="font-label-sm text-label-sm text-secondary hover:opacity-70 transition-opacity duration-300" href="#">New Arrivals</a>
+<a class="font-label-sm text-label-sm text-secondary hover:opacity-70 transition-opacity duration-300" href="#">Boutique</a>
+<a class="font-label-sm text-label-sm text-secondary hover:opacity-70 transition-opacity duration-300" href="#">Editorial</a>
+<a class="font-label-sm text-label-sm text-primary border-b border-primary pb-1" href="#">Wishlist</a>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<button class="hover:opacity-70 transition-opacity duration-300">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+<button class="hover:opacity-70 transition-opacity duration-300">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-32 pb-24 max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Page Header -->
+<div class="mb-16 md:mb-24 flex flex-col items-center text-center">
+<span class="font-label-sm text-label-sm text-on-primary-container mb-4 tracking-[0.2em] uppercase">Private Selection</span>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-6">The Wishlist</h1>
+<p class="font-body-lg text-body-lg text-secondary max-w-xl mx-auto">A curated space for your most-coveted editorial selections, reserved for your future acquisition.</p>
+</div>
+<!-- Wishlist Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-gutter">
+<!-- Item 1 -->
+<div class="group relative">
+<div class="relative aspect-[3/4] overflow-hidden rounded-lg mb-6 bg-surface-container">
+<img alt="Monolith Watch" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A minimalist studio photography shot of a luxury matte black minimalist watch on a stone pedestal. The lighting is dramatic high-contrast, highlighting the textures of the leather strap and the brushed metal finish. Soft shadows fall across a clean light beige background, maintaining a high-fashion editorial mood consistent with premium boutique branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6kKUfQGWxWlu3hfZZGxc99jXkuo2ho61exZgR3bir2Zjbx-EGjoVWTaoY4AIS0777qcIigEaOlkamLGzglXqpPILL6tbOQkMDL0dDzeXqfriRFVGAjZTxBLALg0GYfggRYYTiFFF5v7_oCLSMKTPZpgzBAK1AI4tn_KZJTgWlXX7of0zR7k3zpylF2PcoUjXJXaKq1VdinBPylENI0eDYoqOx-BWO8nBZfbSwvZO5VHHCAN4tjTtItJpyyuDijVfFwdpev6-G8_0"/>
+<button class="absolute top-4 right-4 bg-surface-container-lowest/80 backdrop-blur-md p-2 rounded-full text-secondary hover:text-error transition-colors duration-300">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out bg-gradient-to-t from-black/20 to-transparent">
+<button class="w-full bg-primary text-on-primary font-label-sm text-label-sm py-4 tracking-widest uppercase hover:bg-secondary transition-colors duration-300">Add to Bag</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase mb-2 block">Accessories</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Monolith Timepiece</h3>
+<p class="font-body-md text-body-md text-secondary">Brushed Obsidian / Calfskin</p>
+</div>
+<span class="font-body-lg text-body-lg text-primary">$1,250</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="group relative">
+<div class="relative aspect-[3/4] overflow-hidden rounded-lg mb-6 bg-surface-container">
+<img alt="Wool Coat" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close-up fashion photography of a premium structured oversized wool coat in a soft charcoal grey. The garment is draped elegantly in a bright, airy architectural setting with natural window light creating soft gradients. The aesthetic is ultra-minimalist and expensive, focusing on the high-quality textile weave and precise tailoring." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL8gHf2IEoHPULWkZJwFhZGNYWZ_kCZmRaX1tgRKUqtdgBodxb2J89Ypngd_iUErc9N1BCV_8DiLJUAS3jMlz3nq48ewgmd6TdN2-SsFkeRX0FyZjME6bq-an44GtzbZbxRYcipSNcDf8znWWa0beTVhGBXQtlzqvfWF8DxeTsqY3o2xU2pCQo9ZZrr7d-O8-sQL4M1MJBIDbp6fzImwknk71nIJLmlVMqq9uYlQeRdszQi2Gt8U4SDvkPZ31vSUKFu0ZlFVAP4a0"/>
+<button class="absolute top-4 right-4 bg-surface-container-lowest/80 backdrop-blur-md p-2 rounded-full text-secondary hover:text-error transition-colors duration-300">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out bg-gradient-to-t from-black/20 to-transparent">
+<button class="w-full bg-primary text-on-primary font-label-sm text-label-sm py-4 tracking-widest uppercase hover:bg-secondary transition-colors duration-300">Add to Bag</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase mb-2 block">Apparel</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Architectural Overcoat</h3>
+<p class="font-body-md text-body-md text-secondary">Virgin Wool / Anthracite</p>
+</div>
+<span class="font-body-lg text-body-lg text-primary">$2,800</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="group relative">
+<div class="relative aspect-[3/4] overflow-hidden rounded-lg mb-6 bg-surface-container">
+<img alt="Leather Bag" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Editorial still life of a luxury leather handbag in a deep espresso brown, resting on a polished marble surface. The lighting is sophisticated and directional, creating elegant highlights on the smooth leather. The background is a muted tonal beige, emphasizing a quiet luxury vibe and clean minimalist lines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPAM1DAp9F-dzcinu-goUrNl6BEsxeKYfxtGv-9UbC3a0yJsgV7cn-AmLpJuqVycuNP74NXcYNLMvt_o_yPN3GLOz1S3sbiyVX-1glwzibisFnQF5yoz6iEy2KMReBInCsWOebWLbvkXxIRUZssHpbbbYAmAXipwrHJKIcCWOuvfcLRv5No-Qu-tFUzN45prW-9QF0UVSNTU9TFa9QvHm12Mm9K6Ykfg86xkQT1Uyw5iIqwbJ-oXnDavLSBQpOewwFPgWg9ShM46k"/>
+<button class="absolute top-4 right-4 bg-surface-container-lowest/80 backdrop-blur-md p-2 rounded-full text-secondary hover:text-error transition-colors duration-300">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out bg-gradient-to-t from-black/20 to-transparent">
+<button class="w-full bg-primary text-on-primary font-label-sm text-label-sm py-4 tracking-widest uppercase hover:bg-secondary transition-colors duration-300">Add to Bag</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase mb-2 block">Leather Goods</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Elysium Tote</h3>
+<p class="font-body-md text-body-md text-secondary">Full-Grain Leather / Espresso</p>
+</div>
+<span class="font-body-lg text-body-lg text-primary">$1,450</span>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="group relative lg:block">
+<div class="relative aspect-[3/4] overflow-hidden rounded-lg mb-6 bg-surface-container">
+<img alt="Sneakers" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Detailed shot of premium leather sneakers in off-white, presented in a minimalist gallery-like setting. The lighting is soft and diffused, creating an ethereal and high-end feel. The composition is clean, with the shoes placed asymmetrically against a textured neutral wall, highlighting their refined silhouette and luxury materials." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtdtii7vSVtxbvTkJ-_R6pM8lZhMhlUXNK2oO4MEeBfNcyVqxT9Ok3cTt3E4XNMYhA3o2X6ZLaK5wvcR7DzG_0sfhO9YwXnhaGxkueu-0nCRsrMx-t9gnM0qORr7p-K4Yg-CXz7lP9bv1oGxtognpxBCuGqFsPmzR3vCYIH-4_GU7oU9n7MXQc9dPXcjxTjN1Gz7rSk4DMMxLbQ6WOio-SkSqIJMkidFXF8HaWCRv63akyvlRcJWvN7pdUCohdf_P2xQNs0OnnSls"/>
+<button class="absolute top-4 right-4 bg-surface-container-lowest/80 backdrop-blur-md p-2 rounded-full text-secondary hover:text-error transition-colors duration-300">
+<span class="material-symbols-outlined">close</span>
+</button>
+<div class="absolute inset-x-0 bottom-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out bg-gradient-to-t from-black/20 to-transparent">
+<button class="w-full bg-primary text-on-primary font-label-sm text-label-sm py-4 tracking-widest uppercase hover:bg-secondary transition-colors duration-300">Add to Bag</button>
+</div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<span class="font-label-sm text-label-sm text-secondary uppercase mb-2 block">Footwear</span>
+<h3 class="font-headline-md text-headline-md text-primary mb-1">Linear Low-Top</h3>
+<p class="font-body-md text-body-md text-secondary">Italian Nappa / Bone</p>
+</div>
+<span class="font-body-lg text-body-lg text-primary">$620</span>
+</div>
+</div>
+</div>
+<!-- Empty State / Footer Call to Action -->
+<div class="mt-40 pt-20 border-t border-tertiary-container/10 text-center">
+<h2 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-primary mb-8 italic">Enhance Your Perspective</h2>
+<p class="font-body-lg text-body-lg text-secondary mb-12 max-w-2xl mx-auto">Explore the latest curation from our global ateliers and find pieces that resonate with your personal narrative.</p>
+<a class="inline-block border border-primary px-12 py-5 font-label-sm text-label-sm uppercase tracking-[0.2em] text-primary hover:bg-primary hover:text-on-primary transition-all duration-500 cubic-bezier-spring" href="#">
+                Shop New Arrivals
+            </a>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-background dark:bg-primary-container border-t border-secondary-container dark:border-on-secondary-container/20">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter px-margin-desktop py-20 max-w-max-width mx-auto">
+<div class="flex flex-col space-y-6">
+<span class="font-headline-xl text-headline-xl text-primary dark:text-on-primary">LUXE</span>
+<p class="font-label-sm text-label-sm text-secondary dark:text-on-secondary-container leading-loose">
+                    Redefining the digital editorial experience through the lens of timeless luxury and uncompromising quality.
+                </p>
+</div>
+<div class="flex flex-col space-y-4">
+<h4 class="font-label-sm text-label-sm text-primary dark:text-on-primary uppercase tracking-widest mb-2">Company</h4>
+<a class="font-label-sm text-label-sm text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-on-primary transition-colors duration-200" href="#">Sustainability</a>
+<a class="font-label-sm text-label-sm text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-on-primary transition-colors duration-200" href="#">Editorial</a>
+<a class="font-label-sm text-label-sm text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-on-primary transition-colors duration-200" href="#">Boutiques</a>
+</div>
+<div class="flex flex-col space-y-4">
+<h4 class="font-label-sm text-label-sm text-primary dark:text-on-primary uppercase tracking-widest mb-2">Support</h4>
+<a class="font-label-sm text-label-sm text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-on-primary transition-colors duration-200" href="#">Contact</a>
+<a class="font-label-sm text-label-sm text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-on-primary transition-colors duration-200" href="#">Shipping</a>
+<a class="font-label-sm text-label-sm text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-on-primary transition-colors duration-200" href="#">Returns</a>
+</div>
+<div class="flex flex-col space-y-4">
+<h4 class="font-label-sm text-label-sm text-primary dark:text-on-primary uppercase tracking-widest mb-2">Legal</h4>
+<a class="font-label-sm text-label-sm text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-on-primary transition-colors duration-200" href="#">Terms</a>
+<a class="font-label-sm text-label-sm text-secondary dark:text-on-secondary-container hover:text-primary dark:hover:text-on-primary transition-colors duration-200" href="#">Privacy</a>
+</div>
+</div>
+<div class="px-margin-desktop py-8 border-t border-secondary-container dark:border-on-secondary-container/10 max-w-max-width mx-auto">
+<p class="font-label-sm text-label-sm text-secondary dark:text-on-secondary-container text-center">
+                © 2024 LUXE EDITORIAL. ALL RIGHTS RESERVED.
+            </p>
+</div>
+</footer>
+<script>
+        // Micro-interaction for buttons and item removal
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simple remove logic simulation
+        document.querySelectorAll('.group button.bg-surface-container-lowest').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const card = e.target.closest('.group');
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.display = 'none';
+                }, 500);
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Your Cart | LUXE Editorial</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f5f3f3",
+                        "surface-container": "#efeded",
+                        "outline-variant": "#c4c7c7",
+                        "tertiary": "#000000",
+                        "on-tertiary-fixed": "#1f1b13",
+                        "secondary-fixed-dim": "#c7c6c5",
+                        "tertiary-fixed": "#eae2d4",
+                        "on-secondary-fixed": "#1a1c1b",
+                        "secondary": "#5e5e5d",
+                        "tertiary-container": "#1f1b13",
+                        "surface-dim": "#dbd9d9",
+                        "on-tertiary-container": "#898377",
+                        "error": "#ba1a1a",
+                        "on-primary-container": "#858383",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#e5e2e1",
+                        "outline": "#747878",
+                        "surface-variant": "#e4e2e2",
+                        "on-surface": "#1b1c1c",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#c8c6c5",
+                        "surface-bright": "#fbf9f8",
+                        "on-secondary-fixed-variant": "#464746",
+                        "on-secondary-container": "#626361",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#e3e2e0",
+                        "primary-container": "#1c1b1b",
+                        "tertiary-fixed-dim": "#cdc6b8",
+                        "surface-tint": "#5f5e5e",
+                        "primary": "#000000",
+                        "background": "#fbf9f8",
+                        "on-primary-fixed-variant": "#474746",
+                        "surface": "#fbf9f8",
+                        "on-primary-fixed": "#1c1b1b",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "on-tertiary-fixed-variant": "#4b463c",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#f2f0f0",
+                        "secondary-container": "#e0dfde",
+                        "inverse-surface": "#303030",
+                        "surface-container-high": "#eae8e7",
+                        "on-surface-variant": "#444748",
+                        "surface-container-highest": "#e4e2e2",
+                        "on-background": "#1b1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "max-width": "1440px"
+                    },
+                    "fontFamily": {
+                        "headline-xl-mobile": ["Bodoni Moda"],
+                        "display-lg": ["Bodoni Moda"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Bodoni Moda"],
+                        "headline-xl": ["Bodoni Moda"],
+                        "display-lg-mobile": ["Bodoni Moda"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-xl-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "display-lg": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "headline-xl": ["48px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                        "display-lg-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .bezier-spring {
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        body {
+            background-color: #fbf9f8;
+            color: #1b1c1c;
+        }
+        /* Custom scrollbar for premium touch */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c4c7c7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #888;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden selection:bg-primary-fixed">
+
+    <!-- Toast Notification Container for Micro-animations -->
+    <div id="toast-container" class="fixed bottom-8 right-8 z-50 flex flex-col gap-3"></div>
+
+    <!-- 1. STICKY LUXE NAVBAR -->
+    <header class="bg-surface/80 backdrop-blur-md sticky top-0 z-50 border-b border-outline-variant">
+        <nav class="flex justify-between items-center w-full px-margin-desktop h-20 max-w-max-width mx-auto">
+            <!-- Left Branding & Links -->
+            <div class="flex items-center gap-12">
+                <a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary hover:scale-[0.98] transition-transform duration-300" href="#">LUXE</a>
+                <ul class="hidden md:flex gap-8 items-center">
+                    <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-300 uppercase tracking-widest" href="/">Home</a></li>
+                    <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-300 uppercase tracking-widest" href="/cat">Fashion</a></li>
+                    <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-300 uppercase tracking-widest" href="/cat">Kidz</a></li>
+                    <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-300 uppercase tracking-widest" href="/cat">Watches</a></li>
+                    
+                    <!-- Categories dropdown link -->
+                    <li class="relative" id="categories-dropdown-container">
+                        <button id="categories-trigger" class="flex items-center gap-1 font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-300 uppercase tracking-widest focus:outline-none">
+                            Categories
+                            <span class="material-symbols-outlined !text-[16px] transition-transform duration-300" id="dropdown-arrow">expand_more</span>
+                        </button>
+                        
+                        <!-- Categories Panel -->
+                        <div id="categories-panel" class="absolute left-1/2 -translate-x-1/2 mt-4 bg-surface-container-lowest border border-outline-variant shadow-xl rounded-xl min-w-[260px] p-2 z-50 opacity-0 invisible translate-y-2 transition-all duration-300">
+                            <a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-surface-container text-on-surface hover:text-primary transition-colors font-label-sm text-[11px] uppercase tracking-wider" href="/cat">
+                                <span class="material-symbols-outlined text-[20px]">nutrition</span> Fruits & Vegetables
+                            </a>
+                            <a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-surface-container text-on-surface hover:text-primary transition-colors font-label-sm text-[11px] uppercase tracking-wider" href="/cat">
+                                <span class="material-symbols-outlined text-[20px]">set_meal</span> Meats & Seafood
+                            </a>
+                            <a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-surface-container text-on-surface hover:text-primary transition-colors font-label-sm text-[11px] uppercase tracking-wider" href="/cat">
+                                <span class="material-symbols-outlined text-[20px]">breakfast_dining</span> Breakfast & Dairy
+                            </a>
+                            <a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-surface-container text-on-surface hover:text-primary transition-colors font-label-sm text-[11px] uppercase tracking-wider" href="/cat">
+                                <span class="material-symbols-outlined text-[20px]">local_cafe</span> Beverages
+                            </a>
+                            <a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-surface-container text-on-surface hover:text-primary transition-colors font-label-sm text-[11px] uppercase tracking-wider" href="/cat">
+                                <span class="material-symbols-outlined text-[20px]">bakery_dining</span> Breads & Bakery
+                            </a>
+                            <a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-surface-container text-on-surface hover:text-primary transition-colors font-label-sm text-[11px] uppercase tracking-wider" href="/cat">
+                                <span class="material-symbols-outlined text-[20px]">ac_unit</span> Frozen Foods
+                            </a>
+                            <a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-surface-container text-on-surface hover:text-primary transition-colors font-label-sm text-[11px] uppercase tracking-wider" href="/cat">
+                                <span class="material-symbols-outlined text-[20px]">cookie</span> Biscuits & Snacks
+                            </a>
+                            <a class="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-surface-container text-on-surface hover:text-primary transition-colors font-label-sm text-[11px] uppercase tracking-wider" href="/cat">
+                                <span class="material-symbols-outlined text-[20px]">shopping_basket</span> Grocery & Staples
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right Icons -->
+            <div class="flex items-center gap-6">
+                <!-- Cart Icon with badge -->
+                <a href="#" class="relative p-2 hover:scale-110 transition-transform duration-300 text-[24px] text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined !text-[28px]">shopping_bag</span>
+                    <span id="cart-badge-count" class="absolute -top-1 -right-1 bg-primary text-on-primary text-[9px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-surface">0</span>
+                </a>
+                
+                <!-- Account Profile -->
+                <button class="p-2 hover:scale-110 transition-transform duration-300 text-[24px] text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined !text-[28px]">person</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 2. CART MAIN CONTENT -->
+    <main class="max-w-max-width mx-auto px-margin-desktop py-20 min-h-[60vh]">
+        <!-- Page Title & Header Info -->
+        <div class="mb-12 flex flex-col md:flex-row md:items-baseline md:justify-between gap-4">
+            <h1 class="font-headline-xl text-headline-xl italic text-primary">Shopping Cart</h1>
+            <p id="cart-count-desc" class="text-on-surface-variant font-label-sm uppercase tracking-widest text-[11px]">Loading items in your cart...</p>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-gutter items-start">
+            
+            <!-- Product List Panel -->
+            <div class="w-full lg:flex-1">
+                <!-- Desktop Column Headers -->
+                <div class="hidden md:grid grid-cols-[3fr_1fr_1.2fr_1fr_0.5fr] gap-4 pb-4 border-b border-outline-variant font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">
+                    <div>Product</div>
+                    <div class="text-center">Unit Price</div>
+                    <div class="text-center">Quantity</div>
+                    <div class="text-center">Sub-total</div>
+                    <div class="text-right pr-4">Remove</div>
+                </div>
+
+                <!-- Product Grid Rows Container -->
+                <div id="cart-items-container" class="space-y-2 min-h-[200px]">
+                    <!-- Loading state indicator -->
+                    <div id="loading-spinner" class="flex flex-col items-center justify-center py-20 space-y-4">
+                        <div class="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                        <p class="text-on-surface-variant font-label-sm uppercase tracking-wider text-[11px]">Syncing with Boutique server...</p>
+                    </div>
+                </div>
+
+                <!-- Trust Badges Row -->
+                <div class="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter border-t border-outline-variant pt-20">
+                    <div class="flex items-center gap-4 group cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-primary-fixed transition-colors duration-300">
+                            <span class="material-symbols-outlined text-primary">eco</span>
+                        </div>
+                        <div>
+                            <p class="font-label-sm text-label-sm uppercase tracking-widest font-bold text-primary">Every Day Fresh</p>
+                            <p class="text-[12px] text-on-surface-variant">Sourced sustainably daily</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 group cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-primary-fixed transition-colors duration-300">
+                            <span class="material-symbols-outlined text-primary">local_shipping</span>
+                        </div>
+                        <div>
+                            <p class="font-label-sm text-label-sm uppercase tracking-widest font-bold text-primary">Free Delivery</p>
+                            <p class="text-[12px] text-on-surface-variant">On orders over $70</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 group cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-primary-fixed transition-colors duration-300">
+                            <span class="material-symbols-outlined text-primary">percent</span>
+                        </div>
+                        <div>
+                            <p class="font-label-sm text-label-sm uppercase tracking-widest font-bold text-primary">Mega Discounts</p>
+                            <p class="text-[12px] text-on-surface-variant">Exclusive daily offers</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 group cursor-pointer">
+                        <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-primary-fixed transition-colors duration-300">
+                            <span class="material-symbols-outlined text-primary">payments</span>
+                        </div>
+                        <div>
+                            <p class="font-label-sm text-label-sm uppercase tracking-widest font-bold text-primary">Best Price</p>
+                            <p class="text-[12px] text-on-surface-variant">Guaranteed on market</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary Sidebar -->
+            <aside class="w-full lg:w-[380px] lg:sticky lg:top-28 space-y-gutter">
+                <!-- Order Summary Card -->
+                <div class="bg-surface-container-lowest p-10 rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-surface-container">
+                    <h2 class="font-headline-md text-[24px] mb-8 border-b border-outline-variant pb-4 text-primary">Order Summary</h2>
+                    <div class="space-y-6">
+                        <!-- Subtotal Row -->
+                        <div class="flex justify-between items-center text-on-surface-variant font-body-md">
+                            <span>Subtotal</span>
+                            <span id="order-subtotal" class="text-primary font-semibold">Rs.0</span>
+                        </div>
+                        
+                        <!-- Shipping Row -->
+                        <div class="flex justify-between items-center text-on-surface-variant font-body-md">
+                            <span>Shipping</span>
+                            <span id="order-shipping" class="text-primary-fixed-dim font-medium italic">FREE</span>
+                        </div>
+                        
+                        <!-- Promo Discount Row (Hidden until applied) -->
+                        <div id="promo-discount-row" class="hidden flex justify-between items-center text-error font-body-md transition-all duration-300">
+                            <span>Promo Discount (20%)</span>
+                            <span id="order-discount">-Rs.0</span>
+                        </div>
+                        
+                        <!-- Total Row -->
+                        <div class="pt-6 border-t border-surface-container-highest flex justify-between items-end">
+                            <span class="font-label-sm text-label-sm uppercase tracking-widest font-bold text-primary">Total</span>
+                            <span id="order-total" class="text-[28px] font-headline-md text-primary">Rs.0</span>
+                        </div>
+                    </div>
+
+                    <!-- Checkout CTA Button -->
+                    <button id="checkout-btn" class="w-full mt-10 bg-primary text-on-primary py-5 rounded-lg font-label-sm text-label-sm uppercase tracking-widest font-bold bezier-spring hover:scale-[1.02] active:scale-95 shadow-lg shadow-primary/10">
+                        Proceed to Checkout
+                    </button>
+                    <p class="text-center mt-6 text-[11px] text-on-surface-variant uppercase tracking-tighter">Secure checkout &amp; global shipping</p>
+                </div>
+
+                <!-- Promo Code Card -->
+                <div class="p-8 border border-outline-variant rounded-xl border-dashed bg-surface-container-lowest/50">
+                    <div class="flex items-center gap-3 mb-4 text-primary">
+                        <span class="material-symbols-outlined text-primary">confirmation_number</span>
+                        <span class="font-label-sm text-label-sm uppercase tracking-widest">Promo Code</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <input id="promo-input" class="flex-1 bg-transparent border-b border-outline-variant focus:border-primary focus:outline-none py-2 text-sm transition-colors duration-300" placeholder="Enter code (Try LUXE20)" type="text"/>
+                        <button id="promo-apply-btn" class="font-label-sm text-label-sm uppercase text-primary hover:underline transition-all duration-200">Apply</button>
+                    </div>
+                    <!-- Success/Error dynamic feedback message -->
+                    <p id="promo-message" class="text-[12px] mt-2 font-medium tracking-tight hidden"></p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- 3. LUXE EDITORIAL FOOTER -->
+    <footer class="bg-surface-container mt-20">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-20 max-w-max-width mx-auto">
+            <!-- Brand & Tagline -->
+            <div class="space-y-6">
+                <span class="font-headline-md text-headline-md font-bold text-primary">LUXE</span>
+                <p class="text-on-surface-variant text-body-md leading-relaxed">Defining the vanguard of modern elegance through curated collections and editorial storytelling.</p>
+            </div>
+            
+            <!-- Explore Links -->
+            <div>
+                <h4 class="font-label-sm text-label-sm uppercase tracking-widest mb-8 text-primary">Explore</h4>
+                <ul class="space-y-4">
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-md text-[14px]" href="/journal">Journal</a></li>
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-md text-[14px]" href="/cat">Collections</a></li>
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-md text-[14px]" href="/shipping">Shipping</a></li>
+                </ul>
+            </div>
+            
+            <!-- Information Links -->
+            <div>
+                <h4 class="font-label-sm text-label-sm uppercase tracking-widest mb-8 text-primary">Information</h4>
+                <ul class="space-y-4">
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-md text-[14px]" href="/privacy">Privacy Policy</a></li>
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-md text-[14px]" href="/terms">Terms of Service</a></li>
+                    <li><a class="text-on-surface-variant hover:text-primary transition-colors duration-200 font-body-md text-[14px]" href="/returns">Returns</a></li>
+                </ul>
+            </div>
+            
+            <!-- Newsletter Drop -->
+            <div>
+                <h4 class="font-label-sm text-label-sm uppercase tracking-widest mb-8 text-primary">Newsletter</h4>
+                <p class="text-on-surface-variant text-[14px] mb-6 font-body-md">Join our editorial list for early access to drops.</p>
+                <div class="flex">
+                    <input class="bg-transparent border-b border-outline-variant py-2 flex-1 focus:border-primary outline-none text-sm transition-colors duration-200" placeholder="Email address" type="email" id="newsletter-email"/>
+                    <button class="border-b border-outline-variant px-4 hover:text-primary transition-colors duration-200 flex items-center justify-center" id="newsletter-btn">
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Bar -->
+        <div class="px-margin-desktop py-8 border-t border-outline-variant max-w-max-width mx-auto text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="font-label-sm text-[11px] text-on-surface-variant uppercase tracking-widest">© 2024 LUXE Editorial. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Vanilla Javascript Logic interacting with standard REST API -->
+    <script>
+        // API Base URL
+        const API_BASE_URL = "http://localhost:4000";
+        
+        // Active State
+        let cartItems = [];
+        let appliedPromo = null;
+        const promoDiscountRate = 0.20; // 20% discount code
+
+        // 1. Load User Credentials
+        function getUserDetails() {
+            try {
+                const user = JSON.parse(localStorage.getItem('user') || '{}');
+                return {
+                    userId: user.userid || user.id || "654c1d2e5b7e8c3a1e9c8b7c" // Fallback standard ID if unauthenticated
+                };
+            } catch (e) {
+                return { userId: "654c1d2e5b7e8c3a1e9c8b7c" };
+            }
+        }
+
+        // 2. Premium Fallback Catalog Mock items (to show real elegant items if API is empty or offline)
+        const fallbackMocks = [
+            {
+                _id: "mock_cotton_shirt_1",
+                productId: "prod_casual_cotton_1",
+                title: "The Lifestyle Co Pure Cotton Casual Shirt",
+                image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDE46b3AukOJyV7fpC89z6m5CdzuSIuUOVwlWnve-iEu2WvB6gB5WQGT31M30MSW0jVOradXZkARWS8vQ9H0jcd7gwtAN2oD8DSCGcItzbZIjMMcCoRksP-y4codPW05yxahUkj5rmnEZYr-KAwuFC1LoZkUWPeJKWLcgfOukWiIs2QPAel13qCmGGdt8WOGr-ajU26WSLm4yau81hM8gJ6kM4KH7ztOFHI-Tcj7Sdd_X8LiEdEVhI46vVNoptgQjORju_Vag7DnFE",
+                price: 520,
+                quantity: 1,
+                subtotal: 520,
+                rating: 4.5
+            },
+            {
+                _id: "mock_watch_spot_2",
+                productId: "prod_horology_luxe_2",
+                title: "Luxe Chronograph Classic Horology Edition",
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600&auto=format&fit=crop",
+                price: 1850,
+                quantity: 1,
+                subtotal: 1850,
+                rating: 5.0
+            }
+        ];
+
+        // 3. UI Toast Notification helper for premium animations
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            toast.className = `flex items-center gap-3 px-6 py-4 rounded-xl shadow-lg border text-sm font-label-sm uppercase tracking-wider translate-y-4 opacity-0 transition-all duration-300 bezier-spring ${
+                type === "success" 
+                    ? "bg-surface-container-lowest text-primary border-primary" 
+                    : "bg-error-container text-on-error-container border-error"
+            }`;
+            
+            const icon = type === "success" ? "check_circle" : "error";
+            toast.innerHTML = `
+                <span class="material-symbols-outlined">${icon}</span>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            // animate in
+            setTimeout(() => {
+                toast.classList.remove("translate-y-4", "opacity-0");
+            }, 10);
+
+            // remove after 3s
+            setTimeout(() => {
+                toast.classList.add("translate-y-4", "opacity-0");
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // 4. Fetch Cart items from standard Backend
+        async function fetchCartData() {
+            const spinner = document.getElementById("loading-spinner");
+            const { userId } = getUserDetails();
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/cart?userId=${userId}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && data.cartList && data.cartList.length > 0) {
+                        cartItems = data.cartList;
+                        console.log("Fetched active cart from backend:", cartItems);
+                    } else {
+                        // Empty backend cart, use mocks so UI is beautifully full
+                        cartItems = [...fallbackMocks];
+                        console.log("Empty backend cart, loaded luxury default items.");
+                    }
+                } else {
+                    // Fetch failed (backend offline or invalid), use fallback mocks
+                    cartItems = [...fallbackMocks];
+                    console.log("Backend offline or request failed. Loaded luxury default items.");
+                }
+            } catch (error) {
+                console.error("Cart API Connection Error:", error);
+                cartItems = [...fallbackMocks];
+            } finally {
+                if (spinner) spinner.style.display = "none";
+                renderCartDOM();
+            }
+        }
+
+        // 5. Update quantity inside Backend & State
+        async function updateItemQuantity(cartItemId, newQty, price) {
+            const subtotalVal = newQty * price;
+
+            // Optimistic update locally
+            cartItems = cartItems.map(item => 
+                item._id === cartItemId 
+                    ? { ...item, quantity: newQty, subtotal: subtotalVal }
+                    : item
+            );
+            
+            updateOrderSummary();
+            const rowQtyEl = document.querySelector(`[data-item-qty-id="${cartItemId}"]`);
+            const rowSubtotalEl = document.querySelector(`[data-item-subtotal-id="${cartItemId}"]`);
+            if (rowQtyEl) rowQtyEl.innerText = newQty;
+            if (rowSubtotalEl) rowSubtotalEl.innerText = `Rs.${subtotalVal}`;
+
+            // Mock rows do not make backend updates
+            if (cartItemId.startsWith("mock_")) {
+                console.log(`Mock item quantity updated locally to ${newQty}`);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/cart/${cartItemId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        quantity: newQty,
+                        subtotal: subtotalVal
+                    })
+                });
+
+                if (response.ok) {
+                    console.log("Backend quantity updated successfully.");
+                } else {
+                    console.error("Failed to sync quantity on backend.");
+                }
+            } catch (err) {
+                console.error("Backend quantity sync connection issue:", err);
+            }
+        }
+
+        // 6. Delete item from Backend & DOM
+        async function deleteCartItem(cartItemId, elementToRemove) {
+            // Animate row removal beautifully (fade out + height shrink)
+            elementToRemove.style.opacity = "0";
+            elementToRemove.style.transform = "translateX(-20px)";
+            
+            setTimeout(() => {
+                elementToRemove.remove();
+                
+                // Update active state
+                cartItems = cartItems.filter(item => item._id !== cartItemId);
+                
+                updateOrderSummary();
+                renderCartCountHeader();
+                
+                // Show clean visual state if cart is completely empty
+                if (cartItems.length === 0) {
+                    renderEmptyCartState();
+                }
+                
+                showToast("Garment removed from cart", "success");
+            }, 300);
+
+            // Mock rows do not make backend deletes
+            if (cartItemId.startsWith("mock_")) {
+                console.log(`Mock item removed locally.`);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/cart/${cartItemId}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    console.log("Backend record deleted successfully.");
+                } else {
+                    console.error("Failed to delete record on backend.");
+                }
+            } catch (err) {
+                console.error("Backend deletion connection issue:", err);
+            }
+        }
+
+        // 7. Render dynamic Cart items
+        function renderCartDOM() {
+            const container = document.getElementById("cart-items-container");
+            if (!container) return;
+
+            container.innerHTML = "";
+
+            if (cartItems.length === 0) {
+                renderEmptyCartState();
+                return;
+            }
+
+            cartItems.forEach(item => {
+                const itemRating = item.rating || 4.5;
+                const roundedRating = Math.round(itemRating);
+                
+                // Stars HTML
+                let starsHTML = "";
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= roundedRating) {
+                        starsHTML += `<span class="material-symbols-outlined !text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>`;
+                    } else {
+                        starsHTML += `<span class="material-symbols-outlined !text-[16px] text-outline-variant">star</span>`;
+                    }
+                }
+
+                // Row template
+                const row = document.createElement("div");
+                row.className = "grid grid-cols-1 md:grid-cols-[3fr_1fr_1.2fr_1fr_0.5fr] items-center gap-6 py-10 border-b border-surface-container-highest hover:bg-surface-container-low/30 transition-all duration-300 group";
+                row.innerHTML = `
+                    <!-- Product Column -->
+                    <div class="flex flex-col sm:flex-row items-center gap-8">
+                        <div class="w-40 h-52 overflow-hidden rounded-lg bg-surface-container-high shadow-sm group-hover:scale-[1.02] bezier-spring flex-shrink-0">
+                            <img class="w-full h-full object-cover" src="${item.image || 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=300'}" alt="${item.title}"/>
+                        </div>
+                        <div class="space-y-2 text-center sm:text-left">
+                            <h3 class="font-body-lg text-body-lg font-medium text-primary tracking-tight leading-snug">${item.title}</h3>
+                            <div class="flex justify-center sm:justify-start gap-1">
+                                ${starsHTML}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Unit Price Column -->
+                    <div class="text-center font-body-md text-primary font-medium">Rs.${item.price}</div>
+
+                    <!-- Quantity Stepper Column -->
+                    <div class="flex justify-center">
+                        <div class="flex items-center border border-outline-variant rounded-full px-2 py-1 bg-surface-container-lowest shadow-sm">
+                            <button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-surface-container rounded-full bezier-spring active:scale-90 select-none btn-qty-dec">
+                                <span class="material-symbols-outlined !text-[18px]">remove</span>
+                            </button>
+                            <span class="w-10 text-center font-medium font-body-md select-none text-primary" data-item-qty-id="${item._id}">${item.quantity}</span>
+                            <button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-surface-container rounded-full bezier-spring active:scale-90 select-none btn-qty-inc">
+                                <span class="material-symbols-outlined !text-[18px]">add</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Subtotal Column -->
+                    <div class="text-center font-body-lg text-primary font-bold tracking-tight" data-item-subtotal-id="${item._id}">Rs.${item.subtotal}</div>
+
+                    <!-- Remove Column -->
+                    <div class="flex justify-center md:justify-end md:pr-4">
+                        <button class="text-on-surface-variant hover:text-error bezier-spring p-2 rounded-full hover:bg-error-container/20 btn-item-remove" aria-label="Remove item">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+                `;
+
+                // Quantity Event Listeners
+                const decBtn = row.querySelector(".btn-qty-dec");
+                const incBtn = row.querySelector(".btn-qty-inc");
+                const removeBtn = row.querySelector(".btn-item-remove");
+
+                decBtn.addEventListener("click", () => {
+                    if (item.quantity > 1) {
+                        updateItemQuantity(item._id, item.quantity - 1, item.price);
+                    } else {
+                        showToast("Minimum quantity is 1", "error");
+                    }
+                });
+
+                incBtn.addEventListener("click", () => {
+                    updateItemQuantity(item._id, item.quantity + 1, item.price);
+                });
+
+                removeBtn.addEventListener("click", () => {
+                    deleteCartItem(item._id, row);
+                });
+
+                container.appendChild(row);
+            });
+
+            updateOrderSummary();
+            renderCartCountHeader();
+        }
+
+        // 8. Render Empty Cart State
+        function renderEmptyCartState() {
+            const container = document.getElementById("cart-items-container");
+            if (!container) return;
+
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-20 space-y-6 text-center animate-fade-in">
+                    <span class="material-symbols-outlined !text-[64px] text-outline-variant">shopping_bag</span>
+                    <h3 class="font-headline-md text-2xl text-primary font-medium italic">Your luxury cart is empty</h3>
+                    <p class="text-on-surface-variant font-body-md max-w-sm">Discover carefully tailored garments and horology pieces to begin curating your signature wardrobe.</p>
+                    <a href="/cat" class="bg-primary text-on-primary px-8 py-4 rounded-lg font-label-sm text-sm uppercase tracking-widest bezier-spring hover:scale-[1.02] active:scale-95 shadow-lg shadow-primary/10">
+                        Continue Curating
+                    </a>
+                </div>
+            `;
+        }
+
+        // 9. Update Order Summary Calculations
+        function updateOrderSummary() {
+            const subtotalEl = document.getElementById("order-subtotal");
+            const shippingEl = document.getElementById("order-shipping");
+            const totalEl = document.getElementById("order-total");
+            const discountRow = document.getElementById("promo-discount-row");
+            const discountEl = document.getElementById("order-discount");
+            const badgeEl = document.getElementById("cart-badge-count");
+
+            if (!subtotalEl || !totalEl) return;
+
+            // Calculations
+            const subtotalVal = cartItems.reduce((sum, item) => sum + item.subtotal, 0);
+            const totalItemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+            // Update Navbar Badges
+            if (badgeEl) badgeEl.innerText = totalItemsCount;
+
+            subtotalEl.innerText = `Rs.${subtotalVal}`;
+
+            // Calculate Shipping
+            let shippingVal = 0;
+            if (subtotalVal === 0) {
+                shippingEl.innerHTML = `<span class="italic text-outline-variant">Empty</span>`;
+            } else if (subtotalVal > 0) {
+                shippingEl.innerHTML = `<span class="text-primary-fixed-dim font-medium italic">FREE</span>`;
+            }
+
+            // Calculate Promo Code Discount
+            let discountVal = 0;
+            if (appliedPromo && subtotalVal > 0) {
+                discountVal = Math.round(subtotalVal * promoDiscountRate);
+                if (discountRow) discountRow.classList.remove("hidden");
+                if (discountEl) discountEl.innerText = `-Rs.${discountVal}`;
+            } else {
+                if (discountRow) discountRow.classList.add("hidden");
+            }
+
+            const finalTotal = subtotalVal - discountVal + shippingVal;
+            totalEl.innerText = `Rs.${finalTotal}`;
+        }
+
+        // 10. Update Cart Counter Header Description
+        function renderCartCountHeader() {
+            const countHeader = document.getElementById("cart-count-desc");
+            if (!countHeader) return;
+
+            const totalQ = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+            countHeader.innerText = `There are ${totalQ} products in your cart`;
+        }
+
+        // 11. Categories Dropdown toggle logic (Vanilla JS)
+        const categoriesContainer = document.getElementById("categories-dropdown-container");
+        const categoriesTrigger = document.getElementById("categories-trigger");
+        const categoriesPanel = document.getElementById("categories-panel");
+        const dropdownArrow = document.getElementById("dropdown-arrow");
+
+        if (categoriesTrigger && categoriesPanel) {
+            categoriesTrigger.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const isOpen = !categoriesPanel.classList.contains("invisible");
+                
+                if (isOpen) {
+                    categoriesPanel.classList.add("invisible", "opacity-0", "translate-y-2");
+                    categoriesPanel.classList.remove("visible", "opacity-100", "translate-y-0");
+                    if (dropdownArrow) dropdownArrow.classList.remove("rotate-180");
+                } else {
+                    categoriesPanel.classList.remove("invisible", "opacity-0", "translate-y-2");
+                    categoriesPanel.classList.add("visible", "opacity-100", "translate-y-0");
+                    if (dropdownArrow) dropdownArrow.classList.add("rotate-180");
+                }
+            });
+
+            // Close categories dropdown on outside click
+            document.addEventListener("click", (e) => {
+                if (categoriesPanel && !categoriesPanel.contains(e.target) && e.target !== categoriesTrigger) {
+                    categoriesPanel.classList.add("invisible", "opacity-0", "translate-y-2");
+                    categoriesPanel.classList.remove("visible", "opacity-100", "translate-y-0");
+                    if (dropdownArrow) dropdownArrow.classList.remove("rotate-180");
+                }
+            });
+        }
+
+        // 12. Promo Code Application Logic
+        const promoInput = document.getElementById("promo-input");
+        const promoApplyBtn = document.getElementById("promo-apply-btn");
+        const promoMessage = document.getElementById("promo-message");
+
+        if (promoApplyBtn && promoInput) {
+            promoApplyBtn.addEventListener("click", () => {
+                const code = promoInput.value.trim().toUpperCase();
+                
+                if (cartItems.length === 0) {
+                    showToast("Your cart is empty", "error");
+                    return;
+                }
+
+                if (code === "LUXE20") {
+                    appliedPromo = code;
+                    promoMessage.classList.remove("hidden", "text-error");
+                    promoMessage.classList.add("text-success", "text-emerald-600");
+                    promoMessage.innerText = "LUXE20 Promo applied successfully! 20% discount added.";
+                    showToast("Promo Code Luxe20 applied!", "success");
+                    updateOrderSummary();
+                } else if (code === "") {
+                    promoMessage.classList.remove("hidden");
+                    promoMessage.classList.add("text-error");
+                    promoMessage.innerText = "Please enter a valid code.";
+                } else {
+                    promoMessage.classList.remove("hidden");
+                    promoMessage.classList.add("text-error", "text-red-600");
+                    promoMessage.innerText = "Invalid promo code. Try 'LUXE20'";
+                    showToast("Invalid promo code", "error");
+                }
+            });
+        }
+
+        // 13. Proceed to Checkout CTA Integration
+        const checkoutBtn = document.getElementById("checkout-btn");
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener("click", () => {
+                if (cartItems.length === 0) {
+                    showToast("Add items to your cart before checking out", "error");
+                    return;
+                }
+                showToast("Entering Secure Checkout Portal...", "success");
+                
+                // Elegant full screen simulated redirection overlay
+                setTimeout(() => {
+                    const overlay = document.createElement("div");
+                    overlay.className = "fixed inset-0 bg-primary z-50 flex flex-col items-center justify-center text-on-primary transition-opacity duration-500 opacity-0";
+                    overlay.innerHTML = `
+                        <div class="text-center space-y-6">
+                            <h2 class="font-headline-md text-4xl italic">LUXE</h2>
+                            <p class="font-label-sm text-sm uppercase tracking-widest animate-pulse">Establishing secure billing connection...</p>
+                        </div>
+                    `;
+                    document.body.appendChild(overlay);
+                    setTimeout(() => overlay.classList.remove("opacity-0"), 10);
+                    
+                    // Simple simulation redirect back to parent home
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 2000);
+                }, 800);
+            });
+        }
+
+        // 14. Newsletter footer subscription interactive response
+        const newsletterBtn = document.getElementById("newsletter-btn");
+        const newsletterEmail = document.getElementById("newsletter-email");
+        if (newsletterBtn && newsletterEmail) {
+            newsletterBtn.addEventListener("click", () => {
+                const emailVal = newsletterEmail.value.trim();
+                if (emailVal) {
+                    showToast("Joined Luxe Editorial list successfully!", "success");
+                    newsletterEmail.value = "";
+                } else {
+                    showToast("Please enter a valid email address", "error");
+                }
+            });
+        }
+
+        // Initial launch
+        window.addEventListener("DOMContentLoaded", () => {
+            fetchCartData();
+        });
+    </script>
+</body>
+</html>

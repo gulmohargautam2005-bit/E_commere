@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Orders | LUXE Editorial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#1f1b13",
+                    "inverse-surface": "#303030",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#474746",
+                    "primary-container": "#1c1b1b",
+                    "on-secondary-fixed": "#1a1c1b",
+                    "primary": "#000000",
+                    "surface-dim": "#dbd9d9",
+                    "primary-fixed": "#e5e2e1",
+                    "inverse-primary": "#c8c6c5",
+                    "secondary": "#5e5e5d",
+                    "surface-container-highest": "#e4e2e2",
+                    "background": "#fbf9f8",
+                    "on-background": "#1b1c1c",
+                    "surface-bright": "#fbf9f8",
+                    "surface-container": "#efeded",
+                    "outline-variant": "#c4c7c7",
+                    "secondary-fixed-dim": "#c7c6c5",
+                    "inverse-on-surface": "#f2f0f0",
+                    "on-surface": "#1b1c1c",
+                    "surface-container-low": "#f5f3f3",
+                    "secondary-fixed": "#e3e2e0",
+                    "on-tertiary-fixed-variant": "#4b463c",
+                    "on-secondary-fixed-variant": "#464746",
+                    "on-primary-fixed": "#1c1b1b",
+                    "tertiary": "#000000",
+                    "on-tertiary-container": "#898377",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#e0dfde",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#747878",
+                    "on-secondary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "on-primary-container": "#858383",
+                    "error": "#ba1a1a",
+                    "on-secondary-container": "#626361",
+                    "surface-tint": "#5f5e5e",
+                    "tertiary-fixed": "#eae2d4",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#cdc6b8",
+                    "on-surface-variant": "#444748",
+                    "surface": "#fbf9f8",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#1f1b13",
+                    "surface-variant": "#e4e2e2",
+                    "surface-container-high": "#eae8e7",
+                    "primary-fixed-dim": "#c8c6c5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "64px",
+                    "unit": "8px",
+                    "max-width": "1440px",
+                    "gutter": "24px",
+                    "margin-mobile": "20px"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Bodoni Moda"],
+                    "display-lg": ["Bodoni Moda"],
+                    "body-md": ["Inter"],
+                    "display-lg-mobile": ["Bodoni Moda"],
+                    "headline-md": ["Bodoni Moda"],
+                    "label-sm": ["Inter"],
+                    "headline-xl-mobile": ["Bodoni Moda"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-xl": ["48px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "display-lg": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg-mobile": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-xl-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+      }
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #8C867A; border-radius: 10px; }
+      
+      .stagger-in { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary selection:text-white">
+<!-- TopNavBar -->
+<header class="bg-surface/80 dark:bg-surface/80 backdrop-blur-md text-primary dark:text-on-primary docked full-width top-0 sticky z-50 border-b border-outline-variant dark:border-outline">
+<div class="flex justify-between items-center w-full px-margin-desktop h-20 max-w-max-width mx-auto">
+<div class="flex items-center gap-12">
+<a class="font-headline-md text-headline-md font-bold tracking-tighter text-primary dark:text-on-primary" href="#">LUXE</a>
+<nav class="hidden md:flex gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Home</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Fashion</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Kidz</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:scale-105 transition-transform duration-300 ease-in-out" href="#">Watches</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<button class="flex items-center gap-2 font-label-sm text-label-sm hover:scale-105 transition-transform"><span class="material-symbols-outlined" data-icon="location_on">location_on</span><span class="hidden sm:inline">Location</span></button>
+<button class="flex items-center gap-2 font-label-sm text-label-sm hover:scale-105 transition-transform"><span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span><span class="hidden sm:inline">Cart</span></button>
+<button class="flex items-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined p-1 rounded-full border border-primary/10" data-icon="person">person</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-20">
+<!-- Page Header -->
+<section class="mb-20 stagger-in" style="animation-delay: 0.1s;">
+<h1 class="font-headline-xl text-headline-xl mb-4">My Orders</h1>
+<div class="h-px w-24 bg-primary mb-8"></div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                Review your editorial selections and tracking history. Each piece is a curated part of your narrative.
+            </p>
+</section>
+<!-- Order List Content -->
+<div class="stagger-in" style="animation-delay: 0.2s;">
+<div class="hidden md:grid grid-cols-12 gap-gutter pb-6 border-b border-outline-variant text-on-surface-variant font-label-sm text-label-sm uppercase tracking-widest">
+<div class="col-span-2">Payment ID</div>
+<div class="col-span-4">Product</div>
+<div class="col-span-2 text-center">Contact</div>
+<div class="col-span-1 text-center">Zip</div>
+<div class="col-span-1 text-right">Total</div>
+<div class="col-span-2 text-right">Action</div>
+</div>
+<!-- Order Item 1 -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter py-12 border-b border-outline-variant items-center hover:bg-surface-container-low transition-colors duration-500 group">
+<div class="col-span-1 md:col-span-2 order-2 md:order-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Order ID</span>
+<p class="font-body-md text-body-md font-medium">#PX-98421</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Oct 24, 2024</p>
+</div>
+<div class="col-span-1 md:col-span-4 order-1 md:order-2 flex gap-6 items-center">
+<div class="w-24 h-32 overflow-hidden bg-surface-container flex-shrink-0">
+<img alt="Luxury Wool Coat" class="w-full h-full object-cover grayscale-[0.3] group-hover:scale-110 transition-transform duration-700 ease-in-out" data-alt="A high-fashion editorial photograph of a heavy charcoal wool overcoat hanging in a minimalist white studio. The lighting is soft and diffuse, creating subtle shadows that emphasize the premium texture of the fabric. The aesthetic is clean, sophisticated, and monochromatic, aligning with a luxury brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSYqqEtulTuwiHA9iVLslQOd_OZya-5Z1CTVztVDVCqxGnx4E2LjJ0n73jTktcMKJ_8iDFfqyPz-qim0dpUftJtYzuXHfJNltMxVvXmc_QsVaBYQomiyNzcTukSzZZ8koJOisQGlWz2e9ugzTRiw-hPkjbPm6G7NL5xr_yHEyNr3-Tfu0YNTGrPBnHENgE0PG5IbsRGZ82uDHXEYnqzeTHze-1vcUFyOU3MRxzLEjnGJLgVNww3d4tHESkcsL7TcVyJYPPDOvIj54"/>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] leading-tight mb-2">Heritage Wool Overcoat</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">SIZE: 42 (L) • COLOR: CHARCOAL</p>
+</div>
+</div>
+<div class="col-span-1 md:col-span-2 order-3 md:order-3 md:text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Contact</span>
+<p class="font-body-md text-body-md">+1 (555) 012-9934</p>
+</div>
+<div class="col-span-1 md:col-span-1 order-4 md:order-4 md:text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Zip Code</span>
+<p class="font-body-md text-body-md">10001</p>
+</div>
+<div class="col-span-1 md:col-span-1 order-5 md:order-5 md:text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Amount</span>
+<p class="font-body-md text-body-md font-bold">$1,240.00</p>
+</div>
+<div class="col-span-1 md:col-span-2 order-6 md:order-6 text-right">
+<a class="inline-flex items-center gap-2 px-6 py-3 border border-outline hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 group/btn" href="#">
+<span class="font-label-sm text-label-sm">INVOICE</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+</a>
+</div>
+</div>
+<!-- Order Item 2 -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter py-12 border-b border-outline-variant items-center hover:bg-surface-container-low transition-colors duration-500 group">
+<div class="col-span-1 md:col-span-2 order-2 md:order-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Order ID</span>
+<p class="font-body-md text-body-md font-medium">#PX-88102</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Oct 12, 2024</p>
+</div>
+<div class="col-span-1 md:col-span-4 order-1 md:order-2 flex gap-6 items-center">
+<div class="w-24 h-32 overflow-hidden bg-surface-container flex-shrink-0">
+<img alt="Silk Dress" class="w-full h-full object-cover grayscale-[0.3] group-hover:scale-110 transition-transform duration-700 ease-in-out" data-alt="Close-up editorial shot of a flowing ivory silk dress draped elegantly. The lighting captures the lustrous sheen of the premium silk fabric against a neutral sand-colored background. The composition is artistic and minimalist, focusing on the fluidity and high-end craftsmanship of the garment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjpFf6AiqxdPpe7TghxOtJMyCrInqV2ChcVzKTfbUPXv_GOFjaGFK78WvdOg09tuUb0ylOvsCp-l5p-nbxitxWZL1RDmcmoXY6YM_B0ya8lZRDwVACWMKJZ1n2RAvOV2ru9W11rmMlqLIN1FgVZ674Vpc9mqNFT6qdqi2kZCUNKvKvX-Kb09WEuHC23uUI_pXTEmMj9qyC2G53ziK1e_j0Hxl0O7OilKL2vFlcClazMQJtIZl4T88cn-viieeBaB4k94qx2gu_dZc"/>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] leading-tight mb-2">Asymmetric Silk Wrap</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">SIZE: 38 (S) • COLOR: IVORY</p>
+</div>
+</div>
+<div class="col-span-1 md:col-span-2 order-3 md:order-3 md:text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Contact</span>
+<p class="font-body-md text-body-md">+1 (555) 012-9934</p>
+</div>
+<div class="col-span-1 md:col-span-1 order-4 md:order-4 md:text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Zip Code</span>
+<p class="font-body-md text-body-md">10001</p>
+</div>
+<div class="col-span-1 md:col-span-1 order-5 md:order-5 md:text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Amount</span>
+<p class="font-body-md text-body-md font-bold">$890.00</p>
+</div>
+<div class="col-span-1 md:col-span-2 order-6 md:order-6 text-right">
+<a class="inline-flex items-center gap-2 px-6 py-3 border border-outline hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 group/btn" href="#">
+<span class="font-label-sm text-label-sm">INVOICE</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+</a>
+</div>
+</div>
+<!-- Order Item 3 -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter py-12 border-b border-outline-variant items-center hover:bg-surface-container-low transition-colors duration-500 group">
+<div class="col-span-1 md:col-span-2 order-2 md:order-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Order ID</span>
+<p class="font-body-md text-body-md font-medium">#PX-72019</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Sept 28, 2024</p>
+</div>
+<div class="col-span-1 md:col-span-4 order-1 md:order-2 flex gap-6 items-center">
+<div class="w-24 h-32 overflow-hidden bg-surface-container flex-shrink-0">
+<img alt="Leather Boots" class="w-full h-full object-cover grayscale-[0.3] group-hover:scale-110 transition-transform duration-700 ease-in-out" data-alt="Minimalist product photography of a pair of handcrafted black leather ankle boots placed on a polished concrete surface. High-contrast lighting highlights the sharp silhouettes and the buttery texture of the grain leather. The mood is industrial yet luxurious, with a strong focus on form and material quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAumS4n2C9ivl4Wg0yk0v4CeX9NuyLmii1U-60jRdV8_9Ldu6ffAmiMB6_drMV-AD4YrBoLqQ-mfLXOanqk4yjhdke1AVm0EuNYfFp2SNT5qW00Kr6w6sMJJbVnZ9PM2Np5Oi8tVxCBSHTQUdc8pbiYfV8JU_iI3ix2YzUuBo5fCjC762AoqJ5zvXAeL6uR0CtZhQpufhU60npo8-ItEyw56eWDbQAVyONSJMzf-n5Mt0RPoch8SHsv9-lYnXu43YfzEQemdUrMRBs"/>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] leading-tight mb-2">Sculpted Leather Ankle Boot</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">SIZE: 41 • COLOR: NOIR</p>
+</div>
+</div>
+<div class="col-span-1 md:col-span-2 order-3 md:order-3 md:text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Contact</span>
+<p class="font-body-md text-body-md">+1 (555) 012-9934</p>
+</div>
+<div class="col-span-1 md:col-span-1 order-4 md:order-4 md:text-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Zip Code</span>
+<p class="font-body-md text-body-md">10001</p>
+</div>
+<div class="col-span-1 md:col-span-1 order-5 md:order-5 md:text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block md:hidden mb-1 uppercase opacity-50">Amount</span>
+<p class="font-body-md text-body-md font-bold">$550.00</p>
+</div>
+<div class="col-span-1 md:col-span-2 order-6 md:order-6 text-right">
+<a class="inline-flex items-center gap-2 px-6 py-3 border border-outline hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 group/btn" href="#">
+<span class="font-label-sm text-label-sm">INVOICE</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Pagination / Load More -->
+<div class="mt-20 flex justify-center stagger-in" style="animation-delay: 0.3s;">
+<button class="px-12 py-4 border border-primary text-primary font-label-sm text-label-sm hover:bg-primary hover:text-white transition-all duration-500 tracking-widest uppercase">
+                View Older Transactions
+            </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-inverse-surface border-t border-outline-variant">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-20 max-w-max-width mx-auto">
+<div class="col-span-1">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary block mb-6">LUXE</span>
+<p class="font-body-md text-body-md text-on-surface-variant">Redefining the digital shopping experience through editorial lens and curated craftsmanship.</p>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-sm text-label-sm font-bold mb-6 text-primary dark:text-inverse-primary uppercase tracking-widest">Navigation</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Journal</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Collections</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-sm text-label-sm font-bold mb-6 text-primary dark:text-inverse-primary uppercase tracking-widest">Support</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Shipping</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors" href="#">Returns</a></li>
+</ul>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-sm text-label-sm font-bold mb-6 text-primary dark:text-inverse-primary uppercase tracking-widest">Newsletter</h4>
+<div class="relative">
+<input class="w-full bg-transparent border-b border-primary/20 py-2 focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/50" placeholder="Email Address" type="email"/>
+<button class="absolute right-0 bottom-2 text-primary hover:translate-x-1 transition-transform">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-max-width mx-auto px-margin-desktop py-8 border-t border-outline-variant/30 flex justify-between items-center flex-wrap gap-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant">© 2024 LUXE Editorial. All rights reserved.</span>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined" data-icon="public">public</span></a>
+<a class="text-on-surface-variant hover:text-primary" href="#"><span class="material-symbols-outlined" data-icon="share">share</span></a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for Invoice buttons
+        document.querySelectorAll('a[href="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (link.innerText.includes('INVOICE')) {
+                    e.preventDefault();
+                    link.style.opacity = '0.5';
+                    const originalText = link.innerHTML;
+                    link.innerHTML = '<span class="font-label-sm text-label-sm">PREPARING...</span>';
+                    setTimeout(() => {
+                        link.style.opacity = '1';
+                        link.innerHTML = originalText;
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body></html>
