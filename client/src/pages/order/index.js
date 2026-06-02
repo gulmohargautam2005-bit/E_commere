@@ -1,46 +1,13 @@
-import React, { useState, useEffect, useRef, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Mycontext } from '../../App';
-import Dialog from "@mui/material/Dialog";
-import Slide from "@mui/material/Slide";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import Logout from "@mui/icons-material/Logout";
-import Settings from "@mui/icons-material/Settings";
-import Avatar from "@mui/material/Avatar";
-import { IoMdClose } from "react-icons/io";
-import { FaSearch } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchDataFromAPI } from '../../utils/api';
 import { downloadLuxeInvoice } from '../../utils/invoiceGenerator';
+import Header1 from '../../components/Header1';
+import Footer1 from '../../components/Footer1';
 import '../../web.css';
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 const OrderPage = () => {
   const navigate = useNavigate();
-  const context = useContext(Mycontext);
-
-  // States copied from home1
-  const [scrolled, setScrolled] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [activeSubmenu, setActiveSubmenu] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("Fruits & Vegetables");
-  const [activeLink, setActiveLink] = useState("Orders");
-
-  const [isOpenLocationModal, setIsOpenLocationModal] = useState(false);
-  const [selectedLocationTab, setSelectedLocationTab] = useState(null);
-  const [countryList, setCountryList] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("India");
-  const [profileAnchorEl, setProfileAnchorEl] = useState(null);
-
-  const dropdownRef = useRef(null);
-  const navLinksRef = useRef(null);
 
   // Dynamic Orders States
   const [orders, setOrders] = useState([]);
@@ -76,38 +43,6 @@ const OrderPage = () => {
     }, 1000);
   };
 
-  // Scroll listener for sticky navbar effects (copied from home1)
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Dropdown close on outside click (copied from home1)
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
-      if (navLinksRef.current && !navLinksRef.current.contains(event.target)) {
-        setActiveSubmenu(null);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Sync country list on context load (copied from home1)
-  useEffect(() => {
-    setCountryList(context.countrylist || []);
-  }, [context.countrylist]);
-
   // Fetch orders from database on component load
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
@@ -142,62 +77,6 @@ const OrderPage = () => {
         setLoading(false);
       });
   }, []);
-
-  // Profile click handlers (copied from home1)
-  const handleProfileClick = (event) => {
-    setProfileAnchorEl(event.currentTarget);
-  };
-  const handleProfileClose = () => {
-    setProfileAnchorEl(null);
-  };
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = '/';
-  };
-
-  // Location helpers (copied from home1)
-  const selectcountry = (index) => {
-    setSelectedLocationTab(index);
-    setSelectedCountry(countryList[index].country);
-    setIsOpenLocationModal(false);
-  };
-
-  const filterlist = (e) => {
-    const Keyword = e.target.value.toLowerCase();
-    if (Keyword !== "") {
-      const list = (context.countrylist || []).filter((item) => {
-        return item.country.toLowerCase().includes(Keyword);
-      });
-      setCountryList(list);
-    } else {
-      setCountryList(context.countrylist || []);
-    }
-  };
-
-  // Categories list (copied from home1)
-  const categories = [
-    { name: "Fruits & Vegetables", icon: "eco" },
-    { name: "Meats & Seafood", icon: "restaurant" },
-    { name: "Breakfast & Dairy", icon: "bakery_dining" },
-    { name: "Beverages", icon: "local_cafe" },
-    { name: "Breads & Bakery", icon: "breakfast_dining" },
-    { name: "Frozen Foods", icon: "kitchen" },
-    { name: "Biscuits & Snacks", icon: "cookie" },
-    { name: "Grocery & Staples", icon: "shopping_basket" },
-  ];
-
-  // Group subcategories from context (copied from home1)
-  const groupedSubCats = (context.subCatData || []).reduce((acc, item) => {
-    const catName = item.category?.name || "Other";
-    if (!acc[catName]) acc[catName] = [];
-    acc[catName].push(item);
-    return acc;
-  }, {});
-
-  const fashionKey = Object.keys(groupedSubCats).find(k => k.toLowerCase() === 'fashion');
-  const kidzKey = Object.keys(groupedSubCats).find(k => ['kidz', 'kids', 'kidszz'].includes(k.toLowerCase()));
-  const watchesKey = Object.keys(groupedSubCats).find(k => k.toLowerCase() === 'watches');
 
   // Dynamically load Tailwind CDN & Scoped configuration
   useEffect(() => {
@@ -254,440 +133,7 @@ const OrderPage = () => {
     };
   }, []);
 
-  // Shared Helper Renderers to avoid duplicate code
-  const renderNavbar = () => (
-    <nav
-      className={`luxe-navbar ${scrolled ? "scrolled" : ""} ${scrolled ? "h-compact" : "h-normal"}`}
-    >
-      <div className="luxe-navbar-container">
-        <div className="brand-logo" onClick={() => navigate("/")}>
-          LUXE
-        </div>
 
-        <ul className="nav-links" ref={navLinksRef}>
-          <li className="nav-item">
-            <button
-              className={`nav-link-btn ${activeLink === "Home" ? "active" : ""}`}
-              onClick={() => {
-                setActiveLink("Home");
-                setActiveSubmenu(null);
-                setDropdownOpen(false);
-                navigate("/");
-              }}
-            >
-              Home
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link-btn ${activeSubmenu === "Fashion" ? "active" : ""}`}
-              onClick={() => {
-                setActiveSubmenu(activeSubmenu === "Fashion" ? null : "Fashion");
-                setDropdownOpen(false);
-              }}
-            >
-              Fashion
-              <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                {activeSubmenu === "Fashion" ? "expand_less" : "expand_more"}
-              </span>
-            </button>
-            {fashionKey && groupedSubCats[fashionKey] && (
-              <div className={`luxe-submenu ${activeSubmenu === "Fashion" ? "show" : ""}`}>
-                {groupedSubCats[fashionKey].map((sub, idx) => (
-                  <button
-                    key={idx}
-                    className="luxe-submenu-item"
-                    onClick={() => {
-                      setActiveSubmenu(null);
-                      setActiveLink("Fashion");
-                      navigate(`/subCat/${sub._id}`);
-                    }}
-                  >
-                    {sub.subCat}
-                  </button>
-                ))}
-              </div>
-            )}
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link-btn ${activeSubmenu === "Kidz" ? "active" : ""}`}
-              onClick={() => {
-                setActiveSubmenu(activeSubmenu === "Kidz" ? null : "Kidz");
-                setDropdownOpen(false);
-              }}
-            >
-              Kidz
-              <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                {activeSubmenu === "Kidz" ? "expand_less" : "expand_more"}
-              </span>
-            </button>
-            {kidzKey && groupedSubCats[kidzKey] && (
-              <div className={`luxe-submenu ${activeSubmenu === "Kidz" ? "show" : ""}`}>
-                {groupedSubCats[kidzKey].map((sub, idx) => (
-                  <button
-                    key={idx}
-                    className="luxe-submenu-item"
-                    onClick={() => {
-                      setActiveSubmenu(null);
-                      setActiveLink("Kidz");
-                      navigate(`/subCat/${sub._id}`);
-                    }}
-                  >
-                    {sub.subCat}
-                  </button>
-                ))}
-              </div>
-            )}
-          </li>
-          <li className="nav-item">
-            <button
-              className={`nav-link-btn ${activeSubmenu === "Watches" ? "active" : ""}`}
-              onClick={() => {
-                setActiveSubmenu(activeSubmenu === "Watches" ? null : "Watches");
-                setDropdownOpen(false);
-              }}
-            >
-              Watches
-              <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                {activeSubmenu === "Watches" ? "expand_less" : "expand_more"}
-              </span>
-            </button>
-            {watchesKey && groupedSubCats[watchesKey] && (
-              <div className={`luxe-submenu ${activeSubmenu === "Watches" ? "show" : ""}`}>
-                {groupedSubCats[watchesKey].map((sub, idx) => (
-                  <button
-                    key={idx}
-                    className="luxe-submenu-item"
-                    onClick={() => {
-                      setActiveSubmenu(null);
-                      setActiveLink("Watches");
-                      navigate(`/subCat/${sub._id}`);
-                    }}
-                  >
-                    {sub.subCat}
-                  </button>
-                ))}
-              </div>
-            )}
-          </li>
-
-          <li className="nav-item" ref={dropdownRef}>
-            <button
-              className={`nav-link-btn ${dropdownOpen ? "active" : ""}`}
-              onClick={() => {
-                setDropdownOpen(!dropdownOpen);
-                setActiveSubmenu(null);
-              }}
-            >
-              Categories
-              <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                {dropdownOpen ? "expand_less" : "expand_more"}
-              </span>
-            </button>
-
-            <div className={`categories-dropdown ${dropdownOpen ? "show" : ""}`}>
-              {categories.map((cat, idx) => (
-                <button
-                  key={idx}
-                  className={`dropdown-row ${selectedCategory === cat.name ? "selected" : ""}`}
-                  onClick={() => {
-                    setSelectedCategory(cat.name);
-                    setDropdownOpen(false);
-                  }}
-                >
-                  <span className="material-symbols-outlined dropdown-icon">
-                    {cat.icon}
-                  </span>
-                  <span className="dropdown-label">{cat.name}</span>
-                </button>
-              ))}
-            </div>
-          </li>
-        </ul>
-
-        <div className="right-cluster">
-          <div className="search-bar-luxury d-none d-md-flex align-items-center" style={{
-            display: "flex",
-            alignItems: "center",
-            border: "1px solid var(--outline-variant)",
-            borderRadius: "20px",
-            padding: "4px 16px",
-            backgroundColor: "var(--surface-dim)",
-            marginRight: "4px"
-          }}>
-            <input
-              placeholder="Search products..."
-              type="text"
-              style={{
-                border: "none",
-                outline: "none",
-                background: "transparent",
-                fontSize: "12px",
-                fontFamily: "var(--font-body)",
-                color: "var(--primary)",
-                width: "120px"
-              }}
-            />
-            <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "var(--on-surface-variant)", cursor: "pointer" }}>
-              search
-            </span>
-          </div>
-
-          <div
-            className="location-pill"
-            onClick={() => {
-              setCountryList(context.countrylist || []);
-              setIsOpenLocationModal(true);
-            }}
-          >
-            <span className="material-symbols-outlined text-[20px]" style={{ color: "var(--on-surface-variant)" }}>
-              location_on
-            </span>
-            <span className="location-text">{selectedCountry}</span>
-          </div>
-
-          <button className="cart-icon-wrapper icon-hover-trigger" onClick={() => navigate("/cart")}>
-            <span className="material-symbols-outlined" style={{ fontSize: "28px" }}>
-              shopping_bag
-            </span>
-            <span className="cart-badge">
-              {context?.cartData?.length || 0}
-            </span>
-          </button>
-
-          {context.isLogin !== true ? (
-            <button
-              className="nav-link-btn"
-              onClick={() => navigate("/signin")}
-              style={{ fontSize: "11px", fontWeight: "600", letterSpacing: "0.18em", textTransform: "uppercase" }}
-            >
-              Sign In
-            </button>
-          ) : (
-            <>
-              <div
-                className="profile-avatar icon-hover-trigger"
-                onClick={handleProfileClick}
-                style={{ cursor: "pointer" }}
-              >
-                {context.user?.name?.substring(0, 2).toUpperCase() || "JD"}
-              </div>
-              <Menu
-                anchorEl={profileAnchorEl}
-                id="account-menu"
-                open={Boolean(profileAnchorEl)}
-                onClose={handleProfileClose}
-                disableScrollLock={true}
-                onClick={handleProfileClose}
-                slotProps={{
-                  paper: {
-                    elevation: 0,
-                    sx: {
-                      overflow: 'visible',
-                      filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                      mt: 1.5,
-                      '& .MuiAvatar-root': {
-                        width: 32,
-                        height: 32,
-                        ml: -0.5,
-                        mr: 1,
-                      },
-                      '&::before': {
-                        content: '""',
-                        display: 'block',
-                        position: 'absolute',
-                        top: 0,
-                        right: 14,
-                        width: 10,
-                        height: 10,
-                        bgcolor: 'background.paper',
-                        transform: 'translateY(-50%) rotate(45deg)',
-                        zIndex: 0,
-                      },
-                    },
-                  },
-                }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-              >
-                <MenuItem onClick={() => { handleProfileClose(); navigate("/my-account"); }}>
-                  <Avatar sx={{ width: 32, height: 32, mr: 1 }} />  My account
-                </MenuItem>
-                <MenuItem onClick={() => { handleProfileClose(); navigate("/order"); }}>
-                  <Avatar sx={{ width: 32, height: 32, mr: 1 }} /> Orders
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => { handleProfileClose(); navigate("/wishlist"); }}>
-                  <ListItemIcon>
-                    <FaRegHeart />
-                  </ListItemIcon>
-                  Wishlist
-                </MenuItem>
-                <MenuItem onClick={handleProfileClose}>
-                  <ListItemIcon>
-                    <Settings fontSize="small" />
-                  </ListItemIcon>
-                  Settings
-                </MenuItem>
-                <MenuItem onClick={handleLogout}>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  Logout
-                </MenuItem>
-              </Menu>
-            </>
-          )}
-        </div>
-      </div>
-    </nav>
-  );
-
-  const renderFooter = () => (
-    <footer className="editorial-footer mt-auto">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-12">
-        <div className="row justify-content-between gap-5 mb-5">
-          <div className="col-lg-4">
-            <Link to="/" className="footer-logo">LUXE</Link>
-            <p className="footer-desc">
-              A curated space for the sophisticated wardrobe. Each collection represents an intentional synthesis of high couture and high design.
-            </p>
-            <div className="footer-socials">
-              <a className="footer-social-icon" href="#" onClick={(e) => e.preventDefault()}>FB</a>
-              <a className="footer-social-icon" href="#" onClick={(e) => e.preventDefault()}>IG</a>
-              <a className="footer-social-icon" href="#" onClick={(e) => e.preventDefault()}>YT</a>
-              <a className="footer-social-icon" href="#" onClick={(e) => e.preventDefault()}>PIN</a>
-            </div>
-          </div>
-          <div className="col-lg-2">
-            <h4 className="footer-heading">Navigation</h4>
-            <ul className="footer-links">
-              <li className="footer-link-item">
-                <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); navigate("/"); }}>Journal</a>
-              </li>
-              <li className="footer-link-item">
-                <a className="footer-link" href="#" onClick={(e) => { e.preventDefault(); navigate("/cat"); }}>Collections</a>
-              </li>
-              <li className="footer-link-item">
-                <a className="footer-link" href="#" onClick={(e) => e.preventDefault()}>Contact</a>
-              </li>
-            </ul>
-          </div>
-          <div className="col-lg-2">
-            <h4 className="footer-heading">Support</h4>
-            <ul className="footer-links">
-              <li className="footer-link-item">
-                <a className="footer-link" href="#" onClick={(e) => e.preventDefault()}>Shipping</a>
-              </li>
-              <li className="footer-link-item">
-                <a className="footer-link" href="#" onClick={(e) => e.preventDefault()}>Privacy Policy</a>
-              </li>
-              <li className="footer-link-item">
-                <a className="footer-link" href="#" onClick={(e) => e.preventDefault()}>Returns</a>
-              </li>
-            </ul>
-          </div>
-          <div className="col-lg-2">
-            <h4 className="footer-heading">Newsletter</h4>
-            <div className="position-relative" style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.2)", paddingBottom: "8px" }}>
-              <input
-                className="w-100 bg-transparent border-0 py-2 outline-none text-white font-body-md"
-                placeholder="Enter your email"
-                type="email"
-                style={{ border: "none", outline: "none", background: "transparent", color: "#ffffff", width: "100%", fontSize: "14px" }}
-              />
-              <button
-                className="position-absolute end-0 bottom-0 bg-transparent border-0 font-label-sm uppercase tracking-widest text-white"
-                style={{ background: "transparent", border: "none", color: "#ffffff", fontSize: "11px", fontWeight: "700", letterSpacing: "0.15em", cursor: "pointer" }}
-              >
-                Join
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-4 pt-4 border-t border-white border-opacity-10">
-          <span className="font-label-sm text-white text-opacity-40" style={{ fontSize: "11px", letterSpacing: "0.1em" }}>
-            © {new Date().getFullYear()} LUXE EDITORIAL. ALL RIGHTS RESERVED.
-          </span>
-          <div className="d-flex gap-4 align-items-center text-white text-opacity-40">
-            <span className="font-label-sm" style={{ fontSize: "11px", letterSpacing: "0.1em", cursor: "pointer" }}>PRIVACY</span>
-            <span className="font-label-sm" style={{ fontSize: "11px", letterSpacing: "0.1em", cursor: "pointer" }}>TERMS</span>
-            <span className="font-label-sm" style={{ fontSize: "11px", letterSpacing: "0.1em", cursor: "pointer" }}>COOKIES</span>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-
-  const renderLocationDialog = () => (
-    <Dialog
-      open={isOpenLocationModal}
-      disableScrollLock={true}
-      className="location"
-      onClose={() => setIsOpenLocationModal(false)}
-      TransitionComponent={Transition}
-    >
-      <div style={{ padding: "24px", position: "relative" }}>
-        <h4 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: "600", marginBottom: "8px" }}>
-          Choose your Delivery Location
-        </h4>
-        <p style={{ fontFamily: "var(--font-body)", fontSize: "13px", color: "var(--on-surface-variant)", marginBottom: "20px" }}>
-          Enter your address and we will specify the offer for your area.
-        </p>
-        <Button
-          onClick={() => setIsOpenLocationModal(false)}
-          style={{
-            position: "absolute",
-            top: "16px",
-            right: "16px",
-            minWidth: "auto",
-            padding: "8px",
-            color: "var(--primary)"
-          }}
-        >
-          <IoMdClose size={24} />
-        </Button>
-
-        <div style={{ display: "flex", alignItems: "center", border: "1px solid var(--outline-variant)", borderRadius: "4px", padding: "4px 12px", marginBottom: "20px" }}>
-          <input
-            onChange={filterlist}
-            placeholder="Search your area..."
-            type="text"
-            style={{ border: "none", outline: "none", width: "100%", fontFamily: "var(--font-body)", fontSize: "13px", padding: "8px 0" }}
-          />
-          <Button style={{ minWidth: "auto", color: "var(--on-surface-variant)" }}>
-            <FaSearch />
-          </Button>
-        </div>
-
-        <ul className="clist" style={{ listStyle: "none", padding: 0, margin: 0, maxHeight: "260px", overflowY: "auto" }}>
-          {countryList?.length !== 0 && countryList?.map((item, index) => (
-            <li key={index} style={{ marginBottom: "8px" }}>
-              <Button
-                onClick={() => selectcountry(index)}
-                className={`${selectedLocationTab === index ? "active" : ""}`}
-                style={{
-                  width: "100%",
-                  justifyContent: "flex-start",
-                  fontFamily: "var(--font-body)",
-                  fontSize: "13px",
-                  textTransform: "none",
-                  color: selectedLocationTab === index ? "var(--primary)" : "var(--on-surface-variant)",
-                  fontWeight: selectedLocationTab === index ? "600" : "400",
-                  backgroundColor: selectedLocationTab === index ? "var(--surface-container)" : "transparent",
-                  textAlign: "left",
-                  padding: "8px 16px"
-                }}
-              >
-                {item.country}
-              </Button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </Dialog>
-  );
 
   const renderSkeletons = () => (
     <div className="flex flex-col gap-2 w-full">
@@ -735,7 +181,7 @@ const OrderPage = () => {
   if (!loading && (!user || !user.userid)) {
     return (
       <div className="luxe-body min-h-screen flex flex-col font-body selection:bg-black selection:text-white">
-        {renderNavbar()}
+        <Header1 activePage="Orders" />
 
         <main className="flex-grow flex flex-col items-center justify-center text-center px-6 py-20 pt-40 max-w-[1440px] mx-auto w-full gap-8 animate-fade-up">
           <span className="material-symbols-outlined text-[64px] text-outline">lock</span>
@@ -753,8 +199,7 @@ const OrderPage = () => {
           </button>
         </main>
 
-        {renderFooter()}
-        {renderLocationDialog()}
+        <Footer1 />
       </div>
     );
   }
@@ -763,7 +208,7 @@ const OrderPage = () => {
     <div className="luxe-body min-h-screen flex flex-col font-body selection:bg-black selection:text-white">
 
       {/* Render matching header */}
-      {renderNavbar()}
+      <Header1 activePage="Orders" />
 
       {/* Main Page Container (Offset by navbar height) */}
       <main className="flex-grow max-w-[1440px] mx-auto w-full px-5 md:px-16 pt-36 md:pt-40 pb-16 flex flex-col gap-20">
@@ -891,10 +336,7 @@ const OrderPage = () => {
       </main>
 
       {/* Render matching footer */}
-      {renderFooter()}
-
-      {/* Render location selection popups */}
-      {renderLocationDialog()}
+      <Footer1 />
 
     </div>
   );

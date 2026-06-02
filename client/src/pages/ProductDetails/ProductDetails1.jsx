@@ -1,20 +1,11 @@
 import React, { useContext, useEffect, useMemo, useState, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import Slide from "@mui/material/Slide";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
-import ListItemIcon from "@mui/material/ListItemIcon";
 
 // Icon Imports
-import { IoMdClose } from "react-icons/io";
-import { FaSearch, FaRegHeart } from "react-icons/fa";
-import Logout from "@mui/icons-material/Logout";
-import Settings from "@mui/icons-material/Settings";
+import { FaRegHeart } from "react-icons/fa";
+import Header1 from "../../components/Header1";
+import Footer1 from "../../components/Footer1";
 
 // Luxe Components
 import Productzoom from "../../components/Productzoom";
@@ -28,11 +19,9 @@ import { Mycontext } from "../../App";
 
 // Toast Import
 import toast, { Toaster } from "react-hot-toast";
+import '../../web.css';
 
-// Slide Transition for Dialog
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+
 
 const ProductDetails1 = () => {
   const navigate = useNavigate();
@@ -106,24 +95,7 @@ const ProductDetails1 = () => {
   const [cartfield, setcartfield] = useState({});
   const [listfield, setlistfield] = useState({});
 
-  // Navbar states
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [activeSubmenu, setActiveSubmenu] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("Fruits & Vegetables");
-  const [activeLink, setActiveLink] = useState("Watches");
 
-  // Location modal states
-  const [isOpenLocationModal, setIsOpenLocationModal] = useState(false);
-  const [selectedLocationTab, setSelectedLocationTab] = useState(null);
-  const [countryList, setCountryList] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState("London");
-
-  // Profile dropdown state
-  const [profileAnchorEl, setProfileAnchorEl] = useState(null);
-
-  // Refs
-  const dropdownRef = useRef(null);
-  const navLinksRef = useRef(null);
 
   // Dynamically load Tailwind CDN & Scoped configuration
   useEffect(() => {
@@ -344,56 +316,7 @@ const ProductDetails1 = () => {
     playSuccessSound();
   };
 
-  // Load locations
-  useEffect(() => {
-    setCountryList(context.countrylist || []);
-  }, [context.countrylist]);
 
-  // Profile click handlers
-  const handleProfileClick = (event) => {
-    setProfileAnchorEl(event.currentTarget);
-  };
-  const handleProfileClose = () => {
-    setProfileAnchorEl(null);
-  };
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = '/';
-  };
-
-  // Location helpers
-  const selectcountry = (index) => {
-    setSelectedLocationTab(index);
-    setSelectedCountry(context.countrylist[index].country);
-    setIsOpenLocationModal(false);
-  };
-
-  const filterlist = (e) => {
-    const Keyword = e.target.value.toLowerCase();
-    if (Keyword !== "") {
-      const list = (context.countrylist || []).filter((item) => {
-        return item.country.toLowerCase().includes(Keyword);
-      });
-      setCountryList(list);
-    } else {
-      setCountryList(context.countrylist || []);
-    }
-  };
-
-  // Subcategories grouper
-  const groupedSubCats = (context.subCatData || []).reduce((acc, item) => {
-    const catName = item.category?.name || "Other";
-    if (!acc[catName]) acc[catName] = [];
-    acc[catName].push(item);
-    return acc;
-  }, {});
-
-  const fashionKey = Object.keys(groupedSubCats).find(k => k.toLowerCase() === 'fashion');
-  const kidzKey = Object.keys(groupedSubCats).find(k => ['kidz', 'kids', 'kidszz'].includes(k.toLowerCase()));
-  const watchesKey = Object.keys(groupedSubCats).find(k => k.toLowerCase() === 'watches');
-
-  const totalItemsCount = (context.cartData || []).reduce((sum, item) => sum + (item.quantity || 0), 0);
 
   // Mocks
   const product = useMemo(
@@ -462,16 +385,13 @@ const ProductDetails1 = () => {
     []
   );
 
-  const categoriesList = [
-    { name: "Fruits & Vegetables", icon: "nutrition" },
-    { name: "Meats & Seafood", icon: "set_meal" },
-    { name: "Breakfast & Dairy", icon: "breakfast_dining" },
-    { name: "Beverages", icon: "local_cafe" },
-    { name: "Breads & Bakery", icon: "bakery_dining" },
-    { name: "Frozen Foods", icon: "ac_unit" },
-    { name: "Biscuits & Snacks", icon: "cookie" },
-    { name: "Grocery & Staples", icon: "shopping_basket" }
-  ];
+  const activePage = useMemo(() => {
+    const catName = productdata?.category?.name?.toLowerCase() || "";
+    if (catName.includes("watch")) return "Watches";
+    if (catName.includes("kid")) return "Kidz";
+    if (catName.includes("fashion")) return "Fashion";
+    return "";
+  }, [productdata]);
 
   return (
     <>
@@ -633,237 +553,7 @@ const ProductDetails1 = () => {
           border: 2px solid #000000 !important;
         }
 
-        /* Nav links layout */
-        .luxe-navbar {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          z-index: 1000;
-          transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-          background-color: rgba(255, 255, 255, 0.92);
-          backdrop-filter: blur(12px);
-          border-bottom: 1px solid #e0e0e0;
-          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
-        }
-
-        .luxe-navbar-container {
-          max-width: 1440px;
-          margin: 0 auto;
-          padding: 0 48px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          height: 80px;
-        }
-
-        .brand-logo {
-          font-family: 'Bodoni Moda', serif;
-          font-weight: 800;
-          font-size: 32px;
-          letter-spacing: -0.05em;
-          text-transform: uppercase;
-          color: #000000 !important;
-          cursor: pointer;
-          user-select: none;
-          text-decoration: none;
-        }
-
-        .nav-links {
-          display: flex;
-          align-items: center;
-          gap: 40px;
-          margin: 0;
-          padding: 0;
-          list-style: none;
-        }
-
-        .nav-item {
-          position: relative;
-        }
-
-        .nav-link-btn {
-          font-family: 'Inter', sans-serif !important;
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: #444748 !important;
-          background: none;
-          border: none;
-          padding: 8px 0;
-          cursor: pointer;
-          transition: color 0.3s ease;
-          display: flex;
-          align-items: center;
-          gap: 6px;
-        }
-        .nav-link-btn:hover {
-          color: #000000 !important;
-        }
-        .nav-link-btn.active {
-          color: #000000 !important;
-        }
-        .nav-link-btn.active::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 1px;
-          background-color: #000000;
-        }
-
-        .categories-dropdown {
-          position: absolute;
-          top: 100%;
-          left: 50%;
-          transform: translateX(-50%) translateY(16px);
-          background-color: #ffffff;
-          border: 1px solid #e0e0e0;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-          border-radius: 4px;
-          min-width: 300px;
-          padding: 12px 0;
-          z-index: 1010;
-          opacity: 0;
-          visibility: hidden;
-          transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .categories-dropdown.show {
-          opacity: 1;
-          visibility: visible;
-          transform: translateX(-50%) translateY(8px);
-        }
-
-        .dropdown-row {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          padding: 14px 24px;
-          width: 100%;
-          background: none;
-          border: none;
-          text-align: left;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-        .dropdown-row:hover {
-          background-color: #f5f5f5;
-        }
-        .dropdown-row.selected {
-          background-color: rgba(0, 0, 0, 0.05);
-          font-weight: 700;
-        }
-
-        .right-cluster {
-          display: flex;
-          align-items: center;
-          gap: 24px;
-        }
-
-        .location-pill {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          background-color: #f5f5f5;
-          border: 1px solid #e0e0e0;
-          padding: 8px 16px;
-          border-radius: 99px;
-          cursor: pointer;
-        }
-        .location-text {
-          font-family: 'Inter', sans-serif !important;
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.05em;
-          color: #000000 !important;
-        }
-
-        .cart-icon-wrapper {
-          position: relative;
-          cursor: pointer;
-          background: none;
-          border: none;
-          display: flex;
-          align-items: center;
-          padding: 0;
-          color: #000000 !important;
-        }
-        .cart-badge {
-          position: absolute;
-          top: -4px;
-          right: -4px;
-          background-color: #000000;
-          color: #ffffff !important;
-          font-size: 9px;
-          font-weight: 700;
-          width: 16px;
-          height: 16px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .profile-avatar {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background-color: #000000;
-          color: #ffffff !important;
-          font-family: 'Inter', sans-serif;
-          font-size: 13px;
-          font-weight: 700;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          border: 1px solid #e0e0e0;
-        }
-
-        .luxe-submenu {
-          position: absolute;
-          top: 100%;
-          left: 50%;
-          transform: translateX(-50%) translateY(16px);
-          background-color: #ffffff;
-          border: 1px solid #e0e0e0;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-          border-radius: 4px;
-          min-width: 220px;
-          padding: 12px 0;
-          z-index: 1010;
-          opacity: 0;
-          visibility: hidden;
-          transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .luxe-submenu.show {
-          opacity: 1;
-          visibility: visible;
-          transform: translateX(-50%) translateY(8px);
-        }
-        .luxe-submenu-item {
-          display: block;
-          width: 100%;
-          padding: 10px 24px;
-          text-align: left;
-          background: none;
-          border: none;
-          font-family: 'Inter', sans-serif !important;
-          font-size: 11px;
-          font-weight: 500;
-          letter-spacing: 0.15em;
-          text-transform: uppercase;
-          color: #000000 !important;
-          text-decoration: none;
-          transition: all 0.2s ease;
-          cursor: pointer;
-        }
-        .luxe-submenu-item:hover {
-          background-color: #f5f5f5;
-          color: #000000 !important;
-        }
+        /* Header Navigation styles moved to web.css */
 
         /* Stepper override */
         .quantitydrop {
@@ -957,45 +647,7 @@ const ProductDetails1 = () => {
           font-size: 13px !important;
         }
 
-        /* Editorial Footer */
-        footer.editorial-footer {
-          background: #000000 !important;
-          background-color: #000000 !important;
-          color: #ffffff !important;
-          padding: 120px 48px 48px;
-        }
-        .editorial-footer a,
-        .editorial-footer .footer-logo,
-        .editorial-footer .footer-logo:hover,
-        .editorial-footer .footer-link,
-        .editorial-footer .footer-heading,
-        .editorial-footer span {
-          font-family: 'Inter', sans-serif !important;
-        }
-        .editorial-footer a,
-        .editorial-footer .footer-logo {
-          color: #ffffff !important;
-          text-decoration: none !important;
-        }
-        .editorial-footer .footer-link {
-          color: rgba(255, 255, 255, 0.6) !important;
-          text-decoration: none !important;
-          transition: color 0.3s ease !important;
-        }
-        .editorial-footer .footer-link:hover {
-          color: #ffffff !important;
-        }
-        .editorial-footer span.material-symbols-outlined {
-          color: #ffffff !important;
-          opacity: 0.8 !important;
-          transition: opacity 0.3s ease !important;
-        }
-        .editorial-footer span.material-symbols-outlined:hover {
-          opacity: 1 !important;
-        }
-        .editorial-footer .footer-heading {
-          color: #ffffff !important;
-        }
+        /* Editorial Footer styles moved to web.css */
 
         /* Force all blue text to black */
         .productDetailsPage .text-primary,
@@ -1014,7 +666,7 @@ const ProductDetails1 = () => {
         .productDetailsPage h5,
         .productDetailsPage p,
         .productDetailsPage li,
-        .productDetailsPage span:not(.text-danger):not(.text-error):not(.MuiRating-icon):not(.badge) {
+        .productDetailsPage span:not(.text-danger):not(.text-error):not(.MuiRating-icon):not(.badge):not(.cart-badge) {
           color: #000000 !important;
         }
 
@@ -1179,281 +831,7 @@ const ProductDetails1 = () => {
       `}</style>
 
       <div className="productDetailsPage bg-white min-h-screen text-black">
-        {/* 1. STICKY LUXE NAVBAR */}
-        <nav className="luxe-navbar">
-          <div className="luxe-navbar-container">
-            {/* Brand Logo */}
-            <Link className="brand-logo" to="/">
-              LUXE
-            </Link>
-
-            {/* Center Navigation Links */}
-            <ul className="nav-links" ref={navLinksRef}>
-              <li className="nav-item">
-                <button
-                  className={`nav-link-btn ${activeLink === "Home" ? "active" : ""}`}
-                  onClick={() => {
-                    setActiveLink("Home");
-                    setActiveSubmenu(null);
-                    setDropdownOpen(false);
-                    navigate("/");
-                  }}
-                >
-                  Home
-                </button>
-              </li>
-
-              <li className="nav-item">
-                <button
-                  className={`nav-link-btn ${activeSubmenu === "Fashion" ? "active" : ""}`}
-                  onClick={() => {
-                    setActiveSubmenu(activeSubmenu === "Fashion" ? null : "Fashion");
-                    setDropdownOpen(false);
-                  }}
-                >
-                  Fashion
-                  <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                    {activeSubmenu === "Fashion" ? "expand_less" : "expand_more"}
-                  </span>
-                </button>
-                {fashionKey && groupedSubCats[fashionKey] && (
-                  <div className={`luxe-submenu ${activeSubmenu === "Fashion" ? "show" : ""}`}>
-                    {groupedSubCats[fashionKey].map((sub, idx) => (
-                      <button
-                        key={idx}
-                        className="luxe-submenu-item"
-                        onClick={() => {
-                          setActiveSubmenu(null);
-                          setActiveLink("Fashion");
-                          navigate(`/subCat/${sub._id}`);
-                        }}
-                      >
-                        {sub.subCat}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </li>
-
-              <li className="nav-item">
-                <button
-                  className={`nav-link-btn ${activeSubmenu === "Kidz" ? "active" : ""}`}
-                  onClick={() => {
-                    setActiveSubmenu(activeSubmenu === "Kidz" ? null : "Kidz");
-                    setDropdownOpen(false);
-                  }}
-                >
-                  Kidz
-                  <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                    {activeSubmenu === "Kidz" ? "expand_less" : "expand_more"}
-                  </span>
-                </button>
-                {kidzKey && groupedSubCats[kidzKey] && (
-                  <div className={`luxe-submenu ${activeSubmenu === "Kidz" ? "show" : ""}`}>
-                    {groupedSubCats[kidzKey].map((sub, idx) => (
-                      <button
-                        key={idx}
-                        className="luxe-submenu-item"
-                        onClick={() => {
-                          setActiveSubmenu(null);
-                          setActiveLink("Kidz");
-                          navigate(`/subCat/${sub._id}`);
-                        }}
-                      >
-                        {sub.subCat}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </li>
-
-              <li className="nav-item">
-                <button
-                  className={`nav-link-btn ${activeSubmenu === "Watches" || activeLink === "Watches" ? "active" : ""}`}
-                  onClick={() => {
-                    setActiveSubmenu(activeSubmenu === "Watches" ? null : "Watches");
-                    setDropdownOpen(false);
-                  }}
-                >
-                  Watches
-                  <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                    {activeSubmenu === "Watches" ? "expand_less" : "expand_more"}
-                  </span>
-                </button>
-                {watchesKey && groupedSubCats[watchesKey] && (
-                  <div className={`luxe-submenu ${activeSubmenu === "Watches" ? "show" : ""}`}>
-                    {groupedSubCats[watchesKey].map((sub, idx) => (
-                      <button
-                        key={idx}
-                        className="luxe-submenu-item"
-                        onClick={() => {
-                          setActiveSubmenu(null);
-                          setActiveLink("Watches");
-                          navigate(`/subCat/${sub._id}`);
-                        }}
-                      >
-                        {sub.subCat}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </li>
-
-              {/* Categories dropdown link */}
-              <li className="nav-item" ref={dropdownRef}>
-                <button
-                  className={`nav-link-btn ${dropdownOpen ? "active" : ""}`}
-                  onClick={() => {
-                    setDropdownOpen(!dropdownOpen);
-                    setActiveSubmenu(null);
-                  }}
-                >
-                  Categories
-                  <span className="material-symbols-outlined" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                    {dropdownOpen ? "expand_less" : "expand_more"}
-                  </span>
-                </button>
-
-                {/* Subcategory Dropdown Panel */}
-                <div className={`categories-dropdown ${dropdownOpen ? "show" : ""}`}>
-                  {categoriesList.map((cat, idx) => (
-                    <button
-                      key={idx}
-                      className={`dropdown-row ${selectedCategory === cat.name ? "selected" : ""}`}
-                      onClick={() => {
-                        setSelectedCategory(cat.name);
-                        setDropdownOpen(false);
-                      }}
-                    >
-                      <span className="material-symbols-outlined dropdown-icon">{cat.icon}</span>
-                      <span className="dropdown-label">{cat.name}</span>
-                    </button>
-                  ))}
-                </div>
-              </li>
-            </ul>
-
-            {/* Right cluster */}
-            <div className="right-cluster">
-              {/* Minimal Search Bar */}
-              <div className="hidden md:flex items-center gap-3 border-b border-outline-variant/60 py-1 max-w-[200px]">
-                <span className="material-symbols-outlined" style={{ fontSize: "18px", color: "#666666", cursor: "pointer" }}>
-                  search
-                </span>
-              </div>
-
-              {/* Location Pill */}
-              <div
-                className="location-pill"
-                onClick={() => {
-                  setCountryList(context.countrylist || []);
-                  setIsOpenLocationModal(true);
-                }}
-              >
-                <span className="material-symbols-outlined text-[20px]" style={{ color: "#666666" }}>
-                  location_on
-                </span>
-                <span className="location-text">{selectedCountry}</span>
-              </div>
-
-              {/* Cart Icon with badge */}
-              <button className="cart-icon-wrapper icon-hover-trigger" onClick={() => navigate("/cart")}>
-                <span className="material-symbols-outlined" style={{ fontSize: "28px" }}>
-                  shopping_bag
-                </span>
-                <span className="cart-badge">
-                  {totalItemsCount}
-                </span>
-              </button>
-
-              {/* Profile Avatar / Auth Dropdown */}
-              {context.isLogin !== true ? (
-                <button
-                  className="nav-link-btn"
-                  onClick={() => navigate("/signin")}
-                >
-                  Sign In
-                </button>
-              ) : (
-                <>
-                  <div
-                    className="profile-avatar icon-hover-trigger"
-                    onClick={handleProfileClick}
-                  >
-                    {context.user?.name?.substring(0, 2).toUpperCase() || "JD"}
-                  </div>
-                  <Menu
-                    anchorEl={profileAnchorEl}
-                    id="account-menu"
-                    open={Boolean(profileAnchorEl)}
-                    onClose={handleProfileClose}
-                    disableScrollLock={true}
-                    onClick={handleProfileClose}
-                    slotProps={{
-                      paper: {
-                        elevation: 0,
-                        sx: {
-                          overflow: 'visible',
-                          filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                          mt: 1.5,
-                          '& .MuiAvatar-root': {
-                            width: 32,
-                            height: 32,
-                            ml: -0.5,
-                            mr: 1,
-                          },
-                          '&::before': {
-                            content: '""',
-                            display: 'block',
-                            position: 'absolute',
-                            top: 0,
-                            right: 14,
-                            width: 10,
-                            height: 10,
-                            bgcolor: 'background.paper',
-                            transform: 'translateY(-50%) rotate(45deg)',
-                            zIndex: 0,
-                          },
-                        },
-                      },
-                    }}
-                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                  >
-                    <MenuItem onClick={handleProfileClose}>
-                      <Avatar sx={{ width: 32, height: 32, mr: 1 }} /> Profile
-                    </MenuItem>
-                    <MenuItem onClick={() => { handleProfileClose(); navigate("/my-account"); }}>
-                      <Avatar sx={{ width: 32, height: 32, mr: 1 }} /> My account
-                    </MenuItem>
-                    <Divider />
-                    <MenuItem onClick={() => { handleProfileClose(); navigate("/wishlist"); }}>
-                      <ListItemIcon>
-                        <FaRegHeart />
-                      </ListItemIcon>
-                      Wishlist
-                    </MenuItem>
-                    <MenuItem onClick={handleProfileClose}>
-                      <ListItemIcon>
-                        <Settings fontSize="small" />
-                      </ListItemIcon>
-                      Settings
-                    </MenuItem>
-                    <MenuItem onClick={handleLogout}>
-                      <ListItemIcon>
-                        <Logout fontSize="small" />
-                      </ListItemIcon>
-                      Logout
-                    </MenuItem>
-                  </Menu>
-                </>
-              )}
-            </div>
-          </div>
-        </nav>
-
-        {/* PADDING TO AVOID FIXED NAVBAR */}
-        <div style={{ height: "80px" }}></div>
+        <Header1 activePage={activePage} />
 
         {/* BREADCRUMBS */}
         <div className="max-w-max-width mx-auto px-margin-desktop py-6 flex items-center gap-2 text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">
@@ -1794,149 +1172,8 @@ const ProductDetails1 = () => {
           )}
         </section>
 
-        {/* 4. LUXE EDITORIAL FOOTER */}
-        <footer className="editorial-footer text-on-primary pt-32 pb-12" style={{ backgroundColor: "#000000", color: "#ffffff", padding: "120px 48px 48px" }}>
-          <div className="container-fluid" style={{ maxWidth: "1320px", margin: "0 auto" }}>
-            <div className="row mb-5 pb-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-
-              {/* Logo and description */}
-              <div className="col-lg-5 mb-5 mb-lg-0">
-                <a className="footer-logo" style={{ fontFamily: "var(--font-display)", fontSize: "48px", fontWeight: "800", letterSpacing: "-0.05em", textTransform: "uppercase", color: "#ffffff", textDecoration: "none", display: "block", marginBottom: "24px" }} href="#" onClick={(e) => e.preventDefault()}>LUXE</a>
-                <p style={{ fontFamily: "var(--font-body)", fontSize: "16px", maxWidth: "380px", opacity: 0.6, lineHeight: "1.7", marginBottom: "32px", color: "#ffffff" }}>
-                  Elevating the everyday through curated perspectives and architectural fashion.
-                </p>
-                <div className="d-flex gap-4">
-                  <a className="icon-hover-trigger" style={{ color: "#ffffff", opacity: 0.5, transition: "opacity 0.3s" }} href="#" onClick={(e) => e.preventDefault()}>
-                    <span className="material-symbols-outlined" style={{ fontSize: "24px", color: "#ffffff" }}>public</span>
-                  </a>
-                  <a className="icon-hover-trigger" style={{ color: "#ffffff", opacity: 0.5, transition: "opacity 0.3s" }} href="#" onClick={(e) => e.preventDefault()}>
-                    <span className="material-symbols-outlined" style={{ fontSize: "24px", color: "#ffffff" }}>photo_camera</span>
-                  </a>
-                  <a className="icon-hover-trigger" style={{ color: "#ffffff", opacity: 0.5, transition: "opacity 0.3s" }} href="#" onClick={(e) => e.preventDefault()}>
-                    <span className="material-symbols-outlined" style={{ fontSize: "24px", color: "#ffffff" }}>play_arrow</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* Inspiration Links */}
-              <div className="col-6 col-lg-2 offset-lg-1 mb-4 mb-lg-0 d-flex flex-column gap-3">
-                <h4 className="footer-heading" style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: "700", letterSpacing: "0.15em", textTransform: "uppercase", color: "#ffffff", marginBottom: "12px" }}>Inspiration</h4>
-                <a className="footer-link" href="#" onClick={(e) => e.preventDefault()}>The Journal</a>
-                <a className="footer-link" href="#" onClick={(e) => e.preventDefault()}>Archives</a>
-                <a className="footer-link" href="#" onClick={(e) => e.preventDefault()}>Process</a>
-              </div>
-
-              {/* Assistance Links */}
-              <div className="col-6 col-lg-2 mb-4 mb-lg-0 d-flex flex-column gap-3">
-                <h4 className="footer-heading" style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: "700", letterSpacing: "0.15em", textTransform: "uppercase", color: "#ffffff", marginBottom: "12px" }}>Assistance</h4>
-                <a className="footer-link" href="#" onClick={(e) => e.preventDefault()}>Shipping</a>
-                <a className="footer-link" href="#" onClick={(e) => e.preventDefault()}>Contact</a>
-                <a className="footer-link" href="#" onClick={(e) => e.preventDefault()}>Returns</a>
-              </div>
-
-              {/* Newsletter */}
-              <div className="col-lg-2">
-                <h4 className="footer-heading" style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: "700", letterSpacing: "0.15em", textTransform: "uppercase", color: "#ffffff", marginBottom: "20px" }}>Newsletter</h4>
-                <div className="position-relative" style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.2)", paddingBottom: "8px" }}>
-                  <input
-                    className="w-100 bg-transparent border-0 py-2 outline-none text-white font-body-md"
-                    placeholder="Enter your email"
-                    type="email"
-                    style={{ border: "none", outline: "none", background: "transparent", color: "#ffffff", width: "100%", fontSize: "14px" }}
-                  />
-                  <button
-                    className="position-absolute end-0 bottom-0 bg-transparent border-0 font-label-sm uppercase tracking-widest text-white"
-                    style={{ background: "transparent", border: "none", color: "#ffffff", fontSize: "11px", fontWeight: "700", letterSpacing: "0.15em", cursor: "pointer" }}
-                    onClick={() => toast.success("Joined Luxe Editorial list successfully!")}
-                  >
-                    Join
-                  </button>
-                </div>
-              </div>
-
-            </div>
-
-            {/* Bottom Bar */}
-            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
-              <span className="font-label-sm" style={{ opacity: 0.4, fontSize: "11px", letterSpacing: "0.1em", color: "#ffffff" }}>© 2024 LUXE EDITORIAL. ALL RIGHTS RESERVED.</span>
-              <div className="d-flex gap-4 align-items-center" style={{ opacity: 0.4 }}>
-                <span className="material-symbols-outlined !text-[20px] text-white">payments</span>
-                <span className="material-symbols-outlined !text-[20px] text-white">credit_card</span>
-                <span className="material-symbols-outlined !text-[20px] text-white">account_balance_wallet</span>
-              </div>
-            </div>
-
-          </div>
-        </footer>
+        <Footer1 showPaymentIcons={true} />
       </div>
-
-      {/* DELIVERY LOCATION SELECTION DIALOG */}
-      <Dialog
-        open={isOpenLocationModal}
-        disableScrollLock={true}
-        className="location"
-        onClose={() => setIsOpenLocationModal(false)}
-        TransitionComponent={Transition}
-      >
-        <div style={{ padding: "24px", position: "relative" }}>
-          <h4 style={{ fontFamily: "var(--font-display)", fontSize: "20px", fontWeight: "600", marginBottom: "8px" }}>
-            Choose your Delivery Location
-          </h4>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: "13px", color: "var(--on-surface-variant)", marginBottom: "20px" }}>
-            Enter your address and we will specify the offer for your area.
-          </p>
-          <Button
-            onClick={() => setIsOpenLocationModal(false)}
-            style={{
-              position: "absolute",
-              top: "16px",
-              right: "16px",
-              minWidth: "auto",
-              padding: "8px",
-              color: "var(--primary)"
-            }}
-          >
-            <IoMdClose size={24} />
-          </Button>
-
-          <div style={{ display: "flex", alignItems: "center", border: "1px solid var(--outline-variant)", borderRadius: "4px", padding: "4px 12px", marginBottom: "20px" }}>
-            <input
-              onChange={filterlist}
-              placeholder="Search your area..."
-              type="text"
-              style={{ border: "none", outline: "none", width: "100%", fontFamily: "var(--font-body)", fontSize: "13px", padding: "8px 0" }}
-            />
-            <Button style={{ minWidth: "auto", color: "var(--on-surface-variant)" }}>
-              <FaSearch />
-            </Button>
-          </div>
-
-          <ul className="clist" style={{ listStyle: "none", padding: 0, margin: 0, maxHeight: "260px", overflowY: "auto" }}>
-            {countryList?.length !== 0 && countryList?.map((item, index) => (
-              <li key={index} style={{ marginBottom: "8px" }}>
-                <Button
-                  onClick={() => selectcountry(index)}
-                  className={`${selectedLocationTab === index ? "active" : ""}`}
-                  style={{
-                    width: "100%",
-                    justifyContent: "flex-start",
-                    fontFamily: "var(--font-body)",
-                    fontSize: "13px",
-                    textTransform: "none",
-                    color: selectedLocationTab === index ? "var(--primary)" : "var(--on-surface-variant)",
-                    fontWeight: selectedLocationTab === index ? "600" : "400",
-                    backgroundColor: selectedLocationTab === index ? "var(--surface-container)" : "transparent",
-                    textAlign: "left",
-                    padding: "8px 16px"
-                  }}
-                >
-                  {item.country}
-                </Button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Dialog>
 
       {/* Product modal zoomed view popup */}
       <Productmodal
