@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon11.jpg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+
+  <!-- SEO Optimization Meta Tags -->
+  <title>LUXE — Premium Fashion, Watches & Lifestyle</title>
+  <meta name="description"
+    content="Discover LUXE, a study in structural elegance. Explore our premium fashion, fine timepieces, couture designs, and organic groceries curated for the modern era." />
+
+  <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="LUXE — Premium Fashion, Watches & Lifestyle" />
+  <meta property="og:description"
+    content="Discover LUXE, a study in structural elegance. Explore our premium fashion, fine timepieces, couture designs, and organic groceries curated for the modern era." />
+  <meta property="og:image"
+    content="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1200&auto=format&fit=crop" />
+  <meta property="og:url" content="https://venerable-zabaione-a33ab1.netlify.app" />
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LUXE — Premium Fashion, Watches & Lifestyle" />
+  <meta name="twitter:description"
+    content="Discover LUXE, a study in structural elegance. Explore our premium fashion, fine timepieces, couture designs, and organic groceries curated for the modern era." />
+
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+  <!-- Google Fonts Preconnect and Import -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter:wght@100..900&display=swap"
+    rel="stylesheet" />
+
+  <!-- Instant SplashScreen Style -->
+  <style>
+    #luxe-splash-screen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #1c1c1e 0%, #0c0c0c 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.6s;
+    }
+
+    #luxe-splash-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .splash-logo {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 72px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: #ffffff;
+      text-shadow: 0 0 40px rgba(255, 255, 255, 0.35);
+      margin: 0;
+      animation: logoFadeIn 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      opacity: 0;
+    }
+
+    .splash-loader {
+      display: flex;
+      gap: 8px;
+    }
+
+    .splash-loader span {
+      width: 8px;
+      height: 8px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: splashBounce 1.2s infinite ease-in-out both;
+    }
+
+    .splash-loader span:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    .splash-loader span:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+
+    @keyframes logoFadeIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes splashBounce {
+
+      0%,
+      80%,
+      100% {
+        transform: scale(0);
+        opacity: 0.2;
+      }
+
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+
+  <!-- Instant SplashScreen -->
+  <div id="luxe-splash-screen">
+    <div class="splash-content">
+      <h1 class="splash-logo">LUXE</h1>
+      <div class="splash-loader">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="root"></div>
+</body>
+
+</html>
