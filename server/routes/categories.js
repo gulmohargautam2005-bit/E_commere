@@ -16,32 +16,43 @@ cloudinary.config({
 
 
 router.get('/',async (req,res)=>{
-     
-    const page = parseInt(req.query.page) || 1;
-    const perPage = 10;
-    const totalPosts = await Category.countDocuments();
-    const totalPages = Math.ceil(totalPosts / perPage);
-    
+    try {
+        if (req.query.page === undefined) {
+            const categoryList = await Category.find();
+            if (!categoryList) {
+                return res.status(500).json({ success: false });
+            }
+            return res.status(200).json({
+                "categoryList": categoryList,
+                "totalPages": 1,
+                "page": 1
+            });
+        }
+        
+        const page = parseInt(req.query.page) || 1;
+        const perPage = 10;
+        const totalPosts = await Category.countDocuments();
+        const totalPages = Math.ceil(totalPosts / perPage);
+        
+        if (page > totalPages) {
+            return res.status(404).json({ message: "Page not found" })
+        }
+        const categoryList=await Category.find()
+            .skip((page - 1) * perPage)
+            .limit(perPage)
+            .exec();
 
-    
-    if (page > totalPages) {
-        return res.status(404).json({ message: "Page not found" })
+        if(!categoryList){
+            return res.status(500).json({success:false})
+        }
+        return res.status(200).json({
+            "categoryList": categoryList,
+            "totalPages": totalPages,
+            "page": page
+        });
+    } catch (err) {
+        return res.status(500).json({ success: false, error: err.message });
     }
-    const categoryList=await Category.find()
-  
-    .skip((page - 1) * perPage)
-    .limit(perPage)
-    .exec();
-
-
-    if(!categoryList){
-        res.status(500).json({success:false})
-    }
-   return res.status(200).json({
-    "categoryList": categoryList,
-    "totalPages": totalPages,
-    "page": page
-});
 });
 router.post("/create", async (req, res) => {
     try {

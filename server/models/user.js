@@ -1,38 +1,38 @@
-const mongoose=require('mongoose')
+const mongoose = require('mongoose')
 const { type, userInfo } = require('os')
 const userSchema = mongoose.Schema({
-    name:{
-        type:String,
-        required:true
+    name: {
+        type: String,
+        required: true
     },
     email:
-        {
-            type:String,
-            require:true,
-            unique:true,
-        },
-    
-    phone:{
-        type:String,
-        required:true,
-        unique:true,
+    {
+        type: String,
+        required: true,
+        unique: true,
+    },
+
+    phone: {
+        type: String,
+        required: true,
+        unique: true,
 
     },
-    password:{
-        type:String,
-        required:true,
+    password: {
+        type: String,
+        required: true,
 
     }
-    
-    
+
+
 })
-userSchema.virtual('id').get(function(){
+userSchema.virtual('id').get(function () {
     return this._id.toHexString();
 })
 
-userSchema.set("toJSON",{
-    virtuals:true,
+userSchema.set("toJSON", {
+    virtuals: true,
 })
 
-exports.User =mongoose.model("user",userSchema);
-exports.userSchema=userSchema;
+exports.User = mongoose.model("user", userSchema);
+exports.userSchema = userSchema;

@@ -81,6 +81,16 @@ router.get('/', async (req, res) => {
           if (req.query.subCat !== undefined) {
             filter.subCat = { $regex: new RegExp(req.query.subCat, "i") };
         }
+        if (req.query.search !== undefined && req.query.search !== "") {
+            const searchTerms = req.query.search.trim().split(/\s+/);
+            const regexes = searchTerms.map(term => ({ name: { $regex: new RegExp(term, "i") } }));
+            
+            if (filter.$and) {
+                filter.$and.push(...regexes);
+            } else {
+                filter.$and = regexes;
+            }
+        }
 
         // 🔹 FIX 2: use filter in BOTH count + find
         const totalProducts = await Product.countDocuments(filter);
@@ -232,10 +242,10 @@ router.post('/create', async (req, res) => {
         })
         product = await product.save();
         if (!product) {
-            res.status(500).json({
-                message: "fuck",
+            return res.status(500).json({
+                message: "Product creation failed",
                 success: false,
-            })
+            });
         }
         res.status(201).json(product)
 
@@ -338,6 +348,49 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+router.post('/bulk', async (req, res) => {
+    try {
+        const products = req.body;
+        
+        // Input validation
+        if (!Array.isArray(products) || products.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Request body must be a non-empty array of products"
+            });
+        }
 
+        // Validate each product
+        for (let i = 0; i < products.length; i++) {
+            const prod = products[i];
+            if (!prod.name || !prod.description || !prod.brand || !prod.category || !prod.subcategory || prod.countInstock === undefined) {
+                return res.status(400).json({
+                    success: false,
+                    message: `Product at index ${i} is missing required fields (name, description, brand, category, subcategory, countInstock)`
+                });
+            }
+            if (!Array.isArray(prod.images) || prod.images.length === 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: `Product at index ${i} must have at least one image url in the images array`
+                });
+            }
+        }
+
+        // Mass insert products
+        const savedProducts = await Product.insertMany(products);
+        
+        res.status(201).json({
+            success: true,
+            message: `Successfully uploaded ${savedProducts.length} products`,
+            products: savedProducts
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message || "Failed to bulk upload products"
+        });
+    }
+});
 
 module.exports = router

@@ -1,12 +1,25 @@
 const express = require('express');
 const { SubCategory } = require('../models/subcategory');
 const { Category } = require('../models/category');
+const { Product } = require('../models/products');
 
 const router = express.Router();
 
 // Get all subcategories with pagination
 router.get('/', async (req, res) => {
     try {
+        if (req.query.page === undefined) {
+            const subCategoryList = await SubCategory.find().populate('category');
+            if (!subCategoryList) {
+                return res.status(500).json({ success: false });
+            }
+            return res.status(200).json({
+                subCategoryList: subCategoryList,
+                totalPages: 1,
+                page: 1
+            });
+        }
+
         const page = parseInt(req.query.page) || 1;
         const perPage = 10;
         const totalPosts = await SubCategory.countDocuments();
@@ -142,8 +155,15 @@ router.put('/:id', async (req, res) => {
     }
 });
 router.get('/:id', async (req,res)=>{
-   const product = await Product.findById(req.params.id);
-   res.json(product);
+   try {
+       const subCategory = await SubCategory.findById(req.params.id).populate('category');
+       if (!subCategory) {
+           return res.status(404).json({ success: false, message: 'Subcategory not found' });
+       }
+       res.json(subCategory);
+   } catch (err) {
+       res.status(500).json({ success: false, error: err.message });
+   }
 });
 
 
@@ -162,6 +182,18 @@ router.delete('/:id', async (req, res) => {
             success: true,
             message: 'Subcategory Deleted!'
         });
+    } catch (err) {
+        res.status(500).json({
+            error: err.message || 'Internal Server Error',
+            success: false
+        });
+    }
+});
+
+router.get('/category/:categoryId', async (req, res) => {
+    try {
+        const subCategoryList = await SubCategory.find({ category: req.params.categoryId }).populate('category');
+        return res.status(200).json(subCategoryList);
     } catch (err) {
         res.status(500).json({
             error: err.message || 'Internal Server Error',

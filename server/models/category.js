@@ -1,5 +1,4 @@
 const mongoose=require('mongoose')
-const { type, userInfo } = require('os')
 const categorySchema = mongoose.Schema({
     name:{
         type:String,

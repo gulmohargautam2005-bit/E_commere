@@ -26,12 +26,13 @@ router.post('/signup', async (req, res) => {
         })
 
     } catch (error) {
-        console.log(error);
+        console.log("SIGNUP ERROR:", error.message);  // add this
+        console.log("FULL ERROR:", error);
         if (error.code === 11000) {
             const field = Object.keys(error.keyPattern)[0];
             return res.status(400).json({ msg: `${field} already in use` });
         }
-        res.status(500).json({ msg: "something went wrong" })
+        res.status(500).json({ msg: error.message })  // send actual error to frontend
     }
 
 })

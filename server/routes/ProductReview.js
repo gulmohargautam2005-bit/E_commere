@@ -1,5 +1,6 @@
 const express = require('express');
 const { productReview} = require('../models/ProductReview');
+const authJwt = require('../middleware/authJwt');
 const router = express.Router();
 
 router.get("/",async(req,res)=>{
@@ -32,7 +33,7 @@ router.get("/:id",async(req,res)=>{
     }
     return res.status(200).json(reviews)
 })
-router.post("/add",async(req,res)=>{
+router.post("/add", authJwt, async(req,res)=>{
     let review = new productReview({
         ProductId:req.body.ProductId,
         CustomerName:req.body.CustomerName,
