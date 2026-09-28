@@ -13,49 +13,39 @@ import 'swiper/css/grid';
 
 
 
-const Productitem3=(props)=>{
-    const [productData, setproductData] = useState([]);
-    useEffect(() => {
-        if (props.data) {
-            setproductData(props.data);
-            return;
-        }
-        fetchDataFromAPI('/api/products/subCat/69a91e5cfadb49102d57d876')
-            .then((res) => {
-                if (res && res.products && res.products.length > 0) {
-                    setproductData(res.products);
-                } else {
-                    fetchDataFromAPI('/api/products/').then((allRes) => {
-                        setproductData(allRes.products || allRes || []);
-                    });
-                }
-            })
-            .catch(() => {
-                fetchDataFromAPI('/api/products/').then((allRes) => {
-                    setproductData(allRes.products || allRes || []);
-                });
-            });
-    }, [props.data]);
+const Productitem3 = (props) => {
+  const [productData, setproductData] = useState([]);
+  useEffect(() => {
+    if (props.data) {
+      setproductData(props.data);
+      return;
+    }
+    fetchDataFromAPI('/api/products/').then((allRes) => {
+      setproductData(allRes.products || allRes || []);
+    }).catch((err) => {
+      console.error("Failed to fetch products:", err);
+    });
+  }, [props.data]);
 
-    const shuffleArray = (array) => {
-        const shuffled = [...array]; // copy original array
-      
-        for (let i = shuffled.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-      
-        return shuffled;
-      };
-      
-      const shuffledData = useMemo(() => {
-        return shuffleArray(productData);
-      }, [productData]);
+  const shuffleArray = (array) => {
+    const shuffled = [...array]; // copy original array
 
-    return(
-      <> 
-        <div className="productrow2 w-100" style={{ overflow: "hidden", padding: "10px 0" }}>
-          <style>{`
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+
+    return shuffled;
+  };
+
+  const shuffledData = useMemo(() => {
+    return shuffleArray(productData);
+  }, [productData]);
+
+  return (
+    <>
+      <div className="productrow2 w-100" style={{ overflow: "hidden", padding: "10px 0" }}>
+        <style>{`
             .productrow2 .mySwiper {
               width: 100%;
               height: 980px; /* Increased height to give the "ADD TO BAG" button ample bottom clearance */
@@ -227,27 +217,27 @@ const Productitem3=(props)=>{
               display: none !important;
             }
           `}</style>
-          <Swiper
-              slidesPerView={1}
-              breakpoints={{
-                576: { slidesPerView: 2, spaceBetween: 30 },
-                992: { slidesPerView: 3, spaceBetween: 40 },
-                1400: { slidesPerView: 4, spaceBetween: 40 }
-              }}
-              grid={{ rows: 2, fill: 'row' }}
-              spaceBetween={20}
-              navigation
-              modules={[Navigation, Pagination, Grid]}
-              className="mySwiper"
-          >
-              {shuffledData.map((item) => (
-                  <SwiperSlide key={item._id}>
-                      <Itemthree item={item} />
-                  </SwiperSlide>
-              ))}
-          </Swiper>
-        </div>
-      </>
-    )
+        <Swiper
+          slidesPerView={1}
+          breakpoints={{
+            576: { slidesPerView: 2, spaceBetween: 30 },
+            992: { slidesPerView: 3, spaceBetween: 40 },
+            1400: { slidesPerView: 4, spaceBetween: 40 }
+          }}
+          grid={{ rows: 2, fill: 'row' }}
+          spaceBetween={20}
+          navigation
+          modules={[Navigation, Pagination, Grid]}
+          className="mySwiper"
+        >
+          {shuffledData.map((item) => (
+            <SwiperSlide key={item._id}>
+              <Itemthree item={item} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </>
+  )
 }
 export default Productitem3;

@@ -1,0 +1,159 @@
+.staggered-reveal-section {
+  width: 100%;
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 80px 48px;
+  position: relative;
+}
+
+.reveal-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.reveal-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #888888;
+  display: block;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.reveal-title {
+  font-family: 'Bodoni Moda', serif;
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #000000;
+  margin: 0;
+}
+
+.reveal-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.reveal-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fbf9f8;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1), box-shadow 0.4s ease;
+  position: relative;
+}
+
+.reveal-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.reveal-image-wrapper {
+  width: 100%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  position: relative;
+  background-color: #f5f3f3;
+}
+
+.reveal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+}
+
+.reveal-card:hover .reveal-image {
+  transform: scale(1.05);
+}
+
+.reveal-card-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 4px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.reveal-card-info {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.reveal-card-brand {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  color: #888888;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.reveal-card-name {
+  font-family: 'Bodoni Moda', serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0 0 16px 0;
+  line-height: 1.2;
+  height: 48px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.reveal-card-price {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #000000;
+  margin-top: auto;
+}
+
+@media (max-width: 1024px) {
+  .reveal-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .reveal-card-name {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .reveal-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .staggered-reveal-section {
+    height: auto;
+    padding: 60px 20px;
+  }
+}

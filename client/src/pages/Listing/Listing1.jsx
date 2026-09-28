@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useContext } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 //price range slider
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
@@ -26,6 +26,9 @@ const Listing1 = () => {
   const navigate = useNavigate();
   const context = useContext(Mycontext);
   const { id } = useParams();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const catName = queryParams.get("catName");
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   // States
@@ -157,25 +160,31 @@ const Listing1 = () => {
 
 
 
-  // Fetch products by subcategory parameter
+  // Fetch products by subcategory parameter or category name parameter (or all products if none is provided)
   useEffect(() => {
-    if (!id) return;
     setLoading(true);
     setError(null);
     setCurrentPage(1);
     setItemsToRender(8);
 
-    fetchDataFromAPI(`/api/products/subCat/${id}`)
+    let apiPath = "/api/products/";
+    if (id) {
+      apiPath = `/api/products/subCat/${id}`;
+    } else if (catName) {
+      apiPath = `/api/products?catName=${encodeURIComponent(catName)}`;
+    }
+
+    fetchDataFromAPI(apiPath)
       .then((res) => {
-        setRawProducts(res.products || []);
+        setRawProducts(res.products || res || []);
         setLoading(false);
       })
       .catch((err) => {
-        console.error("Failed to load products for subcategory:", err);
+        console.error("Failed to load products:", err);
         setError("Could not retrieve collection. Please try again.");
         setLoading(false);
       });
-  }, [id]);
+  }, [id, catName]);
 
 
 
@@ -198,8 +207,9 @@ const Listing1 = () => {
   const handlePriceApply = () => {
     setLoading(true);
     setActiveDropdown(null);
+    const subcatParam = id ? `&subcategory=${id}` : "";
     fetchDataFromAPI(
-      `/api/products/products?minprice=${priceRange[0]}&maxprice=${priceRange[1]}&subcategory=${id}`
+      `/api/products/products?minprice=${priceRange[0]}&maxprice=${priceRange[1]}${subcatParam}`
     )
       .then((res) => {
         setRawProducts(res.products || []);
@@ -234,7 +244,8 @@ const Listing1 = () => {
     setItemsToRender(8);
 
     setLoading(true);
-    fetchDataFromAPI(`/api/products/subCat/${id}`)
+    const apiPath = id ? `/api/products/subCat/${id}` : `/api/products/`;
+    fetchDataFromAPI(apiPath)
       .then((res) => {
         setRawProducts(res.products || []);
         setLoading(false);
@@ -373,9 +384,8 @@ const Listing1 = () => {
     0
   );
 
-  // Dynamic Page Title
   const subCategory = (context.subCatData || []).find((item) => item._id === id);
-  const categoryName = subCategory?.category?.name || "Watches";
+  const categoryName = subCategory?.category?.name || catName || "Watches";
   const subCategoryName = subCategory?.subCat || "";
   const displayTitle = subCategoryName
     ? `THE ${subCategoryName.toUpperCase()} COLLECTION`
@@ -384,25 +394,99 @@ const Listing1 = () => {
   // Dynamic Editorial moment card data based on Category
   const editorialData = useMemo(() => {
     const name = categoryName.toLowerCase();
+    
+    // Luxe / Lifestyle Categories
     if (name.includes("watches") || name.includes("watch")) {
       return {
         image: watchesEditorialImg,
         quote: '"Timeless elegance is not about being noticed, it is about being remembered."',
         caption: "HOROLOGY EDITORIAL / VOL. II"
       };
-    } else if (name.includes("fashion") || name.includes("apparel") || name.includes("clothing")) {
+    } else if (name.includes("fashion") || name.includes("apparel") || name.includes("clothing") || name.includes("dress") || name.includes("shirt") || name.includes("denim") || name.includes("footwear") || name.includes("accessories")) {
       return {
         image: fashionEditorialImg,
         quote: '"Style is a way to say who you are without having to speak."',
         caption: "COUTURE COLLECTION / VOL. IV"
       };
-    } else if (name.includes("kidz") || name.includes("kids") || name.includes("child")) {
+    } else if (name.includes("kidz") || name.includes("kids") || name.includes("child") || name.includes("baby") || name.includes("toy")) {
       return {
         image: kidsEditorialImg,
         quote: '"Encourage their curiosity, cherish their wonder, style their dreams."',
         caption: "KIDZ CURATION / SPRING SUMMER"
       };
-    } else {
+    } else if (name.includes("electronic") || name.includes("smart") || name.includes("laptop") || name.includes("camera") || name.includes("gaming") || name.includes("audio")) {
+      return {
+        image: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=800&q=80",
+        quote: '"Designing the future, one byte at a time."',
+        caption: "INTELLIGENT TECH / FUTURE LIVING"
+      };
+    } else if (name.includes("home") || name.includes("living") || name.includes("furniture") || name.includes("decor") || name.includes("kitchen") || name.includes("lighting")) {
+      return {
+        image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
+        quote: '"Form meets comfort. Crafting spaces that tell your story."',
+        caption: "ATELIER HOME / LIVING SPACE"
+      };
+    } else if (name.includes("beauty") || name.includes("skin") || name.includes("makeup") || name.includes("wellness") || name.includes("fragrance")) {
+      return {
+        image: "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&w=800&q=80",
+        quote: '"Nurturing your natural radiance and mindful self-care."',
+        caption: "PURE BEAUTY / BOTANICAL EDIT"
+      };
+    }
+    
+    // Grocery Categories
+    else if (name.includes("fruit") || name.includes("vegetable") || name.includes("veg") || name.includes("produce")) {
+      return {
+        image: "https://images.unsplash.com/photo-1610832958506-ee56336191b1?auto=format&fit=crop&w=800&q=80",
+        quote: '"Nature\'s vibrant colors, harvested at peak freshness."',
+        caption: "FRESH PRODUCE / ORGANIC CURATION"
+      };
+    } else if (name.includes("meat") || name.includes("seafood") || name.includes("poultry") || name.includes("fish")) {
+      return {
+        image: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=800&q=80",
+        quote: '"Premium cut selections, sourced with integrity."',
+        caption: "BUTCHER & SEAFOOD / PRIME CUTS"
+      };
+    } else if (name.includes("breakfast") || name.includes("dairy") || name.includes("milk") || name.includes("butter") || name.includes("egg") || name.includes("yogurt")) {
+      return {
+        image: "https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&w=800&q=80",
+        quote: '"Wholesome dairy and morning essentials for the perfect start."',
+        caption: "DAIRY & HARVEST / DAILY FRESH"
+      };
+    } else if (name.includes("beverage") || name.includes("drink") || name.includes("tea") || name.includes("coffee") || name.includes("juice")) {
+      return {
+        image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=800&q=80",
+        quote: '"Refreshing blends, aromatic brews, crafted for every mood."',
+        caption: "BEVERAGE SELECTION / REFRESHING ELIXIRS"
+      };
+    } else if (name.includes("bread") || name.includes("bakery") || name.includes("pastry") || name.includes("oven") || name.includes("loaf")) {
+      return {
+        image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+        quote: '"Warm, golden crusts baked fresh daily from the finest grains."',
+        caption: "ARTISAN BAKERY / OVENFRESH"
+      };
+    } else if (name.includes("frozen")) {
+      return {
+        image: "https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80",
+        quote: '"Locked-in freshness, ready whenever you need it."',
+        caption: "FROZEN SELECTIONS / QUICK COLD"
+      };
+    } else if (name.includes("biscuit") || name.includes("snack") || name.includes("cookie") || name.includes("chip")) {
+      return {
+        image: "https://images.unsplash.com/photo-1558961309-dbdf000a1291?auto=format&fit=crop&w=800&q=80",
+        quote: '"Delightful bites and savoury treats for your daily cravings."',
+        caption: "SAVOURY DELIGHTS / SNACKS & COOKIES"
+      };
+    } else if (name.includes("grocery") || name.includes("staple") || name.includes("rice") || name.includes("grain") || name.includes("oil") || name.includes("sauce")) {
+      return {
+        image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=800&q=80",
+        quote: '"The foundation of every great meal, curated for quality."',
+        caption: "PANTRY ESSENTIALS / STAPLES"
+      };
+    }
+    
+    // Default Fallback
+    else {
       return {
         image: fashionEditorialImg,
         quote: '"Simplicity is the ultimate sophistication."',
@@ -813,11 +897,11 @@ const Listing1 = () => {
                           alt="Luxe Editorial Lifestyle"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1000ms] ease-out"
                         />
-                        <div className="bottom-left-text-block absolute bottom-12 left-12 z-20 max-w-md pr-8">
-                          <p className="font-display text-white italic mb-4 text-[26px] md:text-[32px] leading-snug">
+                        <div className="bottom-left-text-block absolute bottom-12 left-12 z-20 max-w-md pr-8" style={{ color: "#ffffff" }}>
+                          <p className="font-display text-white italic mb-4 text-[26px] md:text-[32px] leading-snug" style={{ color: "#ffffff", textShadow: "0 2px 12px rgba(0,0,0,0.6)" }}>
                             {editorialData.quote}
                           </p>
-                          <p className="font-label-sm text-white uppercase tracking-[0.3em]">
+                          <p className="font-label-sm text-white uppercase tracking-[0.3em]" style={{ color: "#ffffff", textShadow: "0 2px 12px rgba(0,0,0,0.6)" }}>
                             {editorialData.caption}
                           </p>
                         </div>
@@ -912,11 +996,11 @@ const Listing1 = () => {
                         alt="Luxe Editorial Lifestyle"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1000ms] ease-out"
                       />
-                      <div className="bottom-left-text-block absolute bottom-12 left-12 z-20 max-w-md pr-8">
-                        <p className="font-display text-white italic mb-4 text-[26px] md:text-[32px] leading-snug">
+                      <div className="bottom-left-text-block absolute bottom-12 left-12 z-20 max-w-md pr-8" style={{ color: "#ffffff" }}>
+                        <p className="font-display text-white italic mb-4 text-[26px] md:text-[32px] leading-snug" style={{ color: "#ffffff", textShadow: "0 2px 12px rgba(0,0,0,0.6)" }}>
                           {editorialData.quote}
                         </p>
-                        <p className="font-label-sm text-white uppercase tracking-[0.3em]">
+                        <p className="font-label-sm text-white uppercase tracking-[0.3em]" style={{ color: "#ffffff", textShadow: "0 2px 12px rgba(0,0,0,0.6)" }}>
                           {editorialData.caption}
                         </p>
                       </div>

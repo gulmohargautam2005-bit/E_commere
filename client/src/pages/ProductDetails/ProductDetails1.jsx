@@ -1018,45 +1018,58 @@ const ProductDetails1 = () => {
 
           {activeTab === "description" ? (
             <div className="space-y-8 animate-fade-in">
+              {/* Product Description Paragraphs */}
+              <div className="prose max-w-none text-on-surface-variant text-[15px] leading-relaxed space-y-4">
+                {(productdata?.description || "").split("\n").filter(l => l.trim() !== "").map((para, i) => (
+                  <p key={i}>{para.trim()}</p>
+                ))}
+              </div>
+
               {/* Two Column Specifications list */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-2">
-                {(() => {
-                  const lines = productdata?.description?.split("\n").filter(l => l.trim() !== "") || [];
-                  return lines.map((line, i) => {
-                    let label = "Feature Details";
-                    let value = line.trim();
-
-                    if (line.includes(":")) {
-                      const parts = line.split(":");
-                      label = parts[0].trim();
-                      value = parts.slice(1).join(":").trim();
-                    } else {
-                      const isHeader = /^[A-Za-z0-9 &'-]+$/.test(line.trim()) && line.trim().split(" ").length <= 4;
-                      if (isHeader) {
-                        label = line.trim();
-                        value = "Included";
-                      }
-                    }
-
-                    return (
-                      <div key={i} className="flex justify-between items-center py-2 border-b border-outline-variant/10">
-                        <span className="font-label-sm text-[11px] uppercase tracking-widest text-on-surface-variant font-semibold">
-                          {label}
-                        </span>
-                        <span className="font-body-md text-sm text-primary font-medium text-right max-w-xs">
-                          {value}
-                        </span>
-                      </div>
-                    );
-                  });
-                })()}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-2 pt-6 border-t border-outline-variant/20">
+                {productdata?.brand && (
+                  <div className="flex justify-between items-center py-2 border-b border-outline-variant/10">
+                    <span className="font-label-sm text-[11px] uppercase tracking-widest text-on-surface-variant font-semibold">Brand</span>
+                    <span className="font-body-md text-sm text-primary font-medium text-right">{productdata.brand}</span>
+                  </div>
+                )}
+                {productdata?.productSize?.length > 0 && (
+                  <div className="flex justify-between items-center py-2 border-b border-outline-variant/10">
+                    <span className="font-label-sm text-[11px] uppercase tracking-widest text-on-surface-variant font-semibold">Available Sizes</span>
+                    <span className="font-body-md text-sm text-primary font-medium text-right">{productdata.productSize.join(", ")}</span>
+                  </div>
+                )}
+                {productdata?.productWeight?.length > 0 && (
+                  <div className="flex justify-between items-center py-2 border-b border-outline-variant/10">
+                    <span className="font-label-sm text-[11px] uppercase tracking-widest text-on-surface-variant font-semibold">Weight</span>
+                    <span className="font-body-md text-sm text-primary font-medium text-right">{productdata.productWeight.join(", ")}</span>
+                  </div>
+                )}
+                {productdata?.productRam?.length > 0 && (
+                  <div className="flex justify-between items-center py-2 border-b border-outline-variant/10">
+                    <span className="font-label-sm text-[11px] uppercase tracking-widest text-on-surface-variant font-semibold">RAM</span>
+                    <span className="font-body-md text-sm text-primary font-medium text-right">{productdata.productRam.join(", ")}</span>
+                  </div>
+                )}
+                {productdata?.category?.name && (
+                  <div className="flex justify-between items-center py-2 border-b border-outline-variant/10">
+                    <span className="font-label-sm text-[11px] uppercase tracking-widest text-on-surface-variant font-semibold">Category</span>
+                    <span className="font-body-md text-sm text-primary font-medium text-right">{productdata.category.name}</span>
+                  </div>
+                )}
+                {productdata?.subCat && (
+                  <div className="flex justify-between items-center py-2 border-b border-outline-variant/10">
+                    <span className="font-label-sm text-[11px] uppercase tracking-widest text-on-surface-variant font-semibold">Subcategory</span>
+                    <span className="font-body-md text-sm text-primary font-medium text-right">{productdata.subCat}</span>
+                  </div>
+                )}
               </div>
 
               {/* Material & Care Card */}
               <div className="bg-surface-container-low p-10 rounded-lg border border-outline-variant/30 max-w-3xl">
-                <h4 className="font-label-sm text-xs uppercase tracking-[0.2em] font-bold text-primary mb-4">Material &amp; Care Details</h4>
+                <h4 className="font-label-sm text-xs uppercase tracking-[0.2em] font-bold text-primary mb-4">Storage &amp; Safety Details</h4>
                 <p className="text-on-surface-variant font-body-md text-sm leading-relaxed">
-                  Crafted from high-grade luxury fibers. To preserve its premium texture and long-term durability, we recommend delicate dry cleaning only. Keep stored in a cool, dry place. Avoid direct sunlight and humidity.
+                  Crafted and sourced from premium organic environments. To preserve its premium freshness and taste, we recommend keeping it stored in a cool, dry place or refrigerating after opening. Keep away from direct heat and moisture.
                 </p>
               </div>
             </div>
@@ -1158,7 +1171,7 @@ const ProductDetails1 = () => {
           <div className="flex items-end justify-between border-b border-outline-variant/30 pb-6 mb-10">
             <div>
               <span className="block font-label-sm text-[10px] uppercase tracking-[0.3em] text-on-surface-variant mb-2">PAIRS PERFECTLY</span>
-              <h2 className="font-headline-xl text-3xl font-medium tracking-tight text-primary">Related Products</h2>
+              <h2 className="font-display-lg text-3xl font-medium tracking-tight text-primary">Related Products</h2>
             </div>
             <a href="#" className="font-label-sm text-xs text-primary uppercase tracking-widest font-bold hover:underline" onClick={(e) => { e.preventDefault(); navigate("/cat"); }}>
               Explore All
@@ -1171,9 +1184,9 @@ const ProductDetails1 = () => {
             <p className="text-on-surface-variant font-body-md text-sm italic">No related products found in this category.</p>
           )}
         </section>
-
-        <Footer1 showPaymentIcons={true} />
       </div>
+
+      <Footer1 showPaymentIcons={true} />
 
       {/* Product modal zoomed view popup */}
       <Productmodal

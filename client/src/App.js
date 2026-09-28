@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
+import './mobile.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Header from './components/Header';
@@ -91,6 +92,16 @@ function App() {
   const [isLogin, setisLogin] = useState(false);
   const [user, setuser] = useState({});
   useEffect(() => {
+    // Fade out and remove the instant splash screen on mount
+    const splash = document.getElementById("luxe-splash-screen");
+    if (splash) {
+      setTimeout(() => {
+        splash.classList.add("fade-out");
+        setTimeout(() => {
+          splash.remove();
+        }, 600); // matches transition time
+      }, 500); // tiny buffer to let user appreciate load animation
+    }
     getcountry("https://countriesnow.space/api/v0.1/countries/");
   }, [])
 
@@ -108,13 +119,34 @@ function App() {
     })
   }, [])
   useEffect(() => {
-    fetchDataFromAPI("/api/subCat").then(res => {
-      setSubCatData(res.subCategoryList);
-    });
+    const fetchAllSubCats = async () => {
+      try {
+        const res = await fetchDataFromAPI("/api/subCat");
+        if (res && res.subCategoryList) {
+          let allSubCats = [...res.subCategoryList];
+          if (res.totalPages > 1) {
+            const promises = [];
+            for (let i = 2; i <= res.totalPages; i++) {
+              promises.push(fetchDataFromAPI(`/api/subCat?page=${i}`));
+            }
+            const results = await Promise.all(promises);
+            results.forEach(r => {
+              if (r && r.subCategoryList) {
+                allSubCats = [...allSubCats, ...r.subCategoryList];
+              }
+            });
+          }
+          setSubCatData(allSubCats);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchAllSubCats();
   }, []);
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token !== '' && token !== undefined && token !== null) {
+    if (token && token !== '' && token !== 'undefined' && token !== 'null') {
       setisLogin(true);
       const userdata = JSON.parse(localStorage.getItem("user"));
       setuser(userdata);
@@ -198,7 +230,8 @@ function App() {
     subCatData,
     setSubCatData,
     addtocart,
-    cartData, setcartData, addToWishlist
+    cartData, setcartData, addToWishlist,
+    user, setuser
   }
 
   return (
@@ -209,6 +242,7 @@ function App() {
           <Route path="/" exact={true} element={<Home1 />} />
           <Route path="/cat" exact={true} element={<Listing1 />} />
           <Route path="/subcat/:id" element={<Listing1 />} />
+          <Route path="/subCat/:id" element={<Listing1 />} />
           <Route path="/cart" exact={true} element={<Cart1 />} />
           <Route path="/checkout1" exact={true} element={<Checkout1 />} />
 

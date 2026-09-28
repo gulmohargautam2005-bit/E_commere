@@ -1,0 +1,61 @@
+.brand-marquee-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 60px 0;
+  background-color: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.brand-marquee-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  color: #888888;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.brand-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 60px;
+  animation: scrollMarquee 25s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.brand-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.brand-logo-pill {
+  font-family: 'Bodoni Moda', serif;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #a0a0a0;
+  cursor: pointer;
+  transition: color 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+  user-select: none;
+}
+
+.brand-logo-pill:hover {
+  color: #000000;
+  transform: scale(1.05);
+}
+
+@keyframes scrollMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

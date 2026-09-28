@@ -6,20 +6,24 @@ import Itemthree from "../../components/Itemthree";
 
 const Relatedproduct = (props) => {
     return (<>   
-     <div className='productrow2 w-100'>
+     <div className='related-products-slider w-full'>
         <style>{`
-          .productrow2 .mySwiper {
+          .related-products-slider {
+            width: 100%;
+            overflow: hidden; /* Fix swiper expanding infinitely */
+          }
+          .related-products-slider .mySwiper {
             width: 100%;
             height: 480px !important;
             padding: 10px 0;
           }
-          .productrow2 .swiper-slide {
+          .related-products-slider .swiper-slide {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             height: auto !important;
           }
-          .productrow2 .productitem {
+          .related-products-slider .productitem {
             height: 100% !important;
             display: flex;
             flex-direction: column;
@@ -30,26 +34,26 @@ const Relatedproduct = (props) => {
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
           }
-          .productrow2 .productitem:hover {
+          .related-products-slider .productitem:hover {
             transform: translateY(-8px);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
             border-color: #ffffff !important; 
             border-radius: 0px !important; 
           }
-          .productrow2 .productitem .imgwrap {
+          .related-products-slider .productitem .imgwrap {
             height: 240px !important;
             border-radius: 0px !important; 
             overflow: hidden !important;
             position: relative;
             background: #ffffff !important; 
           }
-          .productrow2 .productitem .imgwrap img {
+          .related-products-slider .productitem .imgwrap img {
             width: 100% !important;
             height: 100% !important;
             object-fit: cover !important; 
             padding: 0 !important;
           }
-          .productrow2 .productitem .badge {
+          .related-products-slider .productitem .badge {
             position: absolute;
             top: 16px;
             left: 16px;
@@ -64,7 +68,7 @@ const Relatedproduct = (props) => {
             line-height: 1.2;
             border: none !important;
           }
-          .productrow2 .productitem .wishlist-btn {
+          .related-products-slider .productitem .wishlist-btn {
             position: absolute;
             top: 16px;
             right: 16px;
@@ -81,18 +85,18 @@ const Relatedproduct = (props) => {
             justify-content: center !important;
             padding: 0 !important;
           }
-          .productrow2 .productitem .wishlist-btn:hover {
+          .related-products-slider .productitem .wishlist-btn:hover {
             background: #ef4444 !important;
             border-color: #ef4444 !important;
           }
-          .productrow2 .productitem .info {
+          .related-products-slider .productitem .info {
             padding: 20px 20px 24px 20px !important;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
             background: #000000 !important; 
           }
-          .productrow2 .productitem .info h4 {
+          .related-products-slider .productitem .info h4 {
             font-family: 'Inter', sans-serif !important; 
             font-size: 13px !important;
             font-weight: 600 !important;
@@ -101,7 +105,7 @@ const Relatedproduct = (props) => {
             letter-spacing: 0.1em !important;
             margin-bottom: 8px !important;
           }
-          .productrow2 .productitem .info .text-success {
+          .related-products-slider .productitem .info .text-success {
             font-family: 'Inter', sans-serif !important;
             font-size: 11px !important;
             font-weight: 600 !important;
@@ -109,20 +113,20 @@ const Relatedproduct = (props) => {
             color: #10b981 !important; 
             margin-bottom: 8px !important;
           }
-          .productrow2 .productitem .info .oldprice {
+          .related-products-slider .productitem .info .oldprice {
             font-family: 'Bodoni Moda', serif !important;
             font-size: 13px !important;
             color: rgba(255, 255, 255, 0.3) !important;
             text-decoration: line-through !important;
             margin-right: 12px !important;
           }
-          .productrow2 .productitem .info .newprice {
+          .related-products-slider .productitem .info .newprice {
             font-family: 'Bodoni Moda', serif !important; 
             font-size: 18px !important;
             font-weight: 500 !important;
             color: #ffffff !important; 
           }
-          .productrow2 .productitem .add-to-bag-btn {
+          .related-products-slider .productitem .add-to-bag-btn {
             width: 100% !important;
             background-color: #ffffff !important; 
             color: #000000 !important; 
@@ -137,7 +141,7 @@ const Relatedproduct = (props) => {
             border: 1px solid #ffffff !important;
             cursor: pointer !important;
           }
-          .productrow2 .productitem .add-to-bag-btn:hover {
+          .related-products-slider .productitem .add-to-bag-btn:hover {
             background-color: transparent !important; 
             color: #ffffff !important;
             border-color: #ffffff !important;

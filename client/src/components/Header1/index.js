@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Mycontext } from "../../App";
+import { fetchDataFromAPI } from "../../utils/api";
 
 // Material UI Imports
 import Dialog from "@mui/material/Dialog";
@@ -33,6 +34,29 @@ const Header1 = ({ transparentInitially = false, activePage = "" }) => {
   const [activeSubmenu, setActiveSubmenu] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("Fruits & Vegetables");
   const [activeLink, setActiveLink] = useState(activePage);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchQuery.trim().length > 0) {
+        fetchDataFromAPI(`/api/products?search=${encodeURIComponent(searchQuery)}`).then((res) => {
+          if (res && res.products) {
+            setSearchResults(res.products);
+            setIsSearchOpen(true);
+          }
+        });
+      } else {
+        setSearchResults([]);
+        setIsSearchOpen(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
 
   const [isOpenLocationModal, setIsOpenLocationModal] = useState(false);
   const [selectedLocationTab, setSelectedLocationTab] = useState(null);
@@ -276,6 +300,7 @@ const Header1 = ({ transparentInitially = false, activePage = "" }) => {
                     onClick={() => {
                       setSelectedCategory(cat.name);
                       setDropdownOpen(false);
+                      navigate(`/cat?catName=${encodeURIComponent(cat.name)}`);
                     }}
                   >
                     <span className="material-symbols-outlined dropdown-icon">{cat.icon}</span>
@@ -299,11 +324,16 @@ const Header1 = ({ transparentInitially = false, activePage = "" }) => {
                 padding: "4px 16px",
                 backgroundColor: "var(--surface-dim)",
                 marginRight: "4px",
+                position: "relative"
               }}
             >
               <input
                 placeholder="Search products..."
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => { if(searchResults.length > 0) setIsSearchOpen(true); }}
+                onBlur={() => setTimeout(() => setIsSearchOpen(false), 200)}
                 style={{
                   border: "none",
                   outline: "none",
@@ -320,6 +350,49 @@ const Header1 = ({ transparentInitially = false, activePage = "" }) => {
               >
                 search
               </span>
+              
+              {isSearchOpen && searchResults.length > 0 && (
+                <div style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 8px)',
+                  left: 0,
+                  width: '280px',
+                  backgroundColor: '#fff',
+                  border: '1px solid #ddd',
+                  borderRadius: '8px',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                  zIndex: 1000,
+                  maxHeight: '350px',
+                  overflowY: 'auto'
+                }}>
+                  {searchResults.map((item, index) => (
+                    <div 
+                      key={index} 
+                      onClick={() => {
+                        navigate(`/product/${item._id}`);
+                        setIsSearchOpen(false);
+                        setSearchQuery("");
+                      }}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '12px',
+                        borderBottom: index !== searchResults.length - 1 ? '1px solid #f0f0f0' : 'none',
+                        cursor: 'pointer',
+                        gap: '12px'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f9f9f9'}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
+                    >
+                      <img src={item.images[0]} alt={item.name} style={{ width: '48px', height: '48px', objectFit: 'cover', borderRadius: '4px' }} />
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <span style={{ fontSize: '13px', fontWeight: '600', color: '#111' }}>{item.name.substring(0, 35)}{item.name.length > 35 ? '...' : ''}</span>
+                        <span style={{ fontSize: '12px', color: 'var(--primary)', fontWeight: '500', marginTop: '4px' }}>${item.price}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Location Pill */}
@@ -449,6 +522,180 @@ const Header1 = ({ transparentInitially = false, activePage = "" }) => {
           </div>
         </div>
       </nav>
+
+      {/* MOBILE HEADER (only visible on mobile) */}
+      <header className="mobile-header-wrapper d-md-none">
+        <div className="mobile-shipping-banner">
+          <p>COMPLIMENTARY WORLDWIDE EXPRESS SHIPPING OVER $250</p>
+        </div>
+        <div className="mobile-header-main">
+          <div className="d-flex align-items-center gap-1">
+            <button 
+              className="btn btn-link p-0 text-dark" 
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <span className="material-symbols-outlined text-[22px]">menu</span>
+            </button>
+          </div>
+          <div className="d-flex flex-column align-items-center justify-content-center">
+            <a href="/" className="mobile-brand" onClick={(e) => { e.preventDefault(); navigate("/"); }}>LUXE</a>
+          </div>
+          <div className="d-flex align-items-center gap-2">
+            <button className="btn btn-link p-0 text-dark" onClick={() => setIsOpenLocationModal(true)}>
+              <span className="material-symbols-outlined text-[20px]" style={{ fontSize: '14px', fontWeight: 'bold' }}>{selectedCountry.substring(0, 2).toUpperCase()}</span>
+            </button>
+            <button className="btn btn-link p-0 text-dark position-relative" onClick={() => navigate("/cart")} style={{ marginRight: '4px' }}>
+              <span className="material-symbols-outlined text-[20px]">shopping_bag</span>
+              {context?.cartData?.length > 0 && (
+                <span className="position-absolute badge rounded-pill bg-dark" style={{fontSize: '9px', top: '-4px', right: '-8px', padding: '2px 4px', minWidth: '14px'}}>
+                  {context?.cartData?.length}
+                </span>
+              )}
+            </button>
+            <div onClick={context.isLogin ? handleProfileClick : () => navigate("/signin")} style={{ cursor: "pointer", marginLeft: '4px' }}>
+              {context.isLogin ? (
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', backgroundColor: '#000', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px' }}>
+                  {context.user?.name?.substring(0, 2).toUpperCase() || "JD"}
+                </div>
+              ) : (
+                <span className="material-symbols-outlined text-[20px]">person</span>
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="mobile-sub-nav">
+          <button className={`mobile-sub-nav-item ${activeLink === "Home" ? "active" : ""}`} onClick={() => { setActiveLink("Home"); navigate("/"); }}>ALL</button>
+          <button className={`mobile-sub-nav-item ${activeLink === "Fashion" ? "active" : ""}`} onClick={() => { setActiveLink("Fashion"); }}>FASHION</button>
+          <button className={`mobile-sub-nav-item ${activeLink === "Kidz" ? "active" : ""}`} onClick={() => { setActiveLink("Kidz"); }}>KIDZ</button>
+          <button className={`mobile-sub-nav-item ${activeLink === "Watches" ? "active" : ""}`} onClick={() => { setActiveLink("Watches"); }}>WATCHES</button>
+          <button className={`mobile-sub-nav-item ${activeLink === "Categories" ? "active" : ""}`} onClick={() => { setActiveLink("Categories"); }}>CATEGORIES</button>
+        </div>
+      </header>
+
+      {/* MOBILE HAMBURGER MENU FULL SCREEN */}
+      {mobileMenuOpen && (
+        <div className="mobile-menu-overlay d-md-none">
+          <div className="mobile-menu-header">
+            <button className="btn btn-link text-dark text-decoration-none d-flex align-items-center gap-2 p-0" onClick={() => setMobileMenuOpen(false)}>
+              <span className="material-symbols-outlined">close</span>
+              <span style={{ fontSize: '12px', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Close</span>
+            </button>
+            <div className="mobile-brand" style={{ fontSize: '20px' }}>LUXE</div>
+            <button className="btn btn-link text-dark p-0" onClick={() => { setMobileMenuOpen(false); navigate("/cart"); }}>
+              <span className="material-symbols-outlined">shopping_bag</span>
+            </button>
+          </div>
+          
+          <div className="mobile-menu-search" style={{ position: "relative", zIndex: 10 }}>
+            <div className="mobile-menu-search-inner">
+              <span className="material-symbols-outlined" style={{ color: 'var(--outline)' }}>search</span>
+              <input 
+                type="text" 
+                placeholder="Search collections, apparel, watches..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => { if(searchResults.length > 0) setIsSearchOpen(true); }}
+                onBlur={() => setTimeout(() => setIsSearchOpen(false), 200)}
+              />
+            </div>
+
+            {isSearchOpen && searchResults.length > 0 && (
+                <div style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 4px)',
+                  left: '24px',
+                  right: '24px',
+                  backgroundColor: '#fff',
+                  border: '1px solid #ddd',
+                  borderRadius: '8px',
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                  maxHeight: '300px',
+                  overflowY: 'auto'
+                }}>
+                  {searchResults.map((item, index) => (
+                    <div 
+                      key={index} 
+                      onClick={() => {
+                        navigate(`/product/${item._id}`);
+                        setIsSearchOpen(false);
+                        setSearchQuery("");
+                        setMobileMenuOpen(false);
+                      }}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '12px',
+                        borderBottom: index !== searchResults.length - 1 ? '1px solid #f0f0f0' : 'none',
+                        cursor: 'pointer',
+                        gap: '12px'
+                      }}
+                    >
+                      <img src={item.images[0]} alt={item.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
+                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        <span style={{ fontSize: '13px', fontWeight: '600', color: '#111' }}>{item.name.substring(0, 30)}{item.name.length > 30 ? '...' : ''}</span>
+                        <span style={{ fontSize: '12px', color: 'var(--primary)', fontWeight: '500' }}>${item.price}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+          </div>
+          
+          <div className="mobile-menu-items mt-3">
+            <div className="mobile-menu-item">
+              <div className="mobile-menu-item-header" onClick={() => setActiveSubmenu(activeSubmenu === "MobileFashion" ? null : "MobileFashion")}>
+                <div className="d-flex align-items-baseline gap-3">
+                  <span style={{ fontSize: '10px', color: 'var(--secondary)', fontWeight: 'bold' }}>01</span>
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '28px', textTransform: 'uppercase' }}>Fashion</span>
+                </div>
+                <span className="material-symbols-outlined" style={{ color: 'var(--outline)', transform: activeSubmenu === "MobileFashion" ? "rotate(90deg)" : "rotate(0deg)", transition: "0.3s" }}>arrow_forward</span>
+              </div>
+              {activeSubmenu === "MobileFashion" && fashionKey && groupedSubCats[fashionKey] && (
+                <div className="mobile-menu-subitems">
+                  {groupedSubCats[fashionKey].map((sub, idx) => (
+                    <a key={idx} href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); navigate(`/subCat/${sub._id}`); }}>{sub.subCat}</a>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="mobile-menu-item">
+              <div className="mobile-menu-item-header" onClick={() => setActiveSubmenu(activeSubmenu === "MobileKidz" ? null : "MobileKidz")}>
+                <div className="d-flex align-items-baseline gap-3">
+                  <span style={{ fontSize: '10px', color: 'var(--secondary)', fontWeight: 'bold' }}>02</span>
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '28px', textTransform: 'uppercase' }}>Kidz</span>
+                </div>
+                <span className="material-symbols-outlined" style={{ color: 'var(--outline)', transform: activeSubmenu === "MobileKidz" ? "rotate(90deg)" : "rotate(0deg)", transition: "0.3s" }}>arrow_forward</span>
+              </div>
+              {activeSubmenu === "MobileKidz" && kidzKey && groupedSubCats[kidzKey] && (
+                <div className="mobile-menu-subitems">
+                  {groupedSubCats[kidzKey].map((sub, idx) => (
+                    <a key={idx} href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); navigate(`/subCat/${sub._id}`); }}>{sub.subCat}</a>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="mobile-menu-item">
+              <div className="mobile-menu-item-header" onClick={() => setActiveSubmenu(activeSubmenu === "MobileWatches" ? null : "MobileWatches")}>
+                <div className="d-flex align-items-baseline gap-3">
+                  <span style={{ fontSize: '10px', color: 'var(--secondary)', fontWeight: 'bold' }}>03</span>
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '28px', textTransform: 'uppercase' }}>Watches</span>
+                </div>
+                <span className="material-symbols-outlined" style={{ color: 'var(--outline)', transform: activeSubmenu === "MobileWatches" ? "rotate(90deg)" : "rotate(0deg)", transition: "0.3s" }}>arrow_forward</span>
+              </div>
+              {activeSubmenu === "MobileWatches" && watchesKey && groupedSubCats[watchesKey] && (
+                <div className="mobile-menu-subitems">
+                  {groupedSubCats[watchesKey].map((sub, idx) => (
+                    <a key={idx} href="#" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); navigate(`/subCat/${sub._id}`); }}>{sub.subCat}</a>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+          </div>
+        </div>
+      )}
 
       {/* DELIVERY LOCATION SELECTION DIALOG */}
       <Dialog

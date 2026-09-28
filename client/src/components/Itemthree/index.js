@@ -111,14 +111,14 @@ const Itemthree = memo((props) => {
                         />
                     ))}
                 </div>
-                {props.item?.discount > 0 && props.item?.price && (
+                {/* {props.item?.discount > 0 && props.item?.price && (
                     <span className="badge badge-primary">
                         {Math.round(
                             (props.item.discount /
                                 (props.item.discount + props.item.price)) * 100
                         )}%
                     </span>
-                )}
+                )} */}
                 <button
                     className="wishlist-btn"
                     onClick={addToWishlist}

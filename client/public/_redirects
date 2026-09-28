@@ -1,0 +1,5 @@
+# Proxy API to Render backend (avoids browser CORS on Netlify)
+/api/*  https://server-k53h.onrender.com/api/:splat  200
+
+# SPA fallback — must be last
+/*  /index.html  200

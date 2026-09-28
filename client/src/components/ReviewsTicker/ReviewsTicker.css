@@ -1,0 +1,165 @@
+.reviews-ticker-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 100px 0;
+  background-color: #0c0c0c;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.reviews-ticker-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.ticker-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #888888;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.ticker-title {
+  font-family: 'Bodoni Moda', serif;
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.ticker-wrap {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.ticker-wrap::before,
+.ticker-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ticker-wrap::before {
+  left: 0;
+  background: linear-gradient(to right, #0c0c0c, transparent);
+}
+
+.ticker-wrap::after {
+  right: 0;
+  background: linear-gradient(to left, #0c0c0c, transparent);
+}
+
+.ticker-row {
+  display: flex;
+  width: max-content;
+  gap: 30px;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Row animations */
+.animate-ltr {
+  animation: scrollLTR 35s linear infinite;
+}
+
+.animate-rtl {
+  animation: scrollRTL 35s linear infinite;
+}
+
+.ticker-row:hover {
+  animation-play-state: paused;
+}
+
+.review-card {
+  width: 380px;
+  background: #161617;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  transition: border-color 0.3s ease, background 0.3s ease;
+  will-change: transform;
+}
+
+.review-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.review-stars {
+  display: flex;
+  gap: 4px;
+}
+
+.star {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.star.filled {
+  color: #d4af37; /* Warm Gold */
+}
+
+.review-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  margin: 0;
+}
+
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 15px;
+}
+
+.review-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.review-date {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #666666;
+}
+
+@keyframes scrollLTR {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes scrollRTL {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
